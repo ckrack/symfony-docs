@@ -947,6 +947,64 @@ These "unmapped fields" can be set and accessed in a controller with::
 Additionally, if there are any fields on the form that aren't included in
 the submitted data, those fields will be explicitly set to ``null``.
 
+Extra fields
+~~~~~~~~~~~~
+
+All form fields are considered properties of the object but you can inject
+fields directly into your view without specifying them in the form definition.
+They can be retrieved via the :method:`FormInterface::getExtraData() <Symfony\\Component\\Form\\FormInterface::getExtraData>`
+method.
+
+This is a creation user form::
+
+    // ...
+    use App\User;
+    use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+    use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+    use Symfony\Component\Form\FormBuilderInterface;
+
+    class UserCreateType extends AbstractType
+    {
+        public function buildForm(FormBuilderInterface $builder, array $options): void
+        {
+            $builder
+                ->add('username', TextType::class)
+                ->add('email', EmailType::class)
+            ;
+        }
+
+        public function configureOptions(OptionsResolver $resolver)
+        {
+            $resolver->setDefaults([
+                'data_class' => User::class,
+            ]);
+        }
+    }
+
+The extra fields can be injected like this:
+
+.. code-block:: html+twig
+
+    {# templates/user/create.html.twig #}
+    {{ form_start(form) }}
+        {{ form_row(form.username) }}
+        {{ form_row(form.email) }}
+
+        {# Hidden field to send additional referral code #}
+        <input type="hidden" name="{{ form.vars.full_name ~ '[referralCode]' }}" value="{{ referralCode }}"/>
+
+        <button type="submit">Submit</button>
+    {{ form_end(form) }}
+
+Here, the referral code is an extra field injected at view level.
+
+You can get the referral code via ``getExtraData``::
+
+    $extraData = $form->getExtraData();
+    $referralCode = $extraData['referralCode'] ?? null;
+    
+> Don't forget to set :ref:`allow_extra_fields <allow-extra-fields>` option to ``true`` on your form
+
 Learn more
 ----------
 
