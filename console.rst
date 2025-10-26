@@ -583,5 +583,6 @@ tools capable of helping you with different tasks:
   output debug information when running an external program
 * :doc:`/components/console/helpers/processhelper`: allows to run processes using ``DebugFormatterHelper``
 * :doc:`/components/console/helpers/cursor`: allows to manipulate the cursor in the terminal
+* :doc:`/components/console/helpers/tree`: displays tree-like structures
 
 .. _`exit status`: https://en.wikipedia.org/wiki/Exit_status
