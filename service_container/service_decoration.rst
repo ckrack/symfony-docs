@@ -142,6 +142,7 @@ automatically changed to ``'.inner'``):
         namespace App;
 
         // ...
+        use App\Mailer;
         use Symfony\Component\DependencyInjection\Attribute\AsDecorator;
         use Symfony\Component\DependencyInjection\Attribute\AutowireDecorated;
 
@@ -149,8 +150,9 @@ automatically changed to ``'.inner'``):
         class DecoratingMailer
         {
             public function __construct(
-                #[AutowireDecorated]
-                private object $inner,
+                // unlike other configuration formats, that name the decorated service argument
+                // as `$inner` by default, when using attributes you can choose any variable name
+                #[AutowireDecorated] private Mailer $mailer,
             ) {
             }
 
