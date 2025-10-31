@@ -580,6 +580,8 @@ The ``.symfony.local.yaml`` file provides advanced configuration options:
         p12: path/to/custom-cert.p12
         # toggle GZIP compression
         use_gzip: true
+        # enable Cross-origin resource sharing (CORS) for all request
+        allow_cors: true
 
     # run the server in the background
     daemon: true
