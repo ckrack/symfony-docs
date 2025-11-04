@@ -142,9 +142,10 @@ to be adjusted if needed:
 
 .. tip::
 
-    It's recommended to use the `PSR-4`_ autoload standard: use the namespace as key,
-    and the location of the bundle's main class (relative to ``composer.json``)
-    as value. As the main class is located in the ``src/`` directory of the bundle:
+    It's recommended to use the `PSR-4`_ autoload standard on your bundle's
+    ``composer.json`` file. Use the namespace as key, and the location of the
+    bundle's main class (relative to ``composer.json``) as value. As the main
+    class is located in the ``src/`` directory of the bundle:
 
     .. code-block:: json
 
@@ -160,6 +161,80 @@ to be adjusted if needed:
                 }
             }
         }
+
+Developing a Reusable Bundle
+----------------------------
+
+Bundles are meant to be reusable pieces of code that live independently from
+any particular Symfony application. However, a bundle cannot run on its own: it
+must be registered inside an application to execute its code.
+
+This can be a bit challenging during development. When working on a bundle in
+its own repository, there's no Symfony application around it, so you need a way
+to test your changes inside a real application environment.
+
+There are two common approaches to do this, depending on whether your bundle has
+already been published or is still under development.
+
+Using a Local Path Repository
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If your bundle hasn't been published yet (for example, it's not available on
+Packagist), you can point Composer to your local bundle directory from any
+Symfony application you use for testing.
+
+Edit the ``composer.json`` file of your application and add this:
+
+.. code-block:: json
+
+    {
+        "repositories": [
+            {
+                "type": "path",
+                "url": "/path/to/your/AcmeBlogBundle"
+            }
+        ],
+        "require": {
+            "acme/blog-bundle": "*"
+        }
+    }
+
+Then, in your application, install the bundle as usual:
+
+.. code-block:: terminal
+
+    $ composer require acme/blog-bundle
+
+Composer will create a symbolic link (symlink) to your local bundle directory,
+so any change you make in the ``AcmeBlogBundle/`` directory is immediately
+visible in the application. You can now enable the bundle in ``config/bundles.php``::
+
+    return [
+        // ...
+        Acme\BlogBundle\AcmeBlogBundle::class => ['all' => true],
+    ];
+
+This setup is ideal during early development because it allows quick iteration
+without publishing or rebuilding archives.
+
+Linking an Already Published Bundle
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If your bundle is already public (for example, it's published on Packagist),
+you can still develop it locally while testing it inside a Symfony application.
+
+In your application, replace the installed bundle with a symlink to your local
+development copy. For example, if your bundle is installed under
+``vendor/acme/blog-bundle/`` and your local copy is in ``~/Projects/AcmeBlogBundle/``:
+
+.. code-block:: terminal
+
+    $ rm -rf vendor/acme/blog-bundle/
+    $ ln -s ~/Projects/AcmeBlogBundle/ vendor/acme/blog-bundle
+
+Symfony will now use your local bundle directly. You can edit its code, run
+tests, and see the changes immediately. When you're done, restore the vendor
+folder or reinstall the package with Composer to go back to the published version.
 
 Learn more
 ----------
