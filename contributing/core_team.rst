@@ -128,7 +128,7 @@ Active Core Members
   * **Ryan Weaver** (`weaverryan`_);
   * **Christian Flothmann** (`xabbuh`_);
   * **Wouter De Jong** (`wouterj`_);
-  * **Javier Eguiluz** (`javiereguiluz`_).
+  * **Javier Eguiluz** (`javiereguiluz`_);
   * **Oskar Stark** (`OskarStark`_).
 
 Former Core Members
