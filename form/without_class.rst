@@ -186,6 +186,8 @@ fields (e.g. a field must not be blank when another field has a certain value).
 To achieve this, use the ``expression`` option of the
 :doc:`When constraint </reference/constraints/When>` to reference the other field::
 
+    use Symfony\Component\Validator\Constraints as Assert;
+
     $builder
         ->add('how_did_you_hear', ChoiceType::class, [
             'required' => true,
