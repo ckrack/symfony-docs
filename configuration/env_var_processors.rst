@@ -629,63 +629,62 @@ Symfony provides the following env var processors:
     .. code-block:: bash
 
         # .env
-        MONGODB_URL="mongodb://db_user:db_password@127.0.0.1:27017/db_name"
+        DATABASE_URL="postgresql://db_user:db_password@127.0.0.1:5432/db_name"
 
     .. configuration-block::
 
         .. code-block:: yaml
 
-            # config/packages/mongodb.yaml
-            mongo_db_bundle:
-                clients:
-                    default:
-                        hosts:
-                            - { host: '%env(string:key:host:url:MONGODB_URL)%', port: '%env(int:key:port:url:MONGODB_URL)%' }
-                        username: '%env(string:key:user:url:MONGODB_URL)%'
-                        password: '%env(string:key:pass:url:MONGODB_URL)%'
-                connections:
-                    default:
-                        database_name: '%env(key:path:url:MONGODB_URL)%'
+            # config/services.yaml
+            services:
+                # ...
+
+                some_service:
+                    arguments:
+                        $host: '%env(string:key:host:url:DATABASE_URL)%'
+                        $port: '%env(int:key:port:url:DATABASE_URL)%'
+                        $username: '%env(string:key:user:url:DATABASE_URL)%'
+                        $password: '%env(string:key:pass:url:DATABASE_URL)%'
+                        $database_name: '%env(key:path:url:DATABASE_URL)%'
 
         .. code-block:: xml
 
-            <!-- config/packages/mongodb.xml -->
+            <!-- config/services.xml -->
             <?xml version="1.0" encoding="UTF-8" ?>
             <container xmlns="http://symfony.com/schema/dic/services"
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                 xsi:schemaLocation="http://symfony.com/schema/dic/services
-                    https://symfony.com/schema/dic/services/services-1.0.xsd">
+                    https://symfony.com/schema/dic/services/services-1.0.xsd"
+            >
+                <services>
+                    <!-- ... -->
 
-                <mongodb:config>
-                    <mongodb:client name="default" username="%env(string:key:user:url:MONGODB_URL)%" password="%env(string:key:pass:url:MONGODB_URL)%">
-                        <mongodb:host host="%env(string:key:host:url:MONGODB_URL)%" port="%env(int:key:port:url:MONGODB_URL)%"/>
-                    </mongodb:client>
-                    <mongodb:connections name="default" database_name="%env(key:path:url:MONGODB_URL)%"/>
-                </mongodb:config>
+                    <service id="some_service">
+                        <argument key="$host">%env(string:key:host:url:DATABASE_URL)%</argument>
+                        <argument key="$port">%env(int:key:port:url:DATABASE_URL)%</argument>
+                        <argument key="$username">%env(string:key:user:url:DATABASE_URL)%</argument>
+                        <argument key="$password">%env(string:key:pass:url:DATABASE_URL)%</argument>
+                        <argument key="$database_name">%env(key:path:url:DATABASE_URL)%</argument>
+                    </service>
+                </services>
             </container>
 
         .. code-block:: php
 
-            // config/packages/mongodb.php
-            $container->loadFromExtension('mongodb', [
-                'clients' => [
-                    'default' => [
-                        'hosts' => [
-                            [
-                                'host' => '%env(string:key:host:url:MONGODB_URL)%',
-                                'port' => '%env(int:key:port:url:MONGODB_URL)%',
-                            ],
-                        ],
-                        'username' => '%env(string:key:user:url:MONGODB_URL)%',
-                        'password' => '%env(string:key:pass:url:MONGODB_URL)%',
-                    ],
-                ],
-                'connections' => [
-                    'default' => [
-                        'database_name' => '%env(key:path:url:MONGODB_URL)%',
-                    ],
-                ],
-            ]);
+        // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return function(ContainerConfigurator $container): void {
+            // ...
+
+            $services->set(SomeService::class)
+                ->arg('$host', '%env(string:key:host:url:DATABASE_URL)%')
+                ->arg('$port', '%env(int:key:port:url:DATABASE_URL)%')
+                ->arg('$username', '%env(string:key:user:url:DATABASE_URL)%')
+                ->arg('$password', '%env(string:key:pass:url:DATABASE_URL)%')
+                ->arg('$database_name', '%env(key:path:url:DATABASE_URL)%')
+            ;
+        };
 
     .. warning::
 
@@ -699,44 +698,53 @@ Symfony provides the following env var processors:
     .. code-block:: bash
 
         # .env
-        MONGODB_URL="mongodb://db_user:db_password@127.0.0.1:27017/db_name?timeout=3000"
+        DATABASE_URL="postgresql://db_user:db_password@127.0.0.1:5432/db_name?serverVersion=12.19&charset=utf8"
 
     .. configuration-block::
 
         .. code-block:: yaml
 
-            # config/packages/mongodb.yaml
-            mongo_db_bundle:
-                clients:
-                    default:
-                        # ...
-                        connectTimeoutMS: '%env(int:key:timeout:query_string:MONGODB_URL)%'
+            # config/services.yaml
+            services:
+                # ...
+
+                some_service:
+                    arguments:
+                        $serverVersion: '%env(string:key:serverVersion:query_string:DATABASE_URL)%'
+                        $charset: '%env(string:key:charset:query_string:DATABASE_URL)%'
 
         .. code-block:: xml
 
-            <!-- config/packages/mongodb.xml -->
+            <!-- config/services.xml -->
             <?xml version="1.0" encoding="UTF-8" ?>
             <container xmlns="http://symfony.com/schema/dic/services"
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                 xsi:schemaLocation="http://symfony.com/schema/dic/services
-                    https://symfony.com/schema/dic/services/services-1.0.xsd">
+                    https://symfony.com/schema/dic/services/services-1.0.xsd"
+            >
+                <services>
+                    <!-- ... -->
 
-                <mongodb:config>
-                    <mongodb:client name="default" connectTimeoutMS="%env(int:key:timeout:query_string:MONGODB_URL)%"/>
-                </mongodb:config>
+                    <service id="some_service">
+                        <argument key="$serverVersion">%env(string:key:serverVersion:query_string:DATABASE_URL)%</argument>
+                        <argument key="$charset">%env(string:key:charset:query_string:DATABASE_URL)%</argument>
+                    </service>
+                </services>
             </container>
 
         .. code-block:: php
 
-            // config/packages/mongodb.php
-            $container->loadFromExtension('mongodb', [
-                'clients' => [
-                    'default' => [
-                        // ...
-                        'connectTimeoutMS' => '%env(int:key:timeout:query_string:MONGODB_URL)%',
-                    ],
-                ],
-            ]);
+        // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return function(ContainerConfigurator $container): void {
+            // ...
+
+            $services->set(SomeService::class)
+                ->arg('$serverVersion', '%env(string:key:serverVersion:query_string:DATABASE_URL)%')
+                ->arg('$charset', '%env(int:string:charset:query_string:DATABASE_URL)%')
+            ;
+        };
 
 ``env(enum:FooEnum:BAR)``
     Tries to convert an environment variable to an actual ``\BackedEnum`` value.
