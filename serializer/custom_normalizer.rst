@@ -164,8 +164,8 @@ Improving Performance of Normalizers/Denormalizers
 
     The ``getSupportedTypes()`` method was introduced in Symfony 6.3.
 
-Both :class:Symfony\\Component\\Serializer\\Normalizer\\NormalizerInterface
-and :class:Symfony\\Component\\Serializer\\Normalizer\\DenormalizerInterface
+Both :class:`Symfony\\Component\\Serializer\\Normalizer\\NormalizerInterface`
+and :class:`Symfony\\Component\\Serializer\\Normalizer\\DenormalizerInterface`
 define a ``getSupportedTypes()`` method to declare which types they support and
 whether their ``supports*()`` result can be cached.
 
