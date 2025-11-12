@@ -259,7 +259,7 @@ You can use custom validators like the ones provided by Symfony itself:
             }
         }
 
-If your constraint contains options, then they should be public properties
+If your constraint contains options, then they must be public properties
 on the custom Constraint class you created earlier. These options can be
 configured like options on core Symfony constraints.
 
