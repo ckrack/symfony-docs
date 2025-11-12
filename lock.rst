@@ -308,7 +308,7 @@ For example, to inject the ``invoice`` package defined earlier::
 
 When :ref:`dealing with multiple implementations of the same type <autowiring-multiple-implementations-same-type>`
 the ``#[Target]`` attribute helps you select which one to inject. Symfony creates
-a target called ``lock.`` + "asset package name" + ``.factory``.
+a target called ``lock.`` + "lock name" + ``.factory``.
 
 For example, to select the ``invoice`` lock defined earlier::
 
