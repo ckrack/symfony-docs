@@ -213,6 +213,93 @@ automatically changed to ``'.inner'``):
                 ->args([service('.inner')]);
         };
 
+When decorating a service, the original service (e.g. ``App\Mailer``) is available
+inside the decorating service (e.g. ``App\DecoratingMailer``) using an ID constructed
+as "Decorating service ID" + the ``.inner`` suffix (e.g. in the previous example,
+the ID is ``'App\DecoratingMailer.inner'``). You can control the inner service
+name via the ``decoration_inner_name`` option:
+
+.. configuration-block::
+
+    .. code-block:: php-attributes
+
+        // when using the #[AutowireDecorated] attribute, you can name the argument
+        // that holds the decorated service however you like, without needing to
+        // configure that name explicitly
+        #[AutowireDecorated] private Mailer $originalMailer,
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+        services:
+            App\DecoratingMailer:
+                # ...
+                decoration_inner_name: 'original_mailer'
+                arguments: ['@original_mailer']
+
+                # if you decorate a lot of services, consider adding the full
+                # original service ID as part of the new ID
+                decoration_inner_name: 'App\Mailer.original'
+                arguments: ['@App\Mailer.original']
+
+    .. code-block:: xml
+
+        <!-- config/services.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema-instance"
+            xsd:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <!-- ... -->
+
+                <service
+                    id="App\DecoratingMailer"
+                    decorates="App\Mailer"
+                    decoration-inner-name="original_mailer"
+                    public="false"
+                >
+                    <argument type="service" id="original_mailer"/>
+                </service>
+
+                <!-- if you decorate a lot of services, consider adding the full
+                     original service ID as part of the new ID -->
+                <service
+                    id="App\DecoratingMailer"
+                    decorates="App\Mailer"
+                    decoration-inner-name="App\Mailer.original"
+                    public="false"
+                >
+                    <argument type="service" id="App\Mailer.original"/>
+                </service>
+
+            </services>
+        </container>
+
+    .. code-block:: php
+
+        // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        use App\DecoratingMailer;
+        use App\Mailer;
+
+        return function(ContainerConfigurator $container): void {
+            $services = $container->services();
+
+            $services->set(Mailer::class);
+
+            $services->set(DecoratingMailer::class)
+                ->decorate(Mailer::class, 'original_mailer')
+                ->args([service('original_mailer')]);
+
+            // if you decorate a lot of services, consider adding the full
+            // original service ID as part of the new ID
+            $services->set(DecoratingMailer::class)
+                ->decorate(Mailer::class, DecoratingMailer::class.'.original')
+                ->args([service(DecoratingMailer::class.'.original')]);
+        };
+
 .. deprecated:: 6.3
 
     The ``#[MapDecorated]`` attribute is deprecated since Symfony 6.3.
@@ -232,65 +319,6 @@ automatically changed to ``'.inner'``):
     defined by Symfony are retained: ``container.service_locator``, ``container.service_subscriber``,
     ``kernel.event_subscriber``, ``kernel.event_listener``, ``kernel.locale_aware``,
     and ``kernel.reset``.
-
-.. note::
-
-    The generated inner id is based on the id of the decorator service
-    (``App\DecoratingMailer`` here), not of the decorated service (``App\Mailer``
-    here). You can control the inner service name via the ``decoration_inner_name``
-    option:
-
-    .. configuration-block::
-
-        .. code-block:: yaml
-
-            # config/services.yaml
-            services:
-                App\DecoratingMailer:
-                    # ...
-                    decoration_inner_name: App\DecoratingMailer.wooz
-                    arguments: ['@App\DecoratingMailer.wooz']
-
-        .. code-block:: xml
-
-            <!-- config/services.xml -->
-            <?xml version="1.0" encoding="UTF-8" ?>
-            <container xmlns="http://symfony.com/schema/dic/services"
-                xmlns:xsd="http://www.w3.org/2001/XMLSchema-instance"
-                xsd:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
-
-                <services>
-                    <!-- ... -->
-
-                    <service
-                        id="App\DecoratingMailer"
-                        decorates="App\Mailer"
-                        decoration-inner-name="App\DecoratingMailer.wooz"
-                        public="false"
-                    >
-                        <argument type="service" id="App\DecoratingMailer.wooz"/>
-                    </service>
-
-                </services>
-            </container>
-
-        .. code-block:: php
-
-            // config/services.php
-            namespace Symfony\Component\DependencyInjection\Loader\Configurator;
-
-            use App\DecoratingMailer;
-            use App\Mailer;
-
-            return function(ContainerConfigurator $container): void {
-                $services = $container->services();
-
-                $services->set(Mailer::class);
-
-                $services->set(DecoratingMailer::class)
-                    ->decorate(Mailer::class, DecoratingMailer::class.'.wooz')
-                    ->args([service(DecoratingMailer::class.'.wooz')]);
-            };
 
 Decoration Priority
 -------------------
