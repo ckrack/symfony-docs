@@ -129,8 +129,8 @@ If you're not using ``autoconfigure``, you have to tag the service with
 Improving Performance of Normalizers/Denormalizers
 --------------------------------------------------
 
-Both :class:Symfony\\Component\\Serializer\\Normalizer\\NormalizerInterface
-and :class:Symfony\\Component\\Serializer\\Normalizer\\DenormalizerInterface
+Both :class:`Symfony\\Component\\Serializer\\Normalizer\\NormalizerInterface`
+and :class:`Symfony\\Component\\Serializer\\Normalizer\\DenormalizerInterface`
 define a ``getSupportedTypes()`` method to declare which types they support and
 whether their ``supports*()`` result can be cached.
 
