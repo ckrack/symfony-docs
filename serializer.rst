@@ -2097,7 +2097,7 @@ To avoid deserializing the whole response, you can use the
 and "unwrap" the input data::
 
     $jsonData = '{"result":"success","data":{"person":{"name": "Jane Doe","age":57}}}';
-    $data = $serialiser->deserialize($jsonData, Object::class, [
+    $data = $serialiser->deserialize($jsonData, Object::class, 'json', [
         UnwrappingDenormalizer::UNWRAP_PATH => '[data][person]',
     ]);
     // $data is Person(name: 'Jane Doe', age: 57)
