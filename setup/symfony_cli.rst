@@ -335,6 +335,12 @@ You can also use wildcards:
 This allows accessing subdomains like ``https://api.my-app.wip`` or
 ``https://admin.my-app.wip``.
 
+.. tip::
+
+    If you prefer to use a different TLD, edit the ``~/.symfony5/proxy.json``
+    file (where ``~`` means the path to your user directory) and change the
+    value of the ``tld`` option from ``wip`` to any other TLD.
+
 When running console commands, set the ``https_proxy`` environment variable
 to make custom domains work:
 
@@ -353,12 +359,6 @@ to make custom domains work:
 
     Although environment variable names are typically uppercase, the ``https_proxy``
     variable `is treated differently`_ and must be written in lowercase.
-
-.. tip::
-
-    If you prefer to use a different TLD, edit the ``~/.symfony5/proxy.json``
-    file (where ``~`` means the path to your user directory) and change the
-    value of the ``tld`` option from ``wip`` to any other TLD.
 
 .. _symfony-server-docker:
 
