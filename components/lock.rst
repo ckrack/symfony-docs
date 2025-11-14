@@ -390,16 +390,19 @@ The component includes the following built-in store types:
 Store                                                       Scope   Blocking  Expiring Sharing Serialization
 ==========================================================  ======  ========  ======== ======= =============
 :ref:`FlockStore <lock-store-flock>`                        local   yes       no       yes     no
-:ref:`MemcachedStore <lock-store-memcached>`                remote  no        yes      no      yes
-:ref:`MongoDbStore <lock-store-mongodb>`                    remote  no        yes      no      yes
-:ref:`PdoStore <lock-store-pdo>`                            remote  no        yes      no      yes
-:ref:`DoctrineDbalStore <lock-store-dbal>`                  remote  no        yes      no      yes
+:ref:`MemcachedStore <lock-store-memcached>`                remote  retry     yes      no      yes
+:ref:`MongoDbStore <lock-store-mongodb>`                    remote  retry     yes      no      yes
+:ref:`PdoStore <lock-store-pdo>`                            remote  retry     yes      no      yes
+:ref:`DoctrineDbalStore <lock-store-dbal>`                  remote  retry     yes      no      yes
 :ref:`PostgreSqlStore <lock-store-pgsql>`                   remote  yes       no       yes     no
 :ref:`DoctrineDbalPostgreSqlStore <lock-store-dbal-pgsql>`  remote  yes       no       yes     no
-:ref:`RedisStore <lock-store-redis>`                        remote  no        yes      yes     yes
+:ref:`RedisStore <lock-store-redis>`                        remote  retry     yes      yes     yes
 :ref:`SemaphoreStore <lock-store-semaphore>`                local   yes       no       no      no
-:ref:`ZookeeperStore <lock-store-zookeeper>`                remote  no        no       no      no
+:ref:`ZookeeperStore <lock-store-zookeeper>`                remote  retry     no       no      no
 ==========================================================  ======  ========  ======== ======= =============
+
+When the store does not support blocking locks, the Lock class will retry to acquire
+the lock in a non-blocking way until the lock is acquired.
 
 .. tip::
 
