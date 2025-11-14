@@ -541,7 +541,7 @@ Define processes that should start automatically with the server in
         # Messenger consumer with file watching
         messenger_consume_async:
             cmd: ['symfony', 'console', 'messenger:consume', 'async']
-            watch: ['config', 'src', 'templates', 'vendor']
+            watch: ['config', 'src', 'templates', 'vendor/composer/installed.json']
 
         # Custom commands
         build_spa:
