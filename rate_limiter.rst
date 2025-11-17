@@ -678,7 +678,7 @@ You can configure multiple rate limiters to work together:
                 ;
 
             $framework->rateLimiter()
-                ->limiter('two_per_minute')
+                ->limiter('five_per_hour')
                     ->policy('fixed_window')
                     ->limit(5)
                     ->interval('1 hour')
