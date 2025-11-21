@@ -187,14 +187,14 @@ which is a common practice when following the `ADR pattern`_
 
     .. code-block:: php-attributes
 
-        // src/Controller/Hello.php
+        // src/Controller/HelloController.php
         namespace App\Controller;
 
         use Symfony\Component\HttpFoundation\Response;
         use Symfony\Component\Routing\Attribute\Route;
 
         #[Route('/hello/{name}', name: 'hello')]
-        class Hello
+        class HelloController
         {
             public function __invoke(string $name = 'World'): Response
             {
