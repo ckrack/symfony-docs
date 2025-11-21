@@ -730,7 +730,7 @@ Form Login
 
 Most websites have a login form where users authenticate using an
 identifier (e.g. email address or username) and a password. This
-functionality is provided by the built-in :class:`Symfony\\Component\\Security\\Http\Authenticator\\FormLoginAuthenticator`.
+functionality is provided by the built-in :class:`Symfony\\Component\\Security\\Http\\Authenticator\\FormLoginAuthenticator`.
 
 You can run the following command to create everything needed to add a login
 form in your application:
@@ -1751,7 +1751,7 @@ Login Programmatically
 
 .. versionadded:: 6.2
 
-    The :class:`Symfony\Bundle\SecurityBundle\Security <Symfony\\Bundle\\SecurityBundle\\Security>`
+    The :class:`Symfony\\Bundle\\SecurityBundle\\Security`
     class was introduced in Symfony 6.2. Prior to 6.2, it was called
     ``Symfony\Component\Security\Core\Security``.
 
@@ -1927,7 +1927,7 @@ Logout programmatically
 
 .. versionadded:: 6.2
 
-    The :class:`Symfony\Bundle\SecurityBundle\Security <Symfony\\Bundle\\SecurityBundle\\Security>`
+    The :class:`Symfony\\Bundle\\SecurityBundle\\Security`
     class was introduced in Symfony 6.2. Prior to 6.2, it was called
     ``Symfony\Component\Security\Core\Security``.
 
