@@ -865,11 +865,12 @@ First, create a service that will compute the item's value::
     // src/Cache/CacheComputation.php
     namespace App\Cache;
 
-    use Symfony\Contracts\Cache\ItemInterface;
+    use Psr\Cache\CacheItemInterface;
+    use Symfony\Contracts\Cache\CallbackInterface;
 
-    class CacheComputation
+    class CacheComputation implements CallbackInterface
     {
-        public function compute(ItemInterface $item): string
+        public function __invoke(CacheItemInterface $item, bool &$save): string
         {
             $item->expiresAfter(5);
 
@@ -893,10 +894,10 @@ In the following example, the value is requested from a controller::
     class CacheController extends AbstractController
     {
         #[Route('/cache', name: 'cache')]
-        public function index(CacheInterface $asyncCache): Response
+        public function index(CacheInterface $asyncCache, CacheComputation $cacheComputation): Response
         {
             // pass to the cache the service method that refreshes the item
-            $cachedValue = $asyncCache->get('my_value', [CacheComputation::class, 'compute'])
+            $cachedValue = $asyncCache->get('my_value', $cacheComputation)
 
             // ...
         }
