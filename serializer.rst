@@ -1771,6 +1771,13 @@ or :ref:`serializer.encoder <reference-dic-tags-serializer-encoder>` tags:
             ;
         };
 
+.. versionadded:: 7.3
+
+    Before Symfony 7.3, named serializer normalizers were added automatically
+    to the default serializer, so you had to set their ``autoconfigure``
+    option to ``false`` to disable them. As of Symfony 7.3, they are no longer
+    registered by default.
+
 When the ``serializer`` attribute is not set, the service is registered only with
 the default serializer.
 
