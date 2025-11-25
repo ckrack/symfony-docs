@@ -241,7 +241,8 @@ Thanks to this new code, your HTTP response will have the following header:
 
 .. tip::
 
-    When both are used, the cache headers defined in the controller take precedence over those configured with the `#[Cache]` attribute.
+    When both are used, the cache headers defined in the controller take
+    precedence over those configured with the ``#[Cache]`` attribute.
 
 This tells your HTTP reverse proxy to cache this response for 3600 seconds. If *anyone*
 requests this URL again before 3600 seconds, your application *won't* be hit at all.
