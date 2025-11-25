@@ -1420,9 +1420,9 @@ normalizers (in order of priority):
     This normalizer converts between :phpclass:`BcMath\\Number` or :phpclass:`GMP` objects and
     strings or integers.
 
-.. versionadded:: 7.2
+.. versionadded:: 7.3
 
-    The ``NumberNormalizer`` was introduced in Symfony 7.2.
+    The ``NumberNormalizer`` was introduced in Symfony 7.3.
 
 :class:`Symfony\\Component\\Serializer\\Normalizer\\DataUriNormalizer`
     This normalizer converts between :phpclass:`SplFileInfo` objects and a
