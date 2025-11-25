@@ -235,6 +235,11 @@ Thanks to this new code, your HTTP response will have the following header:
 
     Cache-Control: public, maxage=3600, must-revalidate
 
+.. tip::
+
+    When both are used, the cache headers defined in the controller take
+    precedence over those configured with the ``#[Cache]`` attribute.
+
 This tells your HTTP reverse proxy to cache this response for 3600 seconds. If *anyone*
 requests this URL again before 3600 seconds, your application *won't* be hit at all.
 If you're using the Symfony reverse proxy, look at the ``X-Symfony-Cache`` header
