@@ -181,7 +181,7 @@ Parameter               Description
 
 .. versionadded:: 6.3
 
-    The `{{ value_length }}` parameter was introduced in Symfony 6.3.
+    The ``{{ value_length }}`` parameter was introduced in Symfony 6.3.
 
 .. include:: /reference/constraints/_groups-option.rst.inc
 
@@ -215,7 +215,7 @@ Parameter               Description
 
 .. versionadded:: 6.3
 
-    The `{{ value_length }}` parameter was introduced in Symfony 6.3.
+    The ``{{ value_length }}`` parameter was introduced in Symfony 6.3.
 
 ``min``
 ~~~~~~~
@@ -251,7 +251,7 @@ Parameter               Description
 
 .. versionadded:: 6.3
 
-    The `{{ value_length }}` parameter was introduced in Symfony 6.3.
+    The ``{{ value_length }}`` parameter was introduced in Symfony 6.3.
 
 .. include:: /reference/constraints/_normalizer-option.rst.inc
 
