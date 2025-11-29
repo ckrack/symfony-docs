@@ -142,6 +142,11 @@ attribute. For example, you may want a command to create a user::
         }
     }
 
+.. versionadded:: 7.3
+
+    Support for invokable commands that don't extend the base ``Command`` class
+    was introduced in Symfony 7.3
+
 If you can't use PHP attributes, register the command as a service and
 :doc:`tag it </service_container/tags>` with the ``console.command`` tag. If you're using the
 :ref:`default services.yaml configuration <service-container-services-load-example>`,
