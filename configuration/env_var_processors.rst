@@ -671,20 +671,20 @@ Symfony provides the following env var processors:
 
         .. code-block:: php
 
-        // config/services.php
-        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+            // config/services.php
+            namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return function(ContainerConfigurator $container): void {
-            // ...
+            return function(ContainerConfigurator $container): void {
+                // ...
 
-            $services->set(SomeService::class)
-                ->arg('$host', '%env(string:key:host:url:DATABASE_URL)%')
-                ->arg('$port', '%env(int:key:port:url:DATABASE_URL)%')
-                ->arg('$username', '%env(string:key:user:url:DATABASE_URL)%')
-                ->arg('$password', '%env(string:key:pass:url:DATABASE_URL)%')
-                ->arg('$database_name', '%env(key:path:url:DATABASE_URL)%')
-            ;
-        };
+                $services->set(SomeService::class)
+                    ->arg('$host', '%env(string:key:host:url:DATABASE_URL)%')
+                    ->arg('$port', '%env(int:key:port:url:DATABASE_URL)%')
+                    ->arg('$username', '%env(string:key:user:url:DATABASE_URL)%')
+                    ->arg('$password', '%env(string:key:pass:url:DATABASE_URL)%')
+                    ->arg('$database_name', '%env(key:path:url:DATABASE_URL)%')
+                ;
+            };
 
     .. warning::
 
@@ -734,17 +734,17 @@ Symfony provides the following env var processors:
 
         .. code-block:: php
 
-        // config/services.php
-        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+            // config/services.php
+            namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return function(ContainerConfigurator $container): void {
-            // ...
+            return function(ContainerConfigurator $container): void {
+                // ...
 
-            $services->set(SomeService::class)
-                ->arg('$serverVersion', '%env(string:key:serverVersion:query_string:DATABASE_URL)%')
-                ->arg('$charset', '%env(int:string:charset:query_string:DATABASE_URL)%')
-            ;
-        };
+                $services->set(SomeService::class)
+                    ->arg('$serverVersion', '%env(string:key:serverVersion:query_string:DATABASE_URL)%')
+                    ->arg('$charset', '%env(int:string:charset:query_string:DATABASE_URL)%')
+                ;
+            };
 
 ``env(enum:FooEnum:BAR)``
     Tries to convert an environment variable to an actual ``\BackedEnum`` value.
