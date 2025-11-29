@@ -5,8 +5,6 @@ Symfony provides an object-oriented API to work with Unicode strings (as bytes,
 code points and grapheme clusters). This API is available via the String component,
 which you must first install in your application:
 
-.. _installation:
-
 .. code-block:: terminal
 
     $ composer require symfony/string

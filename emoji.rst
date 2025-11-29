@@ -9,8 +9,6 @@ Symfony provides several utilities to work with emoji characters and sequences
 from the `Unicode CLDR dataset`_. They are available via the Emoji component,
 which you must first install in your application:
 
-.. _installation:
-
 .. code-block:: terminal
 
     $ composer require symfony/emoji

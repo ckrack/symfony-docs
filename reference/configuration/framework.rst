@@ -1109,7 +1109,7 @@ exceptions
 
 **type**: ``array``
 
-Defines the :ref:`log level </logging>`, :ref:`log channel </logging/channels_handlers>`
+Defines the :ref:`log level </logging>`, :doc:`log channel </logging/channels_handlers>`
 and HTTP status code applied to the exceptions that match the given exception class:
 
 .. configuration-block::
