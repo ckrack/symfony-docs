@@ -403,13 +403,12 @@ checks that all application URLs load successfully::
     // tests/ApplicationAvailabilityFunctionalTest.php
     namespace App\Tests;
 
+    use PHPUnit\Framework\Attributes\DataProvider;
     use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-
+    
     class ApplicationAvailabilityFunctionalTest extends WebTestCase
     {
-        /**
-         * @dataProvider urlProvider
-         */
+        #[DataProvider('urlProvider')]
         public function testPageIsSuccessful($url): void
         {
             $client = self::createClient();
@@ -418,7 +417,7 @@ checks that all application URLs load successfully::
             $this->assertResponseIsSuccessful();
         }
 
-        public function urlProvider(): \Generator
+        public static function urlProvider(): \Generator
         {
             yield ['/'];
             yield ['/posts'];
