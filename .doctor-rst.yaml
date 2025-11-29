@@ -7,6 +7,7 @@ rules:
     composer_dev_option_not_at_the_end: ~
     correct_code_block_directive_based_on_the_content: ~
     deprecated_directive_should_have_version: ~
+    ensure_attribute_between_backticks_in_content: ~
     ensure_bash_prompt_before_composer_command: ~
     ensure_class_constant: ~
     ensure_correct_format_for_phpfunction: ~
@@ -122,3 +123,4 @@ whitelist:
         - 'End to End Tests (E2E)'
         - '.. versionadded:: 2.2.0' # Panther
         - '* Inline code blocks use double-ticks (````like this````).'
+        - 'the `HTML5 color format`_ (``/^#[0-9a-f]{6}$/i``). If it doesn''t match it,'
