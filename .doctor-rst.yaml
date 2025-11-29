@@ -67,6 +67,7 @@ rules:
     typo: ~
     unused_links: ~
     use_deprecated_directive_instead_of_versionadded: ~
+    use_double_backticks_for_inline_literals: ~
     use_named_constructor_without_new_keyword_rule: ~
     use_https_xsd_urls: ~
     valid_inline_highlighted_namespaces: ~
