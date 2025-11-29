@@ -23,7 +23,7 @@ rest of the Symfony documentation:
 Example
 ~~~~~~~
 
-.. code-block:: text
+.. code-block:: rst
 
     Example
     =======
