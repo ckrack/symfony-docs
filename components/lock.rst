@@ -389,13 +389,13 @@ The component includes the following built-in store types:
 ==========================================================  ======  ========  ======== ======= =============
 Store                                                       Scope   Blocking  Expiring Sharing Serialization
 ==========================================================  ======  ========  ======== ======= =============
+:ref:`DoctrineDbalPostgreSqlStore <lock-store-dbal-pgsql>`  remote  yes       no       yes     no
+:ref:`DoctrineDbalStore <lock-store-dbal>`                  remote  retry     yes      no      yes
 :ref:`FlockStore <lock-store-flock>`                        local   yes       no       yes     no
 :ref:`MemcachedStore <lock-store-memcached>`                remote  retry     yes      no      yes
 :ref:`MongoDbStore <lock-store-mongodb>`                    remote  retry     yes      no      yes
 :ref:`PdoStore <lock-store-pdo>`                            remote  retry     yes      no      yes
-:ref:`DoctrineDbalStore <lock-store-dbal>`                  remote  retry     yes      no      yes
 :ref:`PostgreSqlStore <lock-store-pgsql>`                   remote  yes       no       yes     no
-:ref:`DoctrineDbalPostgreSqlStore <lock-store-dbal-pgsql>`  remote  yes       no       yes     no
 :ref:`RedisStore <lock-store-redis>`                        remote  retry     yes      yes     yes
 :ref:`SemaphoreStore <lock-store-semaphore>`                local   yes       no       no      no
 :ref:`ZookeeperStore <lock-store-zookeeper>`                remote  retry     no       no      no
@@ -479,12 +479,12 @@ The ``MongoDbStore`` takes the following ``$options`` (depending on the first pa
 ==============  ================================================================================================
 Option          Description
 ==============  ================================================================================================
+collection      The name of the collection
+database        The name of the database
+driverOptions   Array of driver options for `MongoDBClient::__construct`_
 gcProbability   Should a TTL Index be created expressed as a probability from 0.0 to 1.0 (Defaults to ``0.001``)
 gcProbablity    Same as ``gcProbability``, see the deprecation note below
-database        The name of the database
-collection      The name of the collection
 uriOptions      Array of URI options for `MongoDBClient::__construct`_
-driverOptions   Array of driver options for `MongoDBClient::__construct`_
 =============   ================================================================================================
 
 .. deprecated:: 6.3
