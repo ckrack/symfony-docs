@@ -737,8 +737,11 @@ In same way, parent options can access to the nested options as normal arrays::
                     // ...
                 ]);
             });
+
             $resolver->setOptions('profiling', function (Options $options): void {
-                return 'file' === $options['spool']['type'];
+                if ('file' === $options['spool']['type']) {
+                    // ...
+                }
             });
         }
     }
