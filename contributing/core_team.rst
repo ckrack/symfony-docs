@@ -231,7 +231,7 @@ following these rules:
 * **Feature**: For new features and deprecations; Pull requests must be merged
   in the development branch.
 * **Bug**: Only for bug fixes; We are very conservative when it comes to
-  merging older, but still maintained, branches. Read the :doc:`maintenance`
+  merging older, but still maintained, branches. Read the :doc:`/contributing/code/maintenance`
   document for more information.
 * **Minor**: For everything that does not change the code or when they don't
   need to be listed in the CHANGELOG files: typos, Markdown files, test files,
