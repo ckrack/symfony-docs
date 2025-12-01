@@ -175,13 +175,13 @@ to the container::
 
     class AcmeFeatureBundle extends AbstractBundle
     {
-        public function prependExtension(ContainerConfigurator $configurator, ContainerBuilder $container): void
+        public function prependExtension(ContainerConfigurator $container, ContainerBuilder $builder): void
         {
-            if (!$this->isAssetMapperAvailable($container)) {
+            if (!$this->isAssetMapperAvailable($builder)) {
                 return;
             }
 
-            $container->prependExtensionConfig('framework', [
+            $builder->prependExtensionConfig('framework', [
                 'asset_mapper' => [
                     'paths' => [
                         __DIR__ . '/../assets/dist' => '@acme/feature-bundle',
@@ -190,14 +190,14 @@ to the container::
             ]);
         }
 
-        private function isAssetMapperAvailable(ContainerBuilder $container): bool
+        private function isAssetMapperAvailable(ContainerBuilder $builder): bool
         {
             if (!interface_exists(AssetMapperInterface::class)) {
                 return false;
             }
 
             // check that FrameworkBundle 6.3 or higher is installed
-            $bundlesMetadata = $container->getParameter('kernel.bundles_metadata');
+            $bundlesMetadata = $builder->getParameter('kernel.bundles_metadata');
             if (!isset($bundlesMetadata['FrameworkBundle'])) {
                 return false;
             }
