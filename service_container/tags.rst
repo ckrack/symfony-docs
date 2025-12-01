@@ -131,6 +131,16 @@ base class or interface::
         // ...
     }
 
+When no tag name is specified, the fully qualified class name (FQCN) of the target is used::
+
+    // src/Security/CustomInterface.php
+
+    #[AutoconfigureTag] // equivalent to #[AutoconfigureTag(self::class)]
+    interface CustomInterface
+    {
+        // ...
+    }
+
 .. tip::
 
     If you need more capabilities to autoconfigure instances of your base class
