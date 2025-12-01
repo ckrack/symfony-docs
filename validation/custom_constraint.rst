@@ -563,6 +563,7 @@ class to simplify writing unit tests for your custom constraints::
 
     use App\Validator\ContainsAlphanumeric;
     use App\Validator\ContainsAlphanumericValidator;
+    use PHPUnit\Framework\Attributes\DataProvider;
     use Symfony\Component\Validator\ConstraintValidatorInterface;
     use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 
@@ -580,9 +581,7 @@ class to simplify writing unit tests for your custom constraints::
             $this->assertNoViolation();
         }
 
-        /**
-         * @dataProvider provideInvalidConstraints
-         */
+        #[DataProvider('provideInvalidConstraints')]
         public function testTrueIsInvalid(ContainsAlphanumeric $constraint): void
         {
             $this->validator->validate('...', $constraint);
@@ -592,7 +591,7 @@ class to simplify writing unit tests for your custom constraints::
                 ->assertRaised();
         }
 
-        public function provideInvalidConstraints(): \Generator
+        public static function provideInvalidConstraints(): \Generator
         {
             yield [new ContainsAlphanumeric(message: 'myMessage')];
             // ...
