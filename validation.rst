@@ -95,7 +95,7 @@ following:
         // src/Entity/Author.php
         namespace App\Entity;
         // ...
-        use Symfony\Component\Validator\Constraints\NotBlank;
+        use Symfony\Component\Validator\Constraints as Assert;
         use Symfony\Component\Validator\Mapping\ClassMetadata;
 
         class Author
@@ -104,7 +104,7 @@ following:
 
             public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
-                $metadata->addPropertyConstraint('name', new NotBlank());
+                $metadata->addPropertyConstraint('name', new Assert\NotBlank());
             }
         }
 
@@ -340,12 +340,14 @@ Constraints in Form Classes
 Constraints can be defined while building the form via the ``constraints`` option
 of the form fields::
 
+    use Symfony\Component\Validator\Constraints as Assert;
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('myField', TextType::class, [
                 'required' => true,
-                'constraints' => [new Length(['min' => 3])],
+                'constraints' => [new Assert\Length(min: 3)],
             ])
         ;
     }

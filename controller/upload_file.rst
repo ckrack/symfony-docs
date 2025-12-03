@@ -54,7 +54,7 @@ so Symfony doesn't try to get/set its value from the related entity::
     use Symfony\Component\Form\Extension\Core\Type\FileType;
     use Symfony\Component\Form\FormBuilderInterface;
     use Symfony\Component\OptionsResolver\OptionsResolver;
-    use Symfony\Component\Validator\Constraints\File;
+    use Symfony\Component\Validator\Constraints as Assert;
 
     class ProductType extends AbstractType
     {
@@ -75,7 +75,7 @@ so Symfony doesn't try to get/set its value from the related entity::
                     // unmapped fields can't define their validation using attributes
                     // in the associated entity, so you can use the PHP constraint classes
                     'constraints' => [
-                        new File(
+                        new Assert\File(
                             maxSize: '1024k',
                             extensions: ['pdf'],
                             extensionsMessage: 'Please upload a valid PDF document',

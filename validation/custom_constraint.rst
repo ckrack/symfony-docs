@@ -243,7 +243,7 @@ You can use custom validators like the ones provided by Symfony itself:
         namespace App\Entity;
 
         use App\Validator\ContainsAlphanumeric;
-        use Symfony\Component\Validator\Constraints\NotBlank;
+        use Symfony\Component\Validator\Constraints as Assert;
         use Symfony\Component\Validator\Mapping\ClassMetadata;
 
         class User
@@ -254,7 +254,7 @@ You can use custom validators like the ones provided by Symfony itself:
 
             public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
-                $metadata->addPropertyConstraint('name', new NotBlank());
+                $metadata->addPropertyConstraint('name', new Assert\NotBlank());
                 $metadata->addPropertyConstraint('name', new ContainsAlphanumeric(mode: 'loose'));
             }
         }
@@ -401,7 +401,7 @@ the custom options like you pass any other option in built-in constraints:
         namespace App\Entity;
 
         use App\Validator\ContainsAlphanumeric;
-        use Symfony\Component\Validator\Constraints\NotBlank;
+        use Symfony\Component\Validator\Constraints as Assert;
         use Symfony\Component\Validator\Mapping\ClassMetadata;
 
         class AcmeEntity
@@ -410,7 +410,7 @@ the custom options like you pass any other option in built-in constraints:
 
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
-                $metadata->addPropertyConstraint('name', new NotBlank());
+                $metadata->addPropertyConstraint('name', new Assert\NotBlank());
                 $metadata->addPropertyConstraint('name', new Foo(
                     mandatoryFooOption: 'bar',
                     optionalBarOption: true,
