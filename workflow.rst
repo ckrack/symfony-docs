@@ -573,7 +573,7 @@ The context is accessible in all events except for the ``workflow.guard`` events
 Here is an example of how to enable logging for every time a "blog_publishing"
 workflow leaves a place::
 
-    // src/App/EventSubscriber/WorkflowLoggerSubscriber.php
+    // src/EventSubscriber/WorkflowLoggerSubscriber.php
     namespace App\EventSubscriber;
 
     use Psr\Log\LoggerInterface;
@@ -666,7 +666,7 @@ list of the guard event names.
 This example stops any blog post being transitioned to "reviewed" if it is
 missing a title::
 
-    // src/App/EventSubscriber/BlogPostReviewSubscriber.php
+    // src/EventSubscriber/BlogPostReviewSubscriber.php
     namespace App\EventSubscriber;
 
     use App\Entity\BlogPost;
@@ -958,7 +958,7 @@ This example has been simplified; in production you may prefer to use the
 :doc:`Translation </translation>` component to manage messages in one
 place::
 
-    // src/App/EventSubscriber/BlogPostPublishSubscriber.php
+    // src/EventSubscriber/BlogPostPublishSubscriber.php
     namespace App\EventSubscriber;
 
     use Symfony\Component\EventDispatcher\EventSubscriberInterface;

@@ -20,7 +20,7 @@ on another bundle being loaded as well.
 To give an Extension the power to do this, it needs to implement
 :class:`Symfony\\Component\\DependencyInjection\\Extension\\PrependExtensionInterface`::
 
-    // src/Acme/HelloBundle/DependencyInjection/AcmeHelloExtension.php
+    // src/DependencyInjection/AcmeHelloExtension.php
     namespace Acme\HelloBundle\DependencyInjection;
 
     use Symfony\Component\DependencyInjection\ContainerBuilder;
