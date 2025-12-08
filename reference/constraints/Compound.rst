@@ -53,7 +53,7 @@ You can now use it anywhere you need it:
     .. code-block:: php-attributes
 
         // src/Entity/User.php
-        namespace App\Entity\User;
+        namespace App\Entity;
 
         use App\Validator\Constraints as Assert;
 
@@ -89,7 +89,7 @@ You can now use it anywhere you need it:
     .. code-block:: php
 
         // src/Entity/User.php
-        namespace App\Entity\User;
+        namespace App\Entity;
 
         use App\Validator\Constraints as Assert;
         use Symfony\Component\Validator\Mapping\ClassMetadata;
