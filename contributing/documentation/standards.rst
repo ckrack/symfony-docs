@@ -101,7 +101,7 @@ Example
 .. code-block:: php
 
     // src/Foo/Bar.php
-    namespace Foo;
+    namespace App\Foo;
 
     use Acme\Demo\Cat;
     // ...

@@ -21,6 +21,17 @@ rules:
     ensure_order_of_code_blocks_in_configuration_block: ~
     ensure_php_reference_syntax: ~
     extend_abstract_controller: ~
+    filepath_and_namespace_should_match:
+        namespace_mapping:
+            'src/': 'App\'
+            'tests/': 'App\Tests\'
+        ignored_namespaces:
+            - '/^Acme/'
+            - '/^Shared/'
+        ignored_paths:
+            - '/^config\//'
+            - '/^example\.com\//'
+            - '/^apps\/api\/tests\//'
     # extension_xlf_instead_of_xliff: ~
     forbidden_directives:
         directives:
@@ -43,12 +54,14 @@ rules:
     no_composer_req: ~
     no_directive_after_shorthand: ~
     no_duplicate_use_statements: ~
+    no_empty_directive: ~
     no_empty_literals: ~
     no_explicit_use_of_code_block_php: ~
     no_footnotes: ~
     no_inheritdoc: ~
     no_merge_conflict: ~
     no_namespace_after_use_statements: ~
+    no_non_breaking_space: ~
     no_php_open_tag_in_code_block_php_directive: ~
     no_space_before_self_xml_closing_tag: ~
     no_typographic_quotes: ~

@@ -1895,7 +1895,7 @@ You can logout user programmatically using the ``logout()`` method of the
 :class:`Symfony\\Bundle\\SecurityBundle\\Security` helper::
 
     // src/Controller/SecurityController.php
-    namespace App\Controller\SecurityController;
+    namespace App\Controller;
 
     use Symfony\Bundle\SecurityBundle\Security;
 

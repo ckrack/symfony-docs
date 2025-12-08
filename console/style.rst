@@ -488,7 +488,7 @@ your commands. Thanks to the ``StyleInterface`` you won't need to change the cod
 of your commands to change their appearance::
 
     // src/Command/MyCommand.php
-    namespace App\Console;
+    namespace App\Command;
 
     use App\Console\CustomStyle;
     use Symfony\Component\Console\Command\Command;

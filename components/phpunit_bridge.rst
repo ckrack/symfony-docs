@@ -138,12 +138,12 @@ a directory containing multiple test suites with their own ``phpunit.xml.dist``.
 .. code-block:: terminal
 
     ├── tests/
-    │   ├── Functional/
-    │   │   ├── ...
-    │   │   └── phpunit.xml.dist
-    │   ├── Unit/
-    │   │   ├── ...
-    │   │   └── phpunit.xml.dist
+    │   ├── Functional/
+    │   │   ├── ...
+    │   │   └── phpunit.xml.dist
+    │   ├── Unit/
+    │   │   ├── ...
+    │   │   └── phpunit.xml.dist
 
 .. code-block:: terminal
 

@@ -156,7 +156,7 @@ quick access to complex PHP variables. Consider the following template:
 
 .. code-block:: html+twig
 
-    <p>{{ user.name }} added this comment on {{ comment.publishedAt|date }}</p>
+    <p>{{ user.name }} added this comment on {{ comment.publishedAt|date }}</p>
 
 The ``user.name`` notation means that you want to display some information
 (``name``) stored in a variable (``user``). Is ``user`` an array or an object?
