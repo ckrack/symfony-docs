@@ -109,7 +109,7 @@ Validation groups and payload can be passed via constructor:
     .. code-block:: php-attributes
 
         // src/Entity/User.php
-        namespace App\Entity\User;
+        namespace App\Entity;
 
         use App\Validator\Constraints as Assert;
 
@@ -125,7 +125,7 @@ Validation groups and payload can be passed via constructor:
     .. code-block:: php
 
         // src/Entity/User.php
-        namespace App\Entity\User;
+        namespace App\Entity;
 
         use App\Validator\Constraints as Assert;
         use Symfony\Component\Validator\Mapping\ClassMetadata;
