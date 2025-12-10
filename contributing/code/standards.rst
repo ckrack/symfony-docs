@@ -249,7 +249,7 @@ Naming Conventions
   or ``Boolean``), ``int`` (instead of ``integer``), ``float`` (instead of
   ``double`` or ``real``);
 
-* Don't forget to look at the more verbose :doc:`conventions` document for
+* Don't forget to look at the more verbose :doc:`conventions </contributing/code/conventions>` document for
   more subjective naming considerations.
 
 .. _service-naming-conventions:

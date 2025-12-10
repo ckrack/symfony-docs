@@ -125,7 +125,7 @@ Pick a pull request from the `PRs in need of review`_ and follow these steps:
    pull request. Is that branch correct?
 
    * Bugs should be fixed in the oldest, maintained version that contains the
-     bug. Check :doc:`Symfony's Release Schedule <releases>` to find the oldest
+     bug. Check :doc:`Symfony's Release Schedule </contributing/community/releases>` to find the oldest
      currently supported version.
 
    * New features should always be added to the current development version.

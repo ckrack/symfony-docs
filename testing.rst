@@ -364,7 +364,7 @@ After that, you can create the test database and all tables using:
 .. tip::
 
     You can run these commands to create the database during the
-    :doc:`test bootstrap process <testing/bootstrap>`.
+    :doc:`test bootstrap process </testing/bootstrap>`.
 
 .. tip::
 
