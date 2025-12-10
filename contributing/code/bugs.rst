@@ -7,7 +7,7 @@ us make a better Symfony.
 .. warning::
 
     If you think you've found a security issue, please use the special
-    :doc:`procedure <security>` instead.
+    :doc:`procedure </contributing/code/security>` instead.
 
 Before submitting a bug:
 
@@ -44,7 +44,7 @@ If your problem definitely looks like a bug, report it using the official bug
   **Be wary that stack traces may contain sensitive information, and if it is
   the case, be sure to redact them prior to posting your stack trace.**
 
-* *(optional)* Attach a :doc:`patch <pull_requests>`.
+* *(optional)* Attach a :doc:`patch </contributing/code/pull_requests>`.
 
 .. _`Stack Overflow`: https://stackoverflow.com/questions/tagged/symfony
 .. _the Symfony Slack: https://symfony.com/slack-invite

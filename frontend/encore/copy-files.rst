@@ -56,7 +56,7 @@ install any missing dependencies. After running that command and restarting
 Encore, you're done!
 
 This will copy all files from ``assets/images`` into ``public/build/images``.
-If you have :doc:`versioning enabled <versioning>`, the copied files will
+If you have :doc:`versioning enabled </frontend/encore/versioning>`, the copied files will
 include a hash based on their content.
 
 To render inside Twig, use the ``asset()`` function:

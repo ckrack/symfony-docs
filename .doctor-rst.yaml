@@ -63,6 +63,7 @@ rules:
     no_namespace_after_use_statements: ~
     no_non_breaking_space: ~
     no_php_open_tag_in_code_block_php_directive: ~
+    no_relative_doc_path: ~
     no_space_before_self_xml_closing_tag: ~
     no_typographic_quotes: ~
     non_static_phpunit_assertions: ~
@@ -108,6 +109,8 @@ exclude_rule_for_file:
       rule_name: no_php_open_tag_in_code_block_php_directive
     - path: frontend/create_ux_bundle.rst
       rule_name: argument_variable_must_match_type
+    - path: contributing/documentation/format.rst
+      rule_name: no_relative_doc_path
 
 # do not report as violation
 whitelist:

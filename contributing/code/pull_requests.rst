@@ -107,7 +107,7 @@ Check that the current Tests Pass
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Now that Symfony is installed, check that all unit tests pass for your
-environment as explained in the dedicated :doc:`document <tests>`.
+environment as explained in the dedicated :doc:`document </contributing/code/tests>`.
 
 .. _step-2-work-on-your-patch:
 
@@ -216,8 +216,8 @@ Work on your Pull Request
 Work on the code as much as you want and commit as much as you want; but keep
 in mind the following:
 
-* Read about the Symfony :doc:`conventions <conventions>` and follow the
-  coding :doc:`standards <standards>` (use ``git diff --check`` to check for
+* Read about the Symfony :doc:`conventions </contributing/code/conventions>` and follow the
+  coding :doc:`standards </contributing/code/standards>` (use ``git diff --check`` to check for
   trailing spaces -- also read the tip below);
 
 * Add unit tests to prove that the bug is fixed or that the new feature

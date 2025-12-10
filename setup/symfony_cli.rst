@@ -366,7 +366,7 @@ Docker Integration
 ------------------
 
 The Symfony CLI provides full `Docker`_ integration for projects that
-use it. To learn more about Docker and Symfony, see :doc:`docker`.
+use it. To learn more about Docker and Symfony, see :doc:`/setup/docker`.
 The local server automatically detects Docker services and exposes their
 connection information as environment variables.
 
