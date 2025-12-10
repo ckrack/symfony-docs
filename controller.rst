@@ -648,7 +648,7 @@ Symfony provides an attribute called ``#[MapUploadedFile]`` to map one or more
         }
     }
 
-In this example, the associated :doc:`argument resolver <controller/value_resolver>`
+In this example, the associated :doc:`argument resolver </controller/value_resolver>`
 fetches the ``UploadedFile`` based on the argument name (``$picture``). If no file
 is submitted, an ``HttpException`` is thrown. You can change this by making the
 controller argument nullable:
