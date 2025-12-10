@@ -4,7 +4,7 @@ IsTrue
 Validates that a value is ``true``. Specifically, this checks if the value is
 exactly ``true``, exactly the integer ``1``, or exactly the string ``'1'``.
 
-Also see :doc:`IsFalse <IsFalse>`.
+Also see :doc:`IsFalse </reference/constraints/IsFalse>`.
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`

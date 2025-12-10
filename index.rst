@@ -6,11 +6,11 @@ Symfony Documentation
 Quick Tour
 ----------
 
-Get started fast with the Symfony :doc:`Quick Tour <quick_tour/index>`:
+Get started fast with the Symfony :doc:`Quick Tour </quick_tour/index>`:
 
-* :doc:`quick_tour/the_big_picture`
-* :doc:`quick_tour/flex_recipes`
-* :doc:`quick_tour/the_architecture`
+* :doc:`/quick_tour/the_big_picture`
+* :doc:`/quick_tour/flex_recipes`
+* :doc:`/quick_tour/the_architecture`
 
 Getting Started
 ---------------

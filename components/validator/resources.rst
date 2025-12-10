@@ -11,7 +11,7 @@ The Validator component collects that metadata using a set of loaders.
 
 .. seealso::
 
-    You'll learn how to define the metadata in :doc:`metadata`.
+    You'll learn how to define the metadata in :doc:`/components/validator/metadata`.
 
 The StaticMethodLoader
 ----------------------

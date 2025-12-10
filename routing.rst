@@ -439,7 +439,7 @@ can use any of these variables created by Symfony:
 You can also use these functions:
 
 ``env(string $name)``
-    Returns the value of a variable using :doc:`Environment Variable Processors <configuration/env_var_processors>`
+    Returns the value of a variable using :doc:`Environment Variable Processors </configuration/env_var_processors>`
 
 ``service(string $alias)``
     Returns a routing condition service.
