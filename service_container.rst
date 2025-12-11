@@ -1309,6 +1309,17 @@ key. For example, the default Symfony configuration contains this:
     may use the :class:`Symfony\\Component\\DependencyInjection\\Attribute\\Exclude`
     attribute directly on your class to exclude it.
 
+    ::
+
+        // src/Service/SomeService.php
+        namespace App\Service;
+
+        #[Exclude]
+        class SomeService
+        {
+            // ...
+        }
+
     .. versionadded:: 6.3
 
         The :class:`Symfony\\Component\\DependencyInjection\\Attribute\\Exclude`
