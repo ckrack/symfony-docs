@@ -12,7 +12,8 @@ Enabling the Profiler in Tests
 ------------------------------
 
 Collecting data with :doc:`the Symfony Profiler </profiler>` can slow down your
-tests significantly. That's why Symfony disables it by default:
+tests significantly. For this reason, Symfony keeps the profiler enabled
+but **disables data collection** by default in the test environment:
 
 .. configuration-block::
 
@@ -54,10 +55,14 @@ tests significantly. That's why Symfony disables it by default:
             ;
         };
 
-Setting ``collect`` to ``true`` enables the profiler for all tests. However, if
-you need the profiler only in a few tests, you can keep it disabled globally and
-enable the profiler individually on each test by calling
-``$client->enableProfiler()``.
+Setting ``collect`` to ``true`` enables profiler data collection for all tests.
+However, if you only need profiler data in a few specific tests, you can keep
+collection disabled globally and enable it selectively by calling
+``$client->enableProfiler()`` in those tests.
+
+Note that calling ``enableProfiler()`` does not enable the profiler itself, which
+must already be enabled via configuration. It only enables data collection for
+the current test client.
 
 Testing the Profiler Information
 --------------------------------
@@ -77,9 +82,9 @@ provided by the collectors obtained through the ``$client->getProfile()`` call::
         {
             $client = static::createClient();
 
-            // enable the profiler only for the next request (if you make
-            // new requests, you must call this method again)
-            // (it does nothing if the profiler is not available)
+            // enable profiler data collection only for the next request. If you
+            // make additional requests, you must call this method again. This
+            // method only works if the profiler is enabled in the configuration
             $client->enableProfiler();
 
             $crawler = $client->request('GET', '/lucky/number');
