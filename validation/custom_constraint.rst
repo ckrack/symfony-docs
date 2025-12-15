@@ -29,10 +29,10 @@ First you need to create a Constraint class and extend :class:`Symfony\\Componen
             // all configurable options must be passed to the constructor
             public function __construct(?string $mode = null, ?string $message = null, ?array $groups = null, $payload = null)
             {
-                parent::__construct([], $groups, $payload);
-
                 $this->mode = $mode ?? $this->mode;
                 $this->message = $message ?? $this->message;
+
+                parent::__construct(null, $groups, $payload);
             }
         }
 
@@ -58,7 +58,7 @@ You can use ``#[HasNamedArguments]`` to make some constraint options required::
             ?array $groups = null,
             mixed $payload = null,
         ) {
-            parent::__construct([], $groups, $payload);
+            parent::__construct(null, $groups, $payload);
         }
     }
 
@@ -89,7 +89,7 @@ in the ``__sleep()`` method to ensure they are serialized correctly::
             ?array $groups = null,
             mixed $payload = null,
         ) {
-            parent::__construct([], $groups, $payload);
+            parent::__construct(null, $groups, $payload);
         }
 
         public function __sleep(): array

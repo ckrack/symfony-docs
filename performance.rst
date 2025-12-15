@@ -13,7 +13,6 @@ for maximum performance:
 
 * **Symfony Application Checklist**:
 
-  #. :ref:`Install APCu Polyfill if your server uses APC <performance-install-apcu-polyfill>`
   #. :ref:`Restrict the number of locales enabled in the application <performance-enabled-locales>`
 
 * **Production Server Checklist**:
@@ -24,16 +23,6 @@ for maximum performance:
   #. :ref:`Don't check PHP files timestamps <performance-dont-check-timestamps>`
   #. :ref:`Configure the PHP realpath Cache <performance-configure-realpath-cache>`
   #. :ref:`Optimize Composer Autoloader <performance-optimize-composer-autoloader>`
-
-.. _performance-install-apcu-polyfill:
-
-Install APCu Polyfill if your Server Uses APC
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-If your production server still uses the legacy APC PHP extension instead of
-OPcache, install the `APCu Polyfill component`_ in your application to enable
-compatibility with `APCu PHP functions`_ and unlock support for advanced Symfony
-features, such as the APCu Cache adapter.
 
 .. _performance-enabled-locales:
 
@@ -407,8 +396,6 @@ Learn more
 .. _`byte code caches`: https://en.wikipedia.org/wiki/List_of_PHP_accelerators
 .. _`OPcache`: https://www.php.net/manual/en/book.opcache.php
 .. _`Composer's autoloader optimization`: https://getcomposer.org/doc/articles/autoloader-optimization.md
-.. _`APCu Polyfill component`: https://github.com/symfony/polyfill-apcu
-.. _`APCu PHP functions`: https://www.php.net/manual/en/ref.apcu.php
 .. _`cachetool`: https://github.com/gordalina/cachetool
 .. _`open_basedir`: https://www.php.net/manual/ini.core.php#ini.open-basedir
 .. _`Blackfire`: https://blackfire.io/docs/introduction?utm_source=symfony&utm_medium=symfonycom_docs&utm_campaign=performance
