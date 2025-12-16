@@ -117,6 +117,17 @@ CSRF Protection in Symfony Forms
 checks them automatically for you. So, when using Symfony Forms, you don't have
 to do anything to be protected against CSRF attacks.
 
+.. note::
+
+    According to `OWASP best practices`_, CSRF protection is only required for
+    **state-changing operations**, which must not use ``GET`` requests (as per the
+    HTTP specification). Moreover, including CSRF tokens in ``GET`` request
+    parameters can cause them to leak through browser history, log files, network
+    utilities, and Referer headers.
+
+    If one of your forms uses GET (for example, a read-only search form), you
+    can :ref:`configure the form to disable CSRF protection <form-csrf-configuration>`.
+
 .. _form-csrf-customization:
 
 By default Symfony adds the CSRF token in a hidden field called ``_token``, but
@@ -165,6 +176,8 @@ Globally, you can configure it under the ``framework.form`` option:
                 ->fieldName('custom_token_name')
             ;
         };
+
+.. _form-csrf-configuration:
 
 On a form-by-form basis, you can configure the CSRF protection in the ``setDefaults()``
 method of each form::
@@ -504,6 +517,7 @@ validation has been proven effective, it remains enforced for that session.
     fall back to ``Origin`` / ``Referer`` checks when JavaScript is unavailable.
 
 .. _`Cross-site request forgery`: https://en.wikipedia.org/wiki/Cross-site_request_forgery
+.. _`OWASP best practices`: https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html
 .. _`BREACH`: https://en.wikipedia.org/wiki/BREACH
 .. _`CRIME`: https://en.wikipedia.org/wiki/CRIME
 .. _`some JavaScript`: https://github.com/symfony/recipes/blob/main/symfony/stimulus-bundle/2.20/assets/controllers/csrf_protection_controller.js
