@@ -5,6 +5,17 @@ CSRF, or `Cross-site request forgery`_, is a type of attack where a malicious ac
 tricks a user into performing actions on a web application without their knowledge
 or consent.
 
+.. note::
+
+    According to `OWASP best practices`_, CSRF protection is only required for
+    **state-changing operations**. Do not use GET requests for state-changing
+    operations, as recommended by the HTTP specification. CSRF tokens must not be
+    transmitted in GET request parameters, as they can leak through browser history,
+    log files, network utilities, and Referer headers.
+
+    If you need to disable CSRF protection for specific forms (for example, forms
+    that only perform read operations), see :ref:`form-csrf-customization`.
+
 The attack is based on the trust that a web application has in a user's browser
 (e.g. on session cookies). Here's a real example of a CSRF attack: a malicious
 actor could create the following website:
@@ -255,5 +266,6 @@ attacker from guessing the CSRF tokens, a random mask is prepended to the token
 and used to scramble it.
 
 .. _`Cross-site request forgery`: https://en.wikipedia.org/wiki/Cross-site_request_forgery
+.. _`OWASP best practices`: https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html
 .. _`BREACH`: https://en.wikipedia.org/wiki/BREACH
 .. _`CRIME`: https://en.wikipedia.org/wiki/CRIME
