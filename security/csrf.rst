@@ -5,17 +5,6 @@ CSRF, or `Cross-site request forgery`_, is a type of attack where a malicious ac
 tricks a user into performing actions on a web application without their knowledge
 or consent.
 
-.. note::
-
-    According to `OWASP best practices`_, CSRF protection is only required for
-    **state-changing operations**. Do not use GET requests for state-changing
-    operations, as recommended by the HTTP specification. CSRF tokens must not be
-    transmitted in GET request parameters, as they can leak through browser history,
-    log files, network utilities, and Referer headers.
-
-    If you need to disable CSRF protection for specific forms (for example, forms
-    that only perform read operations), see :ref:`form-csrf-customization`.
-
 The attack is based on the trust that a web application has in a user's browser
 (e.g. on session cookies). Here's a real example of a CSRF attack: a malicious
 actor could create the following website:
@@ -121,6 +110,17 @@ CSRF Protection in Symfony Forms
 checks them automatically for you. So, when using Symfony Forms, you don't have
 to do anything to be protected against CSRF attacks.
 
+.. note::
+
+    According to `OWASP best practices`_, CSRF protection is only required for
+    **state-changing operations**, which must not use ``GET`` requests (as per the
+    HTTP specification). Moreover, including CSRF tokens in ``GET`` request
+    parameters can cause them to leak through browser history, log files, network
+    utilities, and Referer headers.
+
+    If one of your forms uses GET (for example, a read-only search form), you
+    can :ref:`configure the form to disable CSRF protection <form-csrf-configuration>`.
+
 .. _form-csrf-customization:
 
 By default Symfony adds the CSRF token in a hidden field called ``_token``, but
@@ -169,6 +169,8 @@ Globally, you can configure it under the ``framework.form`` option:
                 ->fieldName('custom_token_name')
             ;
         };
+
+.. _form-csrf-configuration:
 
 On a form-by-form basis, you can configure the CSRF protection in the ``setDefaults()``
 method of each form::
