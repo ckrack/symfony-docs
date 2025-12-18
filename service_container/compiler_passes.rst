@@ -67,37 +67,9 @@ method of the application kernel::
 Working with Compiler Passes in Bundles
 ---------------------------------------
 
-If your compiler pass is relatively small, you can add it directly in the main
-bundle class. To do so, make your bundle implement the
-:class:`Symfony\\Component\\DependencyInjection\\Compiler\\CompilerPassInterface`
-and place the compiler pass code inside the ``process()`` method of the main
-bundle class::
-
-    // src/MyBundle/MyBundle.php
-    namespace App\MyBundle;
-
-    use App\DependencyInjection\Compiler\CustomPass;
-    use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
-    use Symfony\Component\DependencyInjection\ContainerBuilder;
-    use Symfony\Component\HttpKernel\Bundle\AbstractBundle;
-
-    class MyBundle extends AbstractBundle implements CompilerPassInterface
-    {
-        public function process(ContainerBuilder $container): void
-        {
-            // in this method you can manipulate the service container:
-            // for example, changing some container service:
-            $container->getDefinition('app.some_private_service')->setPublic(true);
-
-            // or processing tagged services:
-            foreach ($container->findTaggedServiceIds('some_tag') as $id => $tags) {
-                // ...
-            }
-        }
-    }
-
-Alternatively, when using :ref:`separate compiler pass classes <components-di-separate-compiler-passes>`,
-bundles can enable them in the ``build()`` method of their main bundle class::
+:doc:`Bundles </bundles>` can define compiler passes in the ``build()`` method of
+the main bundle class (this is not needed when implementing the ``process()``
+method in the extension)::
 
     // src/MyBundle/MyBundle.php
     namespace App\MyBundle;
@@ -110,9 +82,40 @@ bundles can enable them in the ``build()`` method of their main bundle class::
     {
         public function build(ContainerBuilder $container): void
         {
-            parent::build($container);
-
             $container->addCompilerPass(new CustomPass());
+        }
+    }
+
+If your compiler pass is relatively small, you can make the main bundle class implements
+:class:`Symfony\\Component\\DependencyInjection\\Compiler\\CompilerPassInterface` so that
+it can add itself::
+
+    // src/MyBundle/MyBundle.php
+    namespace App\MyBundle;
+
+    use App\DependencyInjection\Compiler\CustomPass;
+    use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
+    use Symfony\Component\DependencyInjection\ContainerBuilder;
+    use Symfony\Component\HttpKernel\Bundle\AbstractBundle;
+
+    class MyBundle extends AbstractBundle implements CompilerPassInterface
+    {
+
+        public function build(ContainerBuilder $container): void
+        {
+            $container->addCompilerPass($this);
+        }
+
+        public function process(ContainerBuilder $container): void
+        {
+            // in this method you can manipulate the service container:
+            // for example, changing some container service:
+            $container->getDefinition('app.some_private_service')->setPublic(true);
+
+            // or processing tagged services:
+            foreach ($container->findTaggedServiceIds('some_tag') as $id => $tags) {
+                // ...
+            }
         }
     }
 
