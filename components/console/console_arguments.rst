@@ -12,6 +12,26 @@ Have a look at the following command that has three options::
     namespace Acme\Console\Command;
 
     use Symfony\Component\Console\Attribute\AsCommand;
+    use Symfony\Component\Console\Attribute\Option;
+
+    #[AsCommand(name: 'demo:args', description: 'Describe args behaviors')]
+    class DemoArgsCommand
+    {
+        public function __invoke(
+            #[Option(shortcut: 'f')] bool $foo = false,
+            #[Option(shortcut: 'b')] string $bar = '',
+            #[Option(shortcut: 'c')] string|bool $cat = false,
+        ): int {
+            // ...
+        }
+    }
+
+This example uses :ref:`invokable commands <console_creating-command>` with the
+``#[Option]`` attribute. If you prefer the classic approach::
+
+    namespace Acme\Console\Command;
+
+    use Symfony\Component\Console\Attribute\AsCommand;
     use Symfony\Component\Console\Command\Command;
     use Symfony\Component\Console\Input\InputArgument;
     use Symfony\Component\Console\Input\InputDefinition;
@@ -86,5 +106,40 @@ Input                           ``bar``            ``cat``      ``arg``
 ``--bar Hello --cat -- World``  ``"Hello"``        ``null``     ``"World"``
 ``-b Hello -c World``           ``"Hello"``        ``"World"``  ``null``
 ==============================  =================  ===========  ===========
+
+.. _console-option-constraints:
+
+Option Attribute Constraints
+----------------------------
+
+When using the ``#[Option]`` attribute in :ref:`invokable commands <console_creating-command>`, the following
+rules are enforced to ensure consistent behavior:
+
+* Options **must always have a default value**. Unlike arguments, options cannot
+  be required since users may simply not provide them;
+* Nullable bool options (``?bool``) cannot have a ``true`` or ``false`` default.
+  Use ``null`` as the default to enable negatable behavior;
+* Nullable non-bool options (e.g. ``?string``) must have ``null`` as the default value;
+* Union types are only allowed for ``string|bool``, ``int|bool``, and ``float|bool``,
+  and must have ``false`` as the default value.
+
+Examples of valid option definitions::
+
+    #[Option] bool $verbose = false           // VALUE_NONE
+    #[Option] bool $colors = true             // VALUE_NEGATABLE (--colors or --no-colors)
+    #[Option] ?bool $debug = null             // VALUE_NEGATABLE (--debug or --no-debug)
+    #[Option] string $format = 'json'         // VALUE_REQUIRED
+    #[Option] ?string $filter = null          // VALUE_REQUIRED (optional value)
+    #[Option] int $limit = 10                 // VALUE_REQUIRED
+    #[Option] array $roles = []               // VALUE_IS_ARRAY
+    #[Option] string|bool $output = false     // VALUE_OPTIONAL (--output or --output=file.txt)
+
+Examples of **invalid** option definitions::
+
+    #[Option] string $format                  // ERROR: no default value
+    #[Option] ?bool $debug = true             // ERROR: nullable bool with true default
+    #[Option] ?string $filter = 'default'     // ERROR: nullable with non-null default
+    #[Option] string|bool $output = true      // ERROR: union type with true default
+    #[Option] array|bool $items = false       // ERROR: unsupported union type
 
 .. _docopt: http://docopt.org/

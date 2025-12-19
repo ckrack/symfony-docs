@@ -10,7 +10,65 @@ Using Command Arguments
 
 Arguments are the strings - separated by spaces - that
 come after the command name itself. They are ordered, and can be optional
-or required. For example, to add an optional ``last_name`` argument to the command
+or required.
+
+Using Arguments in Invokable Commands
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+In :ref:`invokable commands <console_creating-command>`, use the
+:class:`Symfony\\Component\\Console\\Attribute\\Argument` attribute
+to define arguments directly in the ``__invoke()`` method parameters::
+
+    // ...
+    use Symfony\Component\Console\Attribute\Argument;
+    use Symfony\Component\Console\Attribute\AsCommand;
+
+    #[AsCommand(name: 'app:greet')]
+    class GreetCommand
+    {
+        public function __invoke(
+            // required argument (no default value)
+            #[Argument]
+            string $name,
+
+            // optional argument (has default value)
+            #[Argument]
+            string $lastName = '',
+        ): int {
+            // ...
+        }
+    }
+
+The ``Argument`` attribute accepts the following parameters:
+
+``description``
+    A description of the argument shown when displaying the command help.
+    For example: ``#[Argument(description: 'Your username')]``.
+
+``name``
+    The name of the argument (by default, the parameter name converted to ``kebab-case``).
+    For example: ``#[Argument(name: 'user-name')]``.
+
+``suggestedValues``
+    An array or a callable that provides :ref:`suggested values for the argument <console-input-completion>`.
+    For example: ``#[Argument(suggestedValues: ['Alice', 'Bob'])]``.
+
+.. versionadded:: 7.3
+
+    The ``#[Argument]`` and ``#[Option]`` attributes were introduced in Symfony 7.3.
+
+The argument mode (required, optional, array) is inferred from the parameter type:
+
+* **Required**: Parameters without a default value and not nullable (e.g. ``string $name``);
+* **Optional**: Parameters with a default value (e.g. ``string $name = ''`` or ``?string $name = null``);
+* **Array**: Parameters with the ``array`` type (e.g. ``array $names = []``);
+
+Using the Classic configure() Method
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you prefer the classic approach, or need to extend the ``Command`` class,
+you can use the ``addArgument()`` method in the ``configure()`` method.
+For example, to add an optional ``last_name`` argument to the command
 and make the ``name`` argument required::
 
     // ...
@@ -125,6 +183,97 @@ order) and are specified with two dashes (e.g. ``--yell``). Options are
 *always* optional, and can be setup to accept a value (e.g. ``--dir=src``) or
 as a boolean flag without a value (e.g.  ``--yell``).
 
+Using Options in Invokable Commands
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+In :ref:`invokable commands <console_creating-command>`, use the
+:class:`Symfony\\Component\\Console\\Attribute\\Option` attribute
+to define options directly in the ``__invoke()`` method parameters::
+
+    // ...
+    use Symfony\Component\Console\Attribute\Argument;
+    use Symfony\Component\Console\Attribute\AsCommand;
+    use Symfony\Component\Console\Attribute\Option;
+
+    #[AsCommand(name: 'app:greet')]
+    class GreetCommand
+    {
+        public function __invoke(
+            #[Argument]
+            string $name,
+
+            // option that accepts a value (--iterations=5)
+            #[Option]
+            int $iterations = 1,
+
+            // boolean flag (--yell)
+            #[Option]
+            bool $yell = false,
+        ): int {
+            // ...
+        }
+    }
+
+The ``Option`` attribute accepts the following parameters:
+
+``description``
+    A description of the option shown when displaying the command help.
+    For example: ``#[Option(description: 'Number of iterations')]``.
+
+``name``
+    The name of the option (by default, the parameter name converted to ``kebab-case``).
+    For example: ``#[Option(name: 'max-retries')]``.
+
+``shortcut``
+    A one-letter shortcut that can be used instead of the full option name.
+    For example: ``#[Option(shortcut: 'i')]`` allows using ``-i`` instead of ``--iterations``.
+
+``suggestedValues``
+    An array or a callable that provides :ref:`suggested values for the option <console-input-completion>`.
+    For example: ``#[Option(suggestedValues: ['low', 'medium', 'high'])]``.
+
+The option mode is inferred from the parameter type and default value:
+
+* **Boolean flag** (``VALUE_NONE``): ``bool`` type with default ``false``.
+  Usage: ``--yell`` sets the value to ``true``::
+
+      #[Option] bool $yell = false
+
+* **Negatable flag** (``VALUE_NEGATABLE``): ``bool`` type with default ``true`` or
+  nullable ``?bool`` with default ``null``. Usage: ``--yell`` or ``--no-yell``::
+
+      #[Option] bool $yell = true
+      #[Option] ?bool $yell = null
+
+* **Value required** (``VALUE_REQUIRED``): ``string``, ``int`` or ``float`` types::
+
+      #[Option] string $format = 'json'
+      #[Option] int $limit = 10
+      #[Option] ?string $filter = null
+
+* **Array of values** (``VALUE_IS_ARRAY``): ``array`` type.
+  Usage: ``--role=ADMIN --role=USER``::
+
+      #[Option(description: 'User roles')] array $roles = []
+      #[Option] ?array $tags = null
+
+* **Value optional** (``VALUE_OPTIONAL``): Union types ``string|bool``, ``int|bool``,
+  or ``float|bool`` with default ``false``. Usage: ``--output`` (returns ``true``)
+  or ``--output=file.txt`` (returns ``'file.txt'``)::
+
+      #[Option] string|bool $output = false
+
+.. seealso::
+
+    The ``#[Option]`` attribute enforces validation rules on type and default
+    value combinations. See :ref:`Option Attribute Constraints <console-option-constraints>`
+    for the complete list of rules and examples.
+
+Using the Classic addOption() Method
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you prefer the classic approach, or need to extend the ``Command`` class,
+you can use the ``addOption()`` method in the ``configure()`` method.
 For example, add a new option to the command that can be used to specify
 how many times in a row the message should be printed::
 
@@ -347,6 +496,8 @@ command without having to worry about the number of arguments or options::
     The :method:`Symfony\\Component\\Console\\Input\\ArgvInput::getRawTokens`
     method was introduced in Symfony 7.1.
 
+.. _console-input-completion:
+
 Adding Argument/Option Value Completion
 ---------------------------------------
 
@@ -356,7 +507,57 @@ can also implement value completion for the input in your commands. For
 instance, you may want to complete all usernames from the database in the
 ``name`` argument of your greet command.
 
-To achieve this, use the 5th argument of ``addArgument()`` or the 6th argument of ``addOption()``::
+Using Completion with Attributes
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+When using the ``#[Argument]`` or ``#[Option]`` attributes in invokable commands,
+use the ``suggestedValues`` parameter to provide completion values::
+
+    use Symfony\Component\Console\Attribute\Argument;
+    use Symfony\Component\Console\Attribute\Option;
+    use Symfony\Component\Console\Completion\CompletionInput;
+
+    public function __invoke(
+        // static list of suggested values
+        #[Argument(suggestedValues: ['Alice', 'Bob', 'Charlie'])]
+        string $name,
+
+        // dynamic values via a callable (method reference)
+        #[Option(suggestedValues: [self::class, 'suggestFormats'])]
+        string $format = 'json',
+    ): int {
+        // ...
+    }
+
+    public static function suggestFormats(CompletionInput $input): array
+    {
+        return ['json', 'xml', 'csv'];
+    }
+
+.. note::
+
+    You can remove the ``static`` keyword from the suggestion method to access
+    instance properties. In that case, the command will call the method
+    non-statically, allowing you to return dynamic values based on services
+    injected through the constructor::
+
+        public function __construct(
+            private UserRepository $userRepository,
+        ) {
+        }
+
+        // ...
+
+        public function suggestUsers(CompletionInput $input): array
+        {
+            return $this->userRepository->findAllUsernames();
+        }
+
+Using Completion with addArgument()/addOption()
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+When using the classic ``configure()`` method, use the 5th argument
+of ``addArgument()`` or the 6th argument of ``addOption()``::
 
     // ...
     use Symfony\Component\Console\Completion\CompletionInput;
