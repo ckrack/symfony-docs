@@ -817,6 +817,73 @@ including generators::
         return new StreamedJsonResponse(loadArticles());
     }
 
+.. _component-http-foundation-sse:
+
+Streaming Server-Sent Events
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The :class:`Symfony\\Component\\HttpFoundation\\EventStreamResponse` class
+allows you to implement `Server-Sent Events (SSE)`_ - a standard for pushing
+real-time updates from server to client over HTTP.
+
+.. versionadded:: 7.3
+
+    The ``EventStreamResponse`` and ``ServerEvent`` classes were introduced in Symfony 7.3.
+
+Basic usage with a generator::
+
+    use Symfony\Component\HttpFoundation\EventStreamResponse;
+    use Symfony\Component\HttpFoundation\ServerEvent;
+
+    $response = new EventStreamResponse(function (): iterable {
+        yield new ServerEvent('First message');
+        sleep(1);
+        yield new ServerEvent('Second message');
+    });
+
+    $response->send();
+
+The ``EventStreamResponse`` automatically sets the required headers::
+
+    Content-Type: text/event-stream
+    Cache-Control: no-cache
+    Connection: keep-alive
+
+The :class:`Symfony\\Component\\HttpFoundation\\ServerEvent` class represents an
+individual SSE event following `the WHATWG SSE specification`_. It accepts the
+following constructor arguments:
+
+``data``
+    The event data (string or iterable for multi-line data).
+
+``type``
+    The event type. Clients can listen for specific types using
+    ``eventSource.addEventListener('type', ...)``.
+
+``id``
+    The event ID. The browser sends this as ``Last-Event-ID`` header when
+    reconnecting, allowing you to resume from where the client left off.
+
+``retry``
+    The reconnection time in milliseconds. Tells the browser how long to wait
+    before reconnecting if the connection is lost.
+
+``comment``
+    A comment line (prefixed with ``:`` in the SSE protocol). Useful for
+    keep-alive messages to prevent connection timeouts.
+
+.. tip::
+
+    For usage in Symfony controllers with additional features like automatic
+    reconnection handling, see :ref:`controller-server-sent-events`.
+
+.. warning::
+
+    SSE keeps HTTP connections open, consuming server resources for each client.
+    For applications with many concurrent connections, consider using
+    :doc:`Mercure </mercure>` instead, which uses a dedicated hub for efficient
+    connection management.
+
 .. _component-http-foundation-serving-files:
 
 Serving Files
@@ -1086,3 +1153,5 @@ Learn More
 .. _RFC 8674: https://tools.ietf.org/html/rfc8674
 .. _Doctrine Batch processing: https://www.doctrine-project.org/projects/doctrine-orm/en/2.14/reference/batch-processing.html#iterating-results
 .. _`CHIPS`: https://developer.mozilla.org/en-US/docs/Web/Privacy/Partitioned_cookies
+.. _`Server-Sent Events (SSE)`: https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events
+.. _`the WHATWG SSE specification`: https://html.spec.whatwg.org/multipage/server-sent-events.html

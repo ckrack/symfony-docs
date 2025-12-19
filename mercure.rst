@@ -32,6 +32,17 @@ thanks to a specific HTTP header).
 
 All these features are supported in the Symfony integration.
 
+.. tip::
+
+    For simpler use cases with limited concurrent connections (e.g. progress
+    updates, admin dashboards, or internal tools), you can use native
+    Server-Sent Events directly via Symfony's ``EventStreamResponse`` class.
+    See :ref:`controller-server-sent-events` for more information.
+
+    Use Mercure when you need its advanced features like authorization,
+    automatic reconnection with message recovery, broadcasting to many clients,
+    or high-traffic scalability.
+
 `In this recording`_ you can see how a Symfony web API leverages Mercure
 and API Platform to update in live a React app and a mobile app (React Native)
 generated using the API Platform client generator.
