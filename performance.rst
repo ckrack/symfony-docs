@@ -134,7 +134,7 @@ it's recommended to change these settings as follows:
     opcache.memory_consumption=256
 
     ; maximum number of files that can be stored in the cache
-    opcache.max_accelerated_files=20000
+    opcache.max_accelerated_files=32531
 
 .. _performance-dont-check-timestamps:
 
