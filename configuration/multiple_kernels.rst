@@ -122,16 +122,11 @@ resources::
 
     class Kernel extends BaseKernel
     {
-        use MicroKernelTrait;
+        use MicroKernelTrait { getConfigDir as getSharedConfigDir; }
 
         public function __construct(string $environment, bool $debug, private string $id)
         {
             parent::__construct($environment, $debug);
-        }
-
-        public function getSharedConfigDir(): string
-        {
-            return $this->getProjectDir().'/config';
         }
 
         public function getAppConfigDir(): string
