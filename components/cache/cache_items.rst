@@ -26,8 +26,18 @@ The only way to create cache items is via cache pools. When using the Cache
 Contracts, they are passed as arguments to the recomputation callback::
 
     // $cache pool object was created before
-    $productsCount = $cache->get('stats.products_count', function (ItemInterface $item): string {
+    $productsCount = $cache->get('stats.products_count', function (ItemInterface $item) {
         // [...]
+    });
+
+When using the Cache Contracts, you can also configure the cache item inside the
+callback, for example to define its expiration time::
+
+    $productsCount = $cache->get('stats.products_count', function (ItemInterface $item): int {
+        $item->expiresAfter(3600); // cache for 1 hour
+
+        // ... compute the value
+        return 4711;
     });
 
 When using PSR-6, they are created with the ``getItem($key)`` method of the cache
