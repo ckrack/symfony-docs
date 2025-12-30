@@ -599,10 +599,10 @@ Missing importmap Entry
 One of the most common errors will come from your browser's console, and
 will look something like this:
 
-    Failed to resolve module specifier "    bootstrap". Relative references must start
+    Failed to resolve module specifier "bootstrap". Relative references must start
     with either "/", "./", or "../".
 
-Or:
+or
 
     The specifier "bootstrap" was a bare specifier, but was not remapped to anything.
     Relative module specifiers must start with "./", "../" or "/".
