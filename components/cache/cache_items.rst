@@ -31,7 +31,7 @@ Contracts, they are passed as arguments to the recomputation callback::
     });
 
 When using the Cache Contracts, you can also configure the cache item inside the
-callback, for example to define its expiration time::
+callback. For example, you can set its expiration time::
 
     $productsCount = $cache->get('stats.products_count', function (ItemInterface $item): int {
         $item->expiresAfter(3600); // cache for 1 hour
