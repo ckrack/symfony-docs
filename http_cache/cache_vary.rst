@@ -41,8 +41,13 @@ attribute::
         // ...
 
         #[Cache(vary: ['Accept-Encoding'])]
+        public function foo(): Response
+        {
+            // ...
+        }
+
         #[Cache(vary: ['Accept-Encoding', 'User-Agent'])]
-        public function index(): Response
+        public function bar(): Response
         {
             // ...
         }
