@@ -197,7 +197,7 @@ Below is the configuration for the pull request state machine.
         use Symfony\Config\FrameworkConfig;
 
         return static function (FrameworkConfig $framework): void {
-            $pullRequest = $framework->workflows()->workflows('pull_request');
+            $pullRequest = $framework->workflows()->workflow('pull_request');
 
             $pullRequest
                 ->type('state_machine')
