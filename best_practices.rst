@@ -276,7 +276,7 @@ instead of ``Product/EditForm.html.twig``).
 Prefix Template Fragments with an Underscore
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Template fragments, also called *"partial templates"*, allow to
+Template fragments, also called *"partial templates"*, allow you to
 :ref:`reuse template contents <templates-reuse-contents>`. Prefix their names
 with an underscore to better differentiate them from complete templates (e.g.
 ``_user_metadata.html.twig`` or ``_caution_message.html.twig``).

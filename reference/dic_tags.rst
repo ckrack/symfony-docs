@@ -1084,8 +1084,8 @@ extractor to find and extract translation keys from Twig templates and PHP files
 
 Symfony includes two PHP extractors: :class:`Symfony\\Component\\Translation\\Extractor\\PhpExtractor`
 and :class:`Symfony\\Component\\Translation\\Extractor\\PhpAstExtractor`. The
-first one is simple but doesn't require to install any packages; the second one
-is much more advanced, but requires to install this dependency in your project:
+first one is simple but doesn't require installing any packages; the second one
+is much more advanced, but requires installing this dependency in your project:
 
 .. code-block:: terminal
 

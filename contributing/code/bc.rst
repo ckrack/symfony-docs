@@ -496,7 +496,7 @@ Making Code Changes in a Backward Compatible Way
 As you read above, many changes are not allowed because they would represent a
 backward compatibility break. However, we want to be able to improve the code and
 its features over time and that can be done thanks to some strategies that
-allow to still do some unallowed changes in several steps that ensure backward
+allow you to still do some unallowed changes in several steps that ensure backward
 compatibility and a smooth upgrade path. Some of them are described in the next
 sections.
 

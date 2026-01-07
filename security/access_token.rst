@@ -349,7 +349,7 @@ Using OpenID Connect (OIDC)
 `OpenID Connect (OIDC)`_ is the third generation of OpenID technology and it's a
 RESTful HTTP API that uses JSON as its data format. OpenID Connect is an
 authentication layer on top of the OAuth 2.0 authorization framework. It allows
-to verify the identity of an end user based on the authentication performed by
+you to verify the identity of an end user based on the authentication performed by
 an authorization server.
 
 1) Configure the OidcUserInfoTokenHandler

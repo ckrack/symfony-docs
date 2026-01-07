@@ -128,7 +128,7 @@ The default message supplied when the password does not reach the minimum requir
     class User
     {
         #[Assert\PasswordStrength([
-            'message' => 'Your password is too easy to guess. Company\'s security policy requires to use a stronger password.'
+            'message' => 'Your password is too easy to guess. Company\'s security policy requires using a stronger password.'
         ])]
         protected $rawPassword;
     }

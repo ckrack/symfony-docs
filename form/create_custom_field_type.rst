@@ -232,7 +232,7 @@ better).
 Adding Configuration Options for the Form Type
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Imagine that your project requires to make the ``PostalAddressType``
+Imagine that your project requires making the ``PostalAddressType``
 configurable in two ways:
 
 * In addition to "address line 1" and "address line 2", some addresses should be
@@ -240,7 +240,7 @@ configurable in two ways:
 * Instead of displaying a free text input, some addresses should be able to
   restrict the possible states to a given list.
 
-This is solved with "form type options", which allow to configure the behavior
+This is solved with "form type options", which allow you to configure the behavior
 of the form types. The options are defined in the ``configureOptions()`` method
 and you can use all the :doc:`OptionsResolver component features </components/options_resolver>`
 to define, validate and process their values::

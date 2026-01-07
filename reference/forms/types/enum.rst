@@ -37,7 +37,7 @@ short) defined somewhere in your application. This enum has to be of type
     }
 
 Instead of using the values of the enumeration in a ``choices`` option, the
-``EnumType`` only requires to define the ``class`` option pointing to the enum::
+``EnumType`` only requires defining the ``class`` option pointing to the enum::
 
     use App\Config\TextAlign;
     use Symfony\Component\Form\Extension\Core\Type\EnumType;
