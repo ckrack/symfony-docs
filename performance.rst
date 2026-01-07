@@ -1,7 +1,7 @@
 Performance
 ===========
 
-Symfony is fast, right out of the box. However, you can make it faster if you
+Symfony is fast. However, you can make it faster if you
 optimize your servers and your applications as explained in the following
 performance checklists.
 

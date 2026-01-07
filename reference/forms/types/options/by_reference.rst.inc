@@ -24,7 +24,7 @@ To explain this further, here's a simple example::
                 ->add('email', EmailType::class)
         )
 
-If ``by_reference`` is true, the following takes place behind the scenes
+If ``by_reference`` is true, the following takes place internally
 when you call ``submit()`` (or ``handleRequest()``) on the form::
 
     $article->setTitle('...');

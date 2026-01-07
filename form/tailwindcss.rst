@@ -5,7 +5,7 @@ Symfony provides a minimal form theme for `Tailwind CSS`_. Tailwind is a *utilit
 CSS framework and provides *unlimited ways* to customize your forms. Tailwind has
 an official `form plugin`_ that provides a basic form reset that standardizes their look
 on all browsers. This form theme requires this plugin and adds a few basic tailwind
-classes so out of the box, your forms will look decent. Customization is almost always
+classes so your forms will look decent by default. Customization is almost always
 going to be required so this theme makes that easy.
 
 .. image:: /_images/form/tailwindcss-form.png

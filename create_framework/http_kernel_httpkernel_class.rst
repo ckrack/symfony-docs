@@ -113,7 +113,7 @@ client; that's what the ``ResponseListener`` does::
 
     $dispatcher->addSubscriber(new HttpKernel\EventListener\ResponseListener('UTF-8'));
 
-If you want out of the box support for streamed responses, subscribe
+If you want support for streamed responses, subscribe
 to ``StreamedResponseListener``::
 
     $dispatcher->addSubscriber(new HttpKernel\EventListener\StreamedResponseListener());
@@ -193,8 +193,8 @@ of registering event listeners/subscribers.
 
 Hopefully, you now have a better understanding of why the simple looking
 ``HttpKernelInterface`` is so powerful. Its default implementation,
-``HttpKernel``, gives you access to a lot of cool features, ready to be used
-out of the box, with no efforts. And because HttpKernel is actually the code
+``HttpKernel``, gives you access to a lot of cool and ready to be used features,
+with no efforts. And because HttpKernel is actually the code
 that powers the Symfony framework, you have the best of both
 worlds: a custom framework, tailored to your needs, but based on a rock-solid
 and well maintained low-level architecture that has been proven to work for

@@ -718,7 +718,7 @@ Integrating Panther In Your CI
 Github Actions
 ~~~~~~~~~~~~~~
 
-Panther works out of the box with `GitHub Actions`_.
+Panther also works with `GitHub Actions`_.
 Here is a minimal ``.github/workflows/panther.yaml`` file to run Panther tests:
 
 .. code-block:: yaml
@@ -745,7 +745,7 @@ Here is a minimal ``.github/workflows/panther.yaml`` file to run Panther tests:
 Travis CI
 ~~~~~~~~~
 
-Panther will work out of the box with `Travis CI`_ if you add the Chrome addon.
+Panther works with `Travis CI`_ if you add the Chrome addon.
 Here is a minimal ``.travis.yaml`` file to run Panther tests:
 
 .. code-block:: yaml
@@ -791,7 +791,7 @@ with `Gitlab CI`_:
 AppVeyor
 ~~~~~~~~
 
-Panther will work out of the box with `AppVeyor`_ as long as Google Chrome
+Panther works with `AppVeyor`_ as long as Google Chrome
 is installed. Here is a minimal ``appveyor.yaml`` file to run Panther tests:
 
 .. code-block:: yaml

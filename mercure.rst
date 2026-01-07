@@ -19,7 +19,7 @@ server to clients. It is a modern and efficient alternative to timer-based
 polling and to WebSocket.
 
 Because it is built on top `Server-Sent Events (SSE)`_, Mercure is supported
-out of the box in modern browsers (old versions of Edge and IE require
+natively in modern browsers (old versions of Edge and IE require
 `a polyfill`_) and has `high-level implementations`_ in many programming
 languages.
 
@@ -351,7 +351,7 @@ in a ``Link`` HTTP header.
     ></object>
 
 You can create ``Link`` headers with the ``Discovery`` helper class
-(under the hood, it uses the :doc:`WebLink Component </web_link>`)::
+(internally, it uses the :doc:`WebLink Component </web_link>`)::
 
     // src/Controller/DiscoverController.php
     namespace App\Controller;
