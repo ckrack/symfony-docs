@@ -69,9 +69,9 @@ and check if it is working will give you an even more reliable result.
 
 .. tip::
 
-    If your current project is running on an older PHP version such as
-    PHP 5.x upgrading to a recent version will give you a performance
-    boost without having to change your code.
+    If your current project is running on a legacy PHP version, upgrading to a
+    recent version will give you a performance boost without having to change
+    your code.
 
 Setting up Composer
 ~~~~~~~~~~~~~~~~~~~

@@ -18,7 +18,7 @@ for maximum performance:
 * **Production Server Checklist**:
 
   #. :ref:`Dump the service container into a single file <performance-service-container-single-file>`
-  #. :ref:`Use the OPcache byte code cache <performance-use-opcache>`
+  #. :ref:`Use the OPcache bytecode cache <performance-use-opcache>`
   #. :ref:`Configure OPcache for maximum performance <performance-configure-opcache>`
   #. :ref:`Don't check PHP files timestamps <performance-dont-check-timestamps>`
   #. :ref:`Configure the PHP realpath Cache <performance-configure-realpath-cache>`
@@ -40,7 +40,7 @@ Dump the Service Container into a Single File
 Symfony compiles the :doc:`service container </service_container>` into multiple
 small files by default. Set this parameter to ``true`` to compile the entire
 container into a single file, which could improve performance when using
-"class preloading" in PHP 7.4 or newer versions:
+PHP `class preloading`_:
 
 .. configuration-block::
 
@@ -74,29 +74,27 @@ container into a single file, which could improve performance when using
             $container->parameters()->set('.container.dumper.inline_factories', true);
         };
 
-.. _performance-use-opcache:
-
 .. tip::
 
     The ``.`` prefix denotes a parameter that is only used during compilation of the container.
     See :ref:`Configuration Parameters <configuration-parameters>` for more details.
 
-Use the OPcache Byte Code Cache
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.. _performance-use-opcache:
 
-OPcache stores the compiled PHP files to avoid having to recompile them for
-every request. There are some `byte code caches`_ available, but as of PHP
-5.5, PHP comes with `OPcache`_ built-in. For older versions, the most widely
-used byte code cache is APC.
+Use the OPcache Bytecode Cache
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+OPcache caches the compiled bytecode of PHP scripts to avoid recompiling them on
+each request. PHP ships with `OPcache`_, but depending on your setup, you may
+need to enable it explicitly.
 
 .. _performance-use-preloading:
 
 Use the OPcache class preloading
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Starting from PHP 7.4, OPcache can compile and load classes at start-up and
-make them available to all requests until the server is restarted, improving
-performance significantly.
+OPcache can compile and load classes at start-up and make them available to all
+requests until the server is restarted, improving performance significantly.
 
 During container compilation (e.g. when running the ``cache:clear`` command),
 Symfony generates a file with the list of classes to preload in the
@@ -158,9 +156,9 @@ server OPcache by executing some command in your terminal. These are some of the
 possible solutions:
 
 1. Restart the web server;
-2. Call the ``apc_clear_cache()`` or ``opcache_reset()`` functions via the
-   web server (i.e. by having these in a script that you execute over the web);
-3. Use the `cachetool`_ utility to control APC and OPcache from the CLI.
+2. Call the ``opcache_reset()`` function via the web server (i.e. by having these
+   in a script that you execute over the web);
+3. Use the `cachetool`_ utility to control OPcache from the CLI.
 
 .. _performance-configure-realpath-cache:
 
@@ -384,8 +382,7 @@ Learn more
 
 * :doc:`/http_cache/varnish`
 
-.. _`byte code caches`: https://en.wikipedia.org/wiki/List_of_PHP_accelerators
-.. _`OPcache`: https://www.php.net/manual/en/book.opcache.php
+.. _`OPcache`: https://php.net/book.opcache.php
 .. _`Composer's autoloader optimization`: https://getcomposer.org/doc/articles/autoloader-optimization.md
 .. _`cachetool`: https://github.com/gordalina/cachetool
 .. _`open_basedir`: https://www.php.net/manual/ini.core.php#ini.open-basedir
@@ -393,3 +390,4 @@ Learn more
 .. _`full-featured demo`: https://demo.blackfire.io?utm_source=symfony&utm_medium=symfonycom_docs&utm_campaign=performance
 .. _`Stopwatch component`: https://symfony.com/components/Stopwatch
 .. _`real-world stopwatch`: https://en.wikipedia.org/wiki/Stopwatch
+.. _`class preloading`: https://php.net/opcache.preloading.php
