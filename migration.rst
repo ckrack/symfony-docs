@@ -131,7 +131,7 @@ Additionally legacy code tends to be hard to write tests for, making the process
 slow and cumbersome.
 
 Instead of providing low level tests, that ensure each class works as expected, it
-might makes sense to write high level tests ensuring that at least anything user
+might make sense to write high level tests ensuring that at least anything user
 facing works on at least a superficial level. These kinds of tests are commonly
 called End-to-End tests, because they cover the whole application from what the
 user sees in the browser down to the very code that is being run and connected
