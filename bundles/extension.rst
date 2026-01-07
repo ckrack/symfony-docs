@@ -206,3 +206,9 @@ the full classmap executing the ``dump-autoload`` command of Composer.
     This technique can't be used when the classes to compile use the ``__DIR__``
     or ``__FILE__`` constants, because their values will change when loading
     these classes from the ``classes.php`` file.
+
+.. deprecated:: 7.1
+
+    The ``addAnnotatedClassesToCompile()`` method was deprecated in Symfony 7.1
+    and will be removed in Symfony 8.0. No alternative is provided because the
+    technique explained in this section is no longer necessary with modern PHP.
