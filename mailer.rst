@@ -361,7 +361,7 @@ may be specified as SHA1 or MD5 hash::
 Overriding default SMTP authenticators
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-By default, SMTP transports will try to login using all authentication methods
+By default, SMTP transports will try to log in using all authentication methods
 available on the SMTP server, one after the other. In some cases, it may be
 useful to redefine the supported authentication methods to ensure that the
 preferred method will be used first.

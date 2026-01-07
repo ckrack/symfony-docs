@@ -1025,7 +1025,7 @@ be lost without notifying the running processes.
 
 .. tip::
 
-    To use ZooKeeper's high-availability feature, you can setup a cluster of
+    To use ZooKeeper's high-availability feature, you can set up a cluster of
     multiple servers so that in case one of the server goes down, the majority
     will still be up and serving the requests. All the available servers in the
     cluster will see the same state.

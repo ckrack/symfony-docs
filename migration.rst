@@ -139,7 +139,7 @@ services like a database. To automate this you have to make sure that you can
 get a test instance of your system running as easily as possible and making
 sure that external systems do not change your production environment, e.g.
 provide a separate test database with (anonymized) data from a production
-system or being able to setup a new schema with a basic dataset for your test
+system or being able to set up a new schema with a basic dataset for your test
 environment. Since these tests do not rely as much on isolating testable code
 and instead look at the interconnected system, writing them is usually easier
 and more productive when doing a migration. You can then limit your effort on

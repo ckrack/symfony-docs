@@ -206,7 +206,7 @@ link is created using
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Now the link is created, it needs to be sent to the user. Anyone with the
-link is able to login as this user, so you need to make sure to send it to
+link is able to log in as this user, so you need to make sure to send it to
 a known device of them (e.g. using e-mail or SMS).
 
 You can send the link using any library or method. However the login link
@@ -321,7 +321,7 @@ Limit Login Link Lifetime
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 It is important for login links to have a limited lifetime. This reduces
-the risk that someone can intercept the link and use it to login as
+the risk that someone can intercept the link and use it to log in as
 somebody else. By default, Symfony defines a lifetime of 10 minutes (600
 seconds). You can customize this using the ``lifetime`` option:
 
@@ -638,7 +638,7 @@ user create this POST request (e.g. by clicking a button)::
     {% extends 'base.html.twig' %}
 
     {% block body %}
-        <h2>Hi! You are about to login to ...</h2>
+        <h2>Hi! You are about to log in to ...</h2>
 
         <!-- for instance, use a form with hidden fields to
              create the POST request -->
