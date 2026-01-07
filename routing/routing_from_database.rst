@@ -19,9 +19,9 @@ For these cases, the ``DynamicRouter`` offers an alternative approach:
 
 When all routes are known during deploy time and the number is not too
 high, using a :doc:`custom route loader </routing/custom_route_loader>` is the
-preferred way to add more routes. When working with only one type of
-objects, a slug parameter on the object and the ``#[ParamConverter]``
-attribute works fine (see `FrameworkExtraBundle`_) .
+preferred way to add more routes. When working with only one type of object, a
+slug parameter on the route combined with
+:ref:`Doctrine entity value resolver <doctrine-entity-value-resolver>` works fine.
 
 The ``DynamicRouter`` is useful when you need ``Route`` objects with
 the full feature set of Symfony. Each route can define a specific
@@ -34,5 +34,4 @@ loader, e.g. for another database type or a REST API or anything else.
 
 The DynamicRouter is explained in the `Symfony CMF documentation`_.
 
-.. _FrameworkExtraBundle: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/converters.html
 .. _`Symfony CMF documentation`: https://symfony.com/doc/current/cmf/bundles/routing/dynamic.html
