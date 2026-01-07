@@ -190,7 +190,7 @@ rich API for a ``product`` table? Create a ``Product`` entity and give it the
     // src/Entity/Product.php
     namespace App\Entity;
 
-    use ApiPlatform\Core\Annotation\ApiResource;
+    use ApiPlatform\Metadata\ApiResource;
     use Doctrine\ORM\Mapping as ORM;
 
     #[ORM\Entity]
