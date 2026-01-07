@@ -383,21 +383,22 @@ HTTP requests::
         ],
     ]);
 
-Responses are always asynchronous, so that the call to the method returns
-immediately instead of waiting to receive the response::
+Symfony's HTTP client is asynchronous by default. When you call ``request()``,
+the HTTP request starts immediately, but the method returns without waiting for
+a response. Your code only blocks when you actually need the response data::
 
-    // code execution continues immediately; it doesn't wait to receive the response
+    // the request starts, but execution continues without waiting
     $response = $client->request('GET', 'http://releases.ubuntu.com/18.04.2/ubuntu-18.04.2-desktop-amd64.iso');
 
-    // getting the response headers waits until they arrive
+    // this blocks until the response headers are received
     $contentType = $response->getHeaders()['content-type'][0];
 
-    // trying to get the response content will block the execution until
-    // the full response content is received
+    // this blocks until the full response body is received
     $content = $response->getContent();
 
-This component also supports :ref:`streaming responses <http-client-streaming-responses>`
-for full asynchronous applications.
+The HTTP client also supports :ref:`concurrent requests <http-client-concurrent-requests>`
+to make multiple HTTP requests in parallel, and :ref:`streaming responses <http-client-streaming-responses>`
+to process response data in chunks for fully asynchronous applications.
 
 Authentication
 ~~~~~~~~~~~~~~
@@ -1314,6 +1315,8 @@ errors, exceptions will notify you when needed. On the other hand, if you write
 the error-handling code (by calling ``$response->getStatusCode()``), you will
 opt-out from these fallback mechanisms as the destructor won't have anything
 remaining to do.
+
+.. _http-client-concurrent-requests:
 
 Concurrent Requests
 -------------------
