@@ -178,7 +178,7 @@ Outside a Symfony application, use the :class:`Symfony\\Component\\VarDumper\\Du
     The second argument of :class:`Symfony\\Component\\VarDumper\\Dumper\\ServerDumper`
     is a :class:`Symfony\\Component\\VarDumper\\Dumper\\DataDumperInterface` instance
     used as a fallback when the server is unreachable. The third argument are the
-    context providers, which allow to gather some info about the context in which the
+    context providers, which allow you to gather some info about the context in which the
     data was dumped. The built-in context providers are: ``cli``, ``request`` and ``source``.
 
 Then you can use the following command to start a server out-of-the-box:

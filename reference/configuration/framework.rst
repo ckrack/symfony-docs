@@ -2974,7 +2974,7 @@ paths
 
 **type**: ``array`` **default**: ``[]``
 
-This option allows to define an array of paths with files or directories where
+This option allows you to define an array of paths with files or directories where
 the component will look for additional serialization files.
 
 .. _reference-serializer-name_converter:
@@ -3460,7 +3460,7 @@ default_path
 
 **type**: ``string`` **default**: ``%kernel.project_dir%/translations``
 
-This option allows to define the path where the application translations files
+This option allows you to define the path where the application translations files
 are stored.
 
 .. _reference-translator-enabled:
@@ -3515,7 +3515,7 @@ paths
 
 **type**: ``array`` **default**: ``[]``
 
-This option allows to define an array of paths where the component will look
+This option allows you to define an array of paths where the component will look
 for translation files. The later a path is added, the more priority it has
 (translations from later paths overwrite earlier ones). Translations from the
 :ref:`default_path <reference-translator-default_path>` have more priority than
@@ -3775,7 +3775,7 @@ paths
 
 **type**: ``array`` **default**: ``['config/validation/']``
 
-This option allows to define an array of paths with files or directories where
+This option allows you to define an array of paths with files or directories where
 the component will look for additional validation files:
 
 .. configuration-block::
@@ -3848,7 +3848,7 @@ endpoint
 
 By default, the :doc:`NotCompromisedPassword </reference/constraints/NotCompromisedPassword>`
 constraint uses the public API provided by `haveibeenpwned.com`_. This option
-allows to define a different, but compatible, API endpoint to make the password
+allows you to define a different, but compatible, API endpoint to make the password
 checks. It's useful for example when the Symfony application is run in an
 intranet without public access to the internet.
 

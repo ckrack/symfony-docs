@@ -728,7 +728,7 @@ a PHP callable::
 Streaming a JSON Response
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The :class:`Symfony\\Component\\HttpFoundation\\StreamedJsonResponse` allows to
+The :class:`Symfony\\Component\\HttpFoundation\\StreamedJsonResponse` allows you to
 stream large JSON responses using PHP generators to keep the used resources low.
 
 The class constructor expects an array which represents the JSON structure and

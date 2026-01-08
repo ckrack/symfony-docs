@@ -411,7 +411,7 @@ see `Enable other Features`_::
 Writing to Array Properties
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The ``PropertyAccessor`` class allows to update the content of arrays stored in
+The ``PropertyAccessor`` class allows updating the content of arrays stored in
 properties through *adder* and *remover* methods::
 
     // ...

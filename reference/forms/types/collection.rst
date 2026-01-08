@@ -199,7 +199,7 @@ prototype_options
 **type**: ``array`` **default**: ``[]``
 
 This is the array that's passed to the form type specified in the `entry_type`_
-option when creating its prototype. It allows to have different options depending
+option when creating its prototype. It allows having different options depending
 on whether you are adding a new entry or editing an existing entry::
 
     use Symfony\Component\Form\Extension\Core\Type\CollectionType;

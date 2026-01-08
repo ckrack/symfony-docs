@@ -138,7 +138,7 @@ fields, so you no longer have to deal with form themes:
 Form Rendering Variables
 ------------------------
 
-Some of the Twig functions mentioned in the previous section allow to pass
+Some of the Twig functions mentioned in the previous section allow you to pass
 variables to configure their behavior. For example, the ``form_label()``
 function lets you define a custom label to override the one defined in the form:
 
@@ -354,7 +354,7 @@ label, errors, help and widget.
     {{ form_row(form.name, {'label': 'foo'}) }}
 
 The second argument to ``form_row()`` is an array of variables. The templates
-provided in Symfony only allow to override the label as shown in the example
+provided in Symfony only allow you to override the label as shown in the example
 above.
 
 See ":ref:`twig-reference-form-variables`" to learn about the ``variables``

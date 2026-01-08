@@ -13,7 +13,7 @@ The traditional way of adding commands to your application is to use
 This approach can have downsides as some commands might be expensive to
 instantiate in which case you may want to lazy-load them. Note however that lazy-loading
 is not absolute. Indeed a few commands such as ``list``, ``help`` or ``_complete`` can
-require to instantiate other commands although they are lazy. For example ``list`` needs
+require instantiating other commands although they are lazy. For example ``list`` needs
 to get the name and description of all commands, which might require the command to be
 instantiated to get.
 

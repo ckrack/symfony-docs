@@ -2,7 +2,7 @@ The VarExporter Component
 =========================
 
     The VarExporter component exports any serializable PHP data structure to
-    plain PHP code and allows to instantiate and populate objects without
+    plain PHP code and allows you to instantiate and populate objects without
     calling their constructors.
 
 Installation
@@ -253,7 +253,7 @@ initialized::
         }
     }
 
-:class:`Symfony\\Component\\VarExporter\\LazyGhostTrait` also allows to
+:class:`Symfony\\Component\\VarExporter\\LazyGhostTrait` also allows you to
 convert non-lazy classes to lazy ones::
 
     namespace App\Hash;
@@ -311,9 +311,9 @@ LazyProxyTrait
     objects instead. Note that using the trait with PHP versions earlier than 8.4
     does not trigger a deprecation, to ease the transition.
 
-The purpose of virtual proxies in the same one as
+The purpose of virtual proxies is the same as
 :ref:`ghost objects <var-exporter_ghost-objects>`, but their internal behavior is
-totally different. Where ghost objects requires to extend a base class, virtual
+completely different. Where ghost objects requires extending a base class, virtual
 proxies take advantage of the **Liskov Substitution principle**. This principle
 describes that if two objects are implementing the same interface, you can swap
 between the different implementations without breaking your application. This is

@@ -270,7 +270,7 @@ can change if the number is used in cash transactions or in other scenarios
     $fractionDigits = Currencies::getFractionDigits('SEK');         // returns: 2
     $cashFractionDigits = Currencies::getCashFractionDigits('SEK'); // returns: 0
 
-Some currencies require to round numbers to the nearest increment of some value
+Some currencies require rounding numbers to the nearest increment of some value
 (e.g. 5 cents). This increment might be different if numbers are formatted for
 cash transactions or other scenarios (e.g. accounting)::
 
