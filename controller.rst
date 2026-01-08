@@ -957,9 +957,9 @@ Streaming Server-Sent Events
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 `Server-Sent Events (SSE)`_ is a standard that allows a server to push updates
-to the client over a single HTTP connection. It's a simple and efficient way
-to send real-time updates from the server to the browser, such as live
-notifications, progress updates, or data feeds.
+to the client over a single HTTP connection. It provides an efficient way to
+send real-time updates from the server to the browser, such as live notifications,
+progress updates, or data feeds.
 
 .. versionadded:: 7.3
 
@@ -968,7 +968,7 @@ notifications, progress updates, or data feeds.
 The :class:`Symfony\\Component\\HttpFoundation\\EventStreamResponse` class
 allows you to stream events to the client using the SSE protocol. It automatically
 sets the required headers (``Content-Type: text/event-stream``, ``Cache-Control: no-cache``,
-``Connection: keep-alive``) and provides a simple API to send events::
+``Connection: keep-alive``) and provides an API to send events::
 
     use Symfony\Component\HttpFoundation\EventStreamResponse;
     use Symfony\Component\HttpFoundation\ServerEvent;
@@ -987,19 +987,19 @@ sets the required headers (``Content-Type: text/event-stream``, ``Cache-Control:
     }
 
 The :class:`Symfony\\Component\\HttpFoundation\\ServerEvent` class is a DTO
-that represents an SSE event following `the WHATWG specification`_. You can
+that represents an SSE event following `the WHATWG SSE specification`_. You can
 customize each event using its constructor arguments::
 
-    // basic event with just data
+    // basic event with only data
     yield new ServerEvent('Some message');
 
-    // event with a custom type (client listens via addEventListener('my-event', ...))
+    // event with a custom type (clients listen via addEventListener('my-event', ...))
     yield new ServerEvent(
         data: json_encode(['status' => 'completed']),
         type: 'my-event'
     );
 
-    // event with an ID (useful for resuming streams with Last-Event-ID header)
+    // event with an ID (useful for resuming streams with the Last-Event-ID header)
     yield new ServerEvent(
         data: 'Update content',
         id: 'event-123'
@@ -1014,7 +1014,7 @@ customize each event using its constructor arguments::
     // event with a comment (can be used for keep-alive)
     yield new ServerEvent(comment: 'keep-alive');
 
-For use cases where generators are not feasible, you can use the
+For use cases where generators are not practical, you can use the
 :method:`Symfony\\Component\\HttpFoundation\\EventStreamResponse::sendEvent`
 method for manual control::
 
@@ -1025,10 +1025,10 @@ method for manual control::
 
     public function liveProgress(): EventStreamResponse
     {
-        return new EventStreamResponse(function (EventStreamResponse $response) {
+        return new EventStreamResponse(function (EventStreamResponse $response): void {
             $redis = new \Redis();
             $redis->connect('127.0.0.1');
-            $redis->subscribe(['message'], function (/* ... */, string $message) use ($response) {
+            $redis->subscribe(['message'], function (/* ... */, string $message) use ($response): void {
                 $response->sendEvent(new ServerEvent($message));
             });
         });
@@ -1058,9 +1058,9 @@ On the client side, you can listen to events using the native ``EventSource`` AP
 
 .. warning::
 
-    ``EventStreamResponse`` is designed for small applications with limited
-    concurrent connections. Because SSE keeps HTTP connections open, it consumes
-    server resources (memory and connection limits) for each connected client.
+    ``EventStreamResponse`` is designed for applications with limited concurrent
+    connections. Because SSE keeps HTTP connections open, it consumes server
+    resources (memory and connection limits) for each connected client.
 
     For high-traffic applications that need to broadcast updates to many clients
     simultaneously, consider using :doc:`Mercure </mercure>`, which is built on
@@ -1107,4 +1107,4 @@ Learn more about Controllers
 .. _`phpstan/phpdoc-parser`: https://packagist.org/packages/phpstan/phpdoc-parser
 .. _`phpdocumentor/type-resolver`: https://packagist.org/packages/phpdocumentor/type-resolver
 .. _`Server-Sent Events (SSE)`: https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events
-.. _`the WHATWG specification`: https://html.spec.whatwg.org/multipage/server-sent-events.html
+.. _`the WHATWG SSE specification`: https://html.spec.whatwg.org/multipage/server-sent-events.html

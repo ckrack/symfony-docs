@@ -823,8 +823,8 @@ Streaming Server-Sent Events
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The :class:`Symfony\\Component\\HttpFoundation\\EventStreamResponse` class
-allows you to implement `Server-Sent Events (SSE)`_ - a standard for pushing
-real-time updates from server to client over HTTP.
+allows you to implement `Server-Sent Events (SSE)`_, a standard for pushing
+real-time updates from the server to the client over HTTP.
 
 .. versionadded:: 7.3
 
@@ -843,7 +843,9 @@ Basic usage with a generator::
 
     $response->send();
 
-The ``EventStreamResponse`` automatically sets the required headers::
+The ``EventStreamResponse`` automatically sets the required headers:
+
+.. code-block:: text
 
     Content-Type: text/event-stream
     Cache-Control: no-cache
@@ -854,14 +856,14 @@ individual SSE event following `the WHATWG SSE specification`_. It accepts the
 following constructor arguments:
 
 ``data``
-    The event data (string or iterable for multi-line data).
+    The event data (a string or an iterable for multi-line data).
 
 ``type``
     The event type. Clients can listen for specific types using
     ``eventSource.addEventListener('type', ...)``.
 
 ``id``
-    The event ID. The browser sends this as ``Last-Event-ID`` header when
+    The event ID. The browser sends this as the ``Last-Event-ID`` header when
     reconnecting, allowing you to resume from where the client left off.
 
 ``retry``
