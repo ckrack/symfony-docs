@@ -261,7 +261,7 @@ are done doing other stuff::
     after the request is sent, but to use a job queue instead.
 
 :method:`Symfony\\Component\\Process\\Process::wait` takes one optional argument:
-a callback that is called repeatedly whilst the process is still running, passing
+a callback that is called repeatedly while the process is still running, passing
 in the output and its type::
 
     $process = new Process(['ls', '-lsa']);

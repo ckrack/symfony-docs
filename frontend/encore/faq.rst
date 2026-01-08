@@ -179,7 +179,7 @@ locally or on your Continuous Integration server:
     ("Could not find the entrypoints file from Webpack:
     the file "/var/www/html/public/build/entrypoints.json" does not exist.
 
-This is happening because you did not build your Encore assets, hence no
+This is happening because you did not build your Encore assets, so there is no
 ``entrypoints.json`` file. To solve this error, either build Encore assets or
 set the ``strict_mode`` option to ``false`` (this prevents Encore's Twig
 functions to trigger exceptions when there's no ``entrypoints.json`` file):

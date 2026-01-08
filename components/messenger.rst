@@ -183,8 +183,8 @@ Here are some important envelope stamps that are shipped with the Symfony Messen
     :class:`Symfony\\Component\\Messenger\\Transport\\Serialization\\Normalizer\\FlattenExceptionNormalizer`
     which helps error reporting in the Messenger context.
 
-Instead of dealing directly with the messages in the middleware you receive the envelope.
-Hence you can inspect the envelope content and its stamps, or add any::
+Instead of dealing directly with the messages in the middleware, you receive the envelope.
+Therefore, you can inspect the envelope content and its stamps, or add any::
 
     use App\Message\Stamp\AnotherStamp;
     use Symfony\Component\Messenger\Envelope;
