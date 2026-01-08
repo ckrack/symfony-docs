@@ -299,7 +299,7 @@ For example, to inject the ``invoice`` package defined earlier::
     {
         public function __construct(
             private LockFactory $invoiceLockFactory
-        ): void {
+        ) {
             // ...
         }
     }
@@ -319,7 +319,7 @@ For example, to select the ``invoice`` lock defined earlier::
     {
         public function __construct(
             #[Target('lock.invoice.factory')] private LockFactory $lockFactory
-        ): void {
+        ) {
             // ...
         }
     }
