@@ -199,7 +199,7 @@ As mentioned above, the ``Kernel`` has to implement another method -
 This method is responsible for loading the application's configuration from the
 right *environment*.
 
-:ref:`Configuration environments <configuration-environments>` allow to execute
+:ref:`Configuration environments <configuration-environments>` allow you to execute
 the same code using different configuration. Symfony provides three environments
 by default called ``dev``, ``prod`` and ``test``.
 

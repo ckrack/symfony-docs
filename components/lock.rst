@@ -916,7 +916,7 @@ The PdoStore relies on the `ACID`_ properties of the SQL engine.
 
 .. warning::
 
-    Some SQL engines like MySQL allow to disable the unique constraint check.
+    Some SQL engines like MySQL allow disabling the unique constraint check.
     Ensure that this is not the case ``SET unique_checks=1;``.
 
 In order to purge old locks, this store uses a current datetime to define an

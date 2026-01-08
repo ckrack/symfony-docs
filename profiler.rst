@@ -391,7 +391,7 @@ template access to the collected information::
     }
 
 In the simplest case, you want to display the information in the toolbar
-without providing a profiler panel. This requires to define the ``toolbar``
+without providing a profiler panel. This requires defining the ``toolbar``
 block and set the value of two variables called ``icon`` and ``text``:
 
 .. code-block:: html+twig

@@ -4,7 +4,7 @@ choice_loader
 **type**: :class:`Symfony\\Component\\Form\\ChoiceList\\Loader\\ChoiceLoaderInterface`
 
 The ``choice_loader`` option can be used instead of the ``choices`` option. It
-allows to create a list lazily or partially when fetching only the choices for a
+allows you to create a list lazily or partially when fetching only the choices for a
 set of submitted values (i.e. querying a search engine like ``ElasticSearch``
 can be a heavy process).
 

@@ -442,7 +442,7 @@ the :class:`Symfony\\Component\\RateLimiter\\Reservation` object returned by the
 Storing Rate Limiter State
 --------------------------
 
-All rate limiter policies require to store their state (e.g. how many hits were
+All rate limiter policies require storing their state (e.g. how many hits were
 already made in the current time window). By default, all limiters use the
 ``cache.rate_limiter`` cache pool created with the :doc:`Cache component </cache>`.
 This means that every time you clear the cache, the rate limiter will be reset.

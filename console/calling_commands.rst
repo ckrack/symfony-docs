@@ -53,8 +53,8 @@ method)::
 
 .. note::
 
-    Using ``doRun()`` instead of ``run()`` prevents autoexiting and allows to
-    return the exit code instead.
+    Using ``doRun()`` instead of ``run()`` prevents autoexiting and allows
+    you to return the exit code instead.
 
     Also, using ``$this->getApplication()->doRun()`` instead of
     ``$this->getApplication()->find('demo:greet')->run()`` will allow proper

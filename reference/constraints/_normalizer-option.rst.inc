@@ -3,7 +3,7 @@
 
 **type**: a `PHP callable`_ **default**: ``null``
 
-This option allows to define the PHP callable applied to the given value before
+This option allows you to define the PHP callable applied to the given value before
 checking if it is valid.
 
 For example, you may want to pass the ``'trim'`` string to apply the
