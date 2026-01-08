@@ -239,7 +239,7 @@ processes asking for the same ``$version``::
 Naming Locks
 ------------
 
-If the application needs different kind of Stores alongside each other, Symfony
+If the application needs different kinds of stores alongside each other, Symfony
 provides :ref:`named lock <reference-lock-resources-name>`:
 
 .. configuration-block::

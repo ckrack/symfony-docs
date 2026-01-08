@@ -76,7 +76,7 @@ To achieve this, the rate limit is approximated based on the current window and
 the previous window.
 
 For example: the limit is 5,000 requests per hour; a user made 4,000 requests
-the previous hour and 500 requests this hour. 15 minutes in to the current hour
+the previous hour and 500 requests this hour. 15 minutes into the current hour
 (25% of the window) the hit count would be calculated as: 75% * 4,000 + 500 = 3,500.
 At this point in time the user can only do 1,500 more requests.
 

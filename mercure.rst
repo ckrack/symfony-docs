@@ -4,7 +4,7 @@ Pushing Data to Clients Using the Mercure Protocol
 Being able to broadcast data in real-time from servers to clients is a
 requirement for many modern web and mobile applications.
 
-Creating a UI reacting in live to changes made by other users
+Creating a UI reacting live to changes made by other users
 (e.g. a user changes the data currently browsed by several other users,
 all UIs are instantly updated),
 notifying the user when :doc:`an asynchronous job </messenger>` has been
@@ -726,11 +726,11 @@ Async dispatching
     usually not necessary.
 
 Instead of calling the ``Publisher`` service directly, you can also let Symfony
-dispatching the updates asynchronously thanks to the provided integration with
+dispatch the updates asynchronously thanks to the provided integration with
 the Messenger component.
 
 First, be sure :doc:`to install the Messenger component </messenger>`
-and to configure properly a transport (if you don't, the handler will
+and to properly configure a transport (if you don't, the handler will
 be called synchronously).
 
 Then, dispatch the Mercure ``Update`` to the Messenger's Message Bus,
