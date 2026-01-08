@@ -606,7 +606,7 @@ hypermedia API, and automatic update broadcasting through the Mercure hub::
     // src/Entity/Book.php
     namespace App\Entity;
 
-    use ApiPlatform\Core\Annotation\ApiResource;
+    use ApiPlatform\Metadata\ApiResource;
     use Doctrine\ORM\Mapping as ORM;
 
     #[ApiResource(mercure: true)]
