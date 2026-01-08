@@ -951,6 +951,121 @@ This way, browsers can start downloading the assets immediately; like the
 ``sendEarlyHints()`` method also returns the ``Response`` object, which you
 must use to create the full response sent from the controller action.
 
+.. _controller-server-sent-events:
+
+Streaming Server-Sent Events
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+`Server-Sent Events (SSE)`_ is a standard that allows a server to push updates
+to the client over a single HTTP connection. It's a simple and efficient way
+to send real-time updates from the server to the browser, such as live
+notifications, progress updates, or data feeds.
+
+.. versionadded:: 7.3
+
+    The ``EventStreamResponse`` and ``ServerEvent`` classes were introduced in Symfony 7.3.
+
+The :class:`Symfony\\Component\\HttpFoundation\\EventStreamResponse` class
+allows you to stream events to the client using the SSE protocol. It automatically
+sets the required headers (``Content-Type: text/event-stream``, ``Cache-Control: no-cache``,
+``Connection: keep-alive``) and provides a simple API to send events::
+
+    use Symfony\Component\HttpFoundation\EventStreamResponse;
+    use Symfony\Component\HttpFoundation\ServerEvent;
+
+    // ...
+
+    public function liveNotifications(): EventStreamResponse
+    {
+        return new EventStreamResponse(function (): iterable {
+            foreach ($this->getNotifications() as $notification) {
+                yield new ServerEvent($notification->toJson());
+
+                sleep(1); // simulate a delay between events
+            }
+        });
+    }
+
+The :class:`Symfony\\Component\\HttpFoundation\\ServerEvent` class is a DTO
+that represents an SSE event following `the WHATWG specification`_. You can
+customize each event using its constructor arguments::
+
+    // basic event with just data
+    yield new ServerEvent('Some message');
+
+    // event with a custom type (client listens via addEventListener('my-event', ...))
+    yield new ServerEvent(
+        data: json_encode(['status' => 'completed']),
+        type: 'my-event'
+    );
+
+    // event with an ID (useful for resuming streams with Last-Event-ID header)
+    yield new ServerEvent(
+        data: 'Update content',
+        id: 'event-123'
+    );
+
+    // event that tells the client to retry after a specific time (in milliseconds)
+    yield new ServerEvent(
+        data: 'Retry info',
+        retry: 5000
+    );
+
+    // event with a comment (can be used for keep-alive)
+    yield new ServerEvent(comment: 'keep-alive');
+
+For use cases where generators are not feasible, you can use the
+:method:`Symfony\\Component\\HttpFoundation\\EventStreamResponse::sendEvent`
+method for manual control::
+
+    use Symfony\Component\HttpFoundation\EventStreamResponse;
+    use Symfony\Component\HttpFoundation\ServerEvent;
+
+    // ...
+
+    public function liveProgress(): EventStreamResponse
+    {
+        return new EventStreamResponse(function (EventStreamResponse $response) {
+            $redis = new \Redis();
+            $redis->connect('127.0.0.1');
+            $redis->subscribe(['message'], function (/* ... */, string $message) use ($response) {
+                $response->sendEvent(new ServerEvent($message));
+            });
+        });
+    }
+
+On the client side, you can listen to events using the native ``EventSource`` API:
+
+.. code-block:: javascript
+
+    const eventSource = new EventSource('/live-notifications');
+
+    // listen to all events (without a specific type)
+    eventSource.onmessage = (event) => {
+        console.log('Received:', event.data);
+    };
+
+    // listen to events with a specific type
+    eventSource.addEventListener('my-event', (event) => {
+        console.log('My event:', JSON.parse(event.data));
+    });
+
+    // handle connection errors
+    eventSource.onerror = (error) => {
+        console.error('SSE error:', error);
+        eventSource.close();
+    };
+
+.. warning::
+
+    ``EventStreamResponse`` is designed for small applications with limited
+    concurrent connections. Because SSE keeps HTTP connections open, it consumes
+    server resources (memory and connection limits) for each connected client.
+
+    For high-traffic applications that need to broadcast updates to many clients
+    simultaneously, consider using :doc:`Mercure </mercure>`, which is built on
+    top of SSE but uses a dedicated hub to manage connections efficiently.
+
 Final Thoughts
 --------------
 
@@ -991,3 +1106,5 @@ Learn more about Controllers
 .. _`Validate Filters`: https://www.php.net/manual/en/filter.constants.php
 .. _`phpstan/phpdoc-parser`: https://packagist.org/packages/phpstan/phpdoc-parser
 .. _`phpdocumentor/type-resolver`: https://packagist.org/packages/phpdocumentor/type-resolver
+.. _`Server-Sent Events (SSE)`: https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events
+.. _`the WHATWG specification`: https://html.spec.whatwg.org/multipage/server-sent-events.html
