@@ -1,7 +1,7 @@
 Password Hashing and Verification
 =================================
 
-Most applications use passwords to login users. These passwords should be
+Most applications use passwords to log in users. These passwords should be
 hashed to securely store them. Symfony's PasswordHasher component provides
 all utilities to safely hash and verify passwords.
 

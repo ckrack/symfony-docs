@@ -131,7 +131,7 @@ Additionally legacy code tends to be hard to write tests for, making the process
 slow and cumbersome.
 
 Instead of providing low level tests, that ensure each class works as expected, it
-might makes sense to write high level tests ensuring that at least anything user
+might make sense to write high level tests ensuring that at least anything user
 facing works on at least a superficial level. These kinds of tests are commonly
 called End-to-End tests, because they cover the whole application from what the
 user sees in the browser down to the very code that is being run and connected
@@ -139,7 +139,7 @@ services like a database. To automate this you have to make sure that you can
 get a test instance of your system running as easily as possible and making
 sure that external systems do not change your production environment, e.g.
 provide a separate test database with (anonymized) data from a production
-system or being able to setup a new schema with a basic dataset for your test
+system or being able to set up a new schema with a basic dataset for your test
 environment. Since these tests do not rely as much on isolating testable code
 and instead look at the interconnected system, writing them is usually easier
 and more productive when doing a migration. You can then limit your effort on

@@ -466,7 +466,7 @@ As per RFC2732, IPv6 addresses must be enclosed in square brackets. To bind to I
 Overriding default SMTP authenticators
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-By default, SMTP transports will try to login using all authentication methods
+By default, SMTP transports will try to log in using all authentication methods
 available on the SMTP server, one after the other. In some cases, it may be
 useful to redefine the supported authentication methods to ensure that the
 preferred method will be used first.

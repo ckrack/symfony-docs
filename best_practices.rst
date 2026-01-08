@@ -200,7 +200,7 @@ If you use the :ref:`default services.yaml configuration <service-container-serv
 most services will be configured automatically. However, in some edge cases
 you'll need to configure services (or parts of them) manually.
 
-YAML is the format recommended configuring services because it's friendly to
+YAML is the format recommended for configuring services because it's friendly to
 newcomers and concise, but Symfony also supports XML and PHP configuration.
 
 Use Attributes to Define the Doctrine Entity Mapping
