@@ -194,7 +194,7 @@ These are all the possible behaviors:
 Avoiding your Code Becoming Dependent on the Container
 ------------------------------------------------------
 
-Whilst you can retrieve services from the container directly it is best
+While you can retrieve services from the container directly it is best
 to minimize this. For example, in the ``NewsletterManager`` you injected
 the ``mailer`` service in rather than asking for it from the container.
 You could have injected the container in and retrieved the ``mailer`` service

@@ -318,7 +318,7 @@ somewhat like this::
          * architecture of the legacy code and how it's executed.
          *
          * If your mapping is complicated, you may want to write unit tests
-         * to verify your logic, hence this is public static.
+         * to verify your logic, so this method is public static.
          */
         public static function getLegacyScript(Request $request): string
         {

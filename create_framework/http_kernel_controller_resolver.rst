@@ -2,7 +2,7 @@ The HttpKernel Component: the Controller Resolver
 =================================================
 
 You might think that our framework is already pretty solid and you are
-probably right. But let's see how we can improve it nonetheless.
+probably right. But it can still be improved.
 
 Right now, all our examples use procedural code, but remember that controllers
 can be any valid PHP callbacks. Let's convert our controller to a proper

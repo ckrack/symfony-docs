@@ -1,8 +1,8 @@
 Unit Testing
 ============
 
-You might have noticed some subtle but nonetheless important bugs in the
-framework we built in the previous chapter. When creating a framework, you
+You might have noticed some subtle but important bugs in the framework built in
+the previous chapter. When creating a framework, you
 must be sure that it behaves as advertised. If not, all the applications based
 on it will exhibit the same bugs. The good news is that whenever you fix a
 bug, you are fixing a bunch of applications too.
