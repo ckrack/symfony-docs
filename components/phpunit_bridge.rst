@@ -500,13 +500,13 @@ Running the following command will display the full stack trace:
 Testing with Multiple PHPUnit Versions
 --------------------------------------
 
-When testing a library that has to be compatible with several versions of PHP,
+When testing a library that has to be compatible with legacy versions of PHP,
 the test suite cannot use the latest versions of PHPUnit because:
 
 * PHPUnit 8 deprecated several methods in favor of other methods which are not
   available in older versions (e.g. PHPUnit 4);
 * PHPUnit 8 added the ``void`` return type to the ``setUp()`` method, which is
-  not compatible with PHP 5.5;
+  not compatible with legacy PHP versions;
 * PHPUnit switched to namespaced classes starting from PHPUnit 6, so tests must
   work with and without namespaces.
 
@@ -526,7 +526,8 @@ When running the ``simple-phpunit`` script with the ``SYMFONY_PHPUNIT_REMOVE_RET
 environment variable set to ``1``, the PHPUnit bridge will alter the code of
 PHPUnit to remove the return type (introduced in PHPUnit 8) from ``setUp()``,
 ``tearDown()``, ``setUpBeforeClass()`` and ``tearDownAfterClass()`` methods.
-This allows you to write a test compatible with both PHP 5 and PHPUnit 8.
+This allows you to write a test compatible with both legacy PHP versions and
+PHPUnit 8.
 
 Using Namespaced PHPUnit Classes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
