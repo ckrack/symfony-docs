@@ -1,12 +1,11 @@
 Upgrading Existing Applications to Symfony Flex
 ===============================================
 
-Using Symfony Flex is optional, even in Symfony 4, where Flex is used by
-default. However, Flex is so convenient and improves your productivity so much
-that it's strongly recommended to upgrade your existing applications to it.
+Symfony Flex is optional, but it's so convenient and improves your productivity
+so much that it's strongly recommended to use it in all your applications.
 
 Symfony Flex recommends that applications use the following directory structure,
-which is the same used by default in Symfony 4, but you can
+which is the same used by default in Symfony, but you can
 :ref:`customize some directories <flex-customize-paths>`:
 
 .. code-block:: text
@@ -42,9 +41,9 @@ manual steps:
 
        $ composer require symfony/flex
 
-#. If the project's ``composer.json`` file contains ``symfony/symfony`` dependency,
-   it still depends on the Symfony Standard Edition, which is no longer available
-   in Symfony 4. First, remove this dependency:
+#. If the project's ``composer.json`` file contains the ``symfony/symfony`` dependency,
+   it still depends on the legacy Symfony Standard Edition, which is no longer available.
+   First, remove this dependency:
 
    .. code-block:: terminal
 
