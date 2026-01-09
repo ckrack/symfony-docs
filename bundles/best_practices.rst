@@ -204,7 +204,7 @@ A bundle should at least test:
 * All supported major Symfony versions (e.g. both ``6.4`` and ``7.x`` if
   support is claimed for both).
 
-Thus, a bundle supporting PHP 7.4, 8.3 and 8.4, and Symfony 6.4 and 7.x should
+Therefore, a bundle supporting PHP 7.4, 8.3 and 8.4, and Symfony 6.4 and 7.x should
 have at least this test matrix:
 
 ===========  ===============  ===================

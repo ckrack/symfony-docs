@@ -1674,7 +1674,7 @@ your Envelope::
     the ``messenger:stop-workers`` command inefficient, as they all rely on the fact that
     the receiver returns immediately no matter if it finds a message or not. The consume
     worker is responsible for iterating until it receives a message to handle and/or until one
-    of the stop conditions is reached. Thus, the worker's stop logic cannot be reached if it
+    of the stop conditions is reached. Therefore, the worker's stop logic cannot be reached if it
     is stuck in a blocking call.
 
 .. tip::
@@ -2498,7 +2498,7 @@ handler is registered. The ``HandleTrait`` can be used in any class that has a
         }
     }
 
-Hence, you can use the trait to create command & query bus classes.
+Therefore, you can use the trait to create command & query bus classes.
 For example, you could create a special ``QueryBus`` class and inject it
 wherever you need a query bus behavior instead of the ``MessageBusInterface``::
 

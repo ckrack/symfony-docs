@@ -5,7 +5,7 @@ Sometimes, you may want to display constraint validation error messages differen
 based on some rules. For example, you have a registration form for new users
 where they enter some personal information and choose their authentication
 credentials. They would have to choose a username and a secure password,
-but providing bank account information would be optional. Nonetheless, you
+but providing bank account information would be optional. However, you
 want to make sure that these optional fields, if entered, are still valid,
 but display their errors differently.
 

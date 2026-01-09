@@ -533,7 +533,7 @@ way further optimizes how the services are created by the container.
 In the above example you will need to delete the cached container file whenever
 you make any changes. Adding a check for a variable that determines if you
 are in debug mode allows you to keep the speed of the cached container in
-production but getting an up to date configuration whilst developing your
+production but getting an up to date configuration while developing your
 application::
 
     // ...
