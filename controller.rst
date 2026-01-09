@@ -725,41 +725,49 @@ there are constraint violations:
 Managing the Session
 --------------------
 
-You can store special messages, called "flash" messages, on the user's session.
-By design, flash messages are meant to be used exactly once: they vanish from
-the session automatically as soon as you retrieve them. This feature makes
-"flash" messages particularly great for storing user notifications.
+Symfony provides a session service to store information about the user between
+requests. You can access the session through the ``Request`` object (in services,
+:doc:`inject the RequestStack service </service_container/request>`)::
 
-For example, imagine you're processing a :doc:`form </forms>` submission::
+    use Symfony\Component\HttpFoundation\Request;
+    use Symfony\Component\HttpFoundation\Response;
 
-.. configuration-block::
+    public function index(Request $request): Response
+    {
+        $session = $request->getSession();
 
-    .. code-block:: php-symfony
+        // store an attribute for reuse during a later user request
+        $session->set('user_id', 42);
 
-        use Symfony\Component\HttpFoundation\Request;
-        use Symfony\Component\HttpFoundation\Response;
+        // retrieve an attribute with an optional default value
+        $userId = $session->get('user_id', 0);
+
         // ...
+    }
 
-        public function update(Request $request): Response
-        {
-            // ...
+Read the :doc:`session documentation </session>` for more details about
+configuring and using sessions.
 
-            if ($form->isSubmitted() && $form->isValid()) {
-                // do some sort of processing
+Flash Messages
+~~~~~~~~~~~~~~
 
-                $this->addFlash(
-                    'notice',
-                    'Your changes were saved!'
-                );
-                // $this->addFlash() is equivalent to $request->getSession()->getFlashBag()->add()
+Flash messages are special session messages meant to be used exactly once: they
+vanish from the session automatically as soon as you retrieve them. This makes
+them ideal for storing user notifications::
 
-                return $this->redirectToRoute(/* ... */);
-            }
+    use Symfony\Component\HttpFoundation\Request;
+    use Symfony\Component\HttpFoundation\Response;
+    // ...
 
-            return $this->render(/* ... */);
-        }
+    public function update(Request $request): Response
+    {
+        // ... do some data processing
 
-:ref:`Reading <session-intro>` for more information about using Sessions.
+        $this->addFlash('notice', 'Your changes were saved!');
+        // $this->addFlash() is equivalent to $request->getSession()->getFlashBag()->add()
+
+        return $this->redirectToRoute(/* ... */);
+    }
 
 .. _request-object-info:
 
