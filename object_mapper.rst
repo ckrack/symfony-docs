@@ -601,6 +601,26 @@ your DTOs/Entities, you can implement a custom mapping strategy using the
 This allows defining mapping rules within dedicated mapper services, similar
 to the approach used by libraries like MapStruct in the Java ecosystem.
 
+.. note::
+
+    The built-in ``#[Map]`` attribute from Symfony only supports ``TARGET_CLASS``
+    and ``TARGET_PROPERTY`` targets. To use ``#[Map]`` on methods (as shown in
+    the MapStruct-like example below), you need to create your own custom attribute
+    that extends Symfony's ``Map`` attribute and adds ``TARGET_METHOD`` support::
+
+        // src/ObjectMapper/Attribute/Map.php
+        namespace App\ObjectMapper\Attribute;
+
+        use Symfony\Component\ObjectMapper\Attribute\Map as BaseMap;
+
+        #[\Attribute(\Attribute::TARGET_CLASS | \Attribute::TARGET_PROPERTY | \Attribute::TARGET_METHOD | \Attribute::IS_REPEATABLE)]
+        class Map extends BaseMap
+        {
+        }
+
+    Then use this custom ``App\ObjectMapper\Attribute\Map`` attribute instead of
+    Symfony's built-in one in your mapper classes.
+
 First, create your custom metadata factory. The following example reads mapping
 rules defined via ``#[Map]`` attributes on a dedicated mapper service class,
 specifically on its ``map`` method for property mappings and on the class itself
@@ -663,14 +683,15 @@ for the source-to-target relationship::
 Next, define your mapper service class. This class implements ``ObjectMapperInterface``
 but typically delegates the actual mapping back to a standard ``ObjectMapper``
 instance configured with the custom metadata factory. Mapping rules are defined
-using ``#[Map]`` attributes on this class and its ``map`` method::
+using your custom ``#[Map]`` attribute (not Symfony's built-in one) on this class
+and its ``map`` method::
 
     namespace App\ObjectMapper;
 
     use App\Dto\LegacyUser;
     use App\Dto\UserDto;
+    use App\ObjectMapper\Attribute\Map;
     use App\ObjectMapper\Metadata\MapStructMapperMetadataFactory;
-    use Symfony\Component\ObjectMapper\Attribute\Map;
     use Symfony\Component\ObjectMapper\ObjectMapper;
     use Symfony\Component\ObjectMapper\ObjectMapperInterface;
 
