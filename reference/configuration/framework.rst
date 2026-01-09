@@ -377,6 +377,10 @@ Another alternative is to set the ``xdebug.file_link_format`` option in your
         // example for PhpStorm
         'phpstorm://open?file=%%f&line=%%l&/var/www/app/>/projects/my_project/'
 
+        // example for JetBrains Toolbox, using a relative path
+        // by removing the `/path/to/root/` (note trailing `/`), it becomes relative
+        'jetbrains://php-storm/navigate/reference?project=my-project&path=%%f:%%l&/path/to/root/>'
+
 .. _reference-framework-test:
 
 test
