@@ -943,7 +943,7 @@ the submitted data, those fields will be explicitly set to ``null``.
 Learn more
 ----------
 
-When building forms, keep in mind that the first goal of a form is to translate
+When building forms, remember that the first goal of a form is to translate
 data from an object (``Task``) to an HTML form so that the user can modify that
 data. The second goal of a form is to take the data submitted by the user and to
 re-apply it to the object.

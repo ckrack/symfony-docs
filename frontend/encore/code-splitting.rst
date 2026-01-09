@@ -47,7 +47,7 @@ the code via AJAX when it's needed:
 By using ``import()`` like a function, the module will be downloaded async and
 the ``.then()`` callback will be executed when it's finished. The ``VideoPlayer``
 argument to the callback will be the loaded module. In other words, it works like
-normal AJAX calls! Behind the scenes, Webpack will package the ``VideoPlayer`` module
+normal AJAX calls! Internally, Webpack will package the ``VideoPlayer`` module
 into a separate file (e.g. ``0.js``) so it can be downloaded. All the details are
 handled for you.
 

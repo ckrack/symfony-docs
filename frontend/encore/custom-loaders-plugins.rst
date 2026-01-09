@@ -4,7 +4,7 @@ Adding Custom Loaders & Plugins with Webpack Encore
 Adding Custom Loaders
 ---------------------
 
-Encore already comes with a variety of different loaders out of the box,
+Encore already comes with a variety of different loaders,
 but if there is a specific loader that you want to use that is not currently supported, you
 can add your own loader through the ``addLoader`` function.
 The ``addLoader`` takes any valid webpack rules config.

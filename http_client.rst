@@ -1142,7 +1142,7 @@ To force HTTP/2 for ``http`` URLs, you need to enable it explicitly via the
 
         $client = HttpClient::create(['http_version' => '2.0']);
 
-Support for HTTP/2 PUSH works out of the box when using a compatible client:
+Support for HTTP/2 PUSH works automatically when using a compatible client:
 pushed responses are put into a temporary cache and are used when a
 subsequent request is triggered for the corresponding URLs.
 
@@ -1495,7 +1495,7 @@ Caching Requests and Responses
 This component provides a :class:`Symfony\\Component\\HttpClient\\CachingHttpClient`
 decorator that allows caching responses and serving them from the local storage
 for next requests. The implementation leverages the
-:class:`Symfony\\Component\\HttpKernel\\HttpCache\\HttpCache` class under the hood
+:class:`Symfony\\Component\\HttpKernel\\HttpCache\\HttpCache` class internally
 so that the :doc:`HttpKernel component </components/http_kernel>` needs to be
 installed in your application::
 

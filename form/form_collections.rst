@@ -504,7 +504,7 @@ you will learn about next!).
     you'll need to do a little bit more work to ensure that the correct side
     of the relationship is modified.
 
-    The trick is to make sure that the single "Task" is set on each "Tag".
+    The solution is to make sure that the single "Task" is set on each "Tag".
     One way to do this is to add some extra logic to ``addTag()``, which
     is called by the form type since ``by_reference`` is set to ``false``::
 

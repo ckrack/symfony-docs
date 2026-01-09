@@ -15,7 +15,7 @@ process, you need to understand three parts that work together:
 
     Usually, you will not need to define your own front controller or
     ``Kernel`` class as Symfony provides sensible default implementations.
-    This article is provided to explain what is going on behind the scenes.
+    This article is provided to explain what is going on internally.
 
 .. _architecture-front-controller:
 

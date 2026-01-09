@@ -17,7 +17,7 @@ integration, CSS inlining, file attachments and a lot more. Get them installed w
 Transport Setup
 ---------------
 
-Emails are delivered via a "transport". Out of the box, you can deliver emails
+Emails are delivered via a "transport". By default, you can deliver emails
 over SMTP by configuring the DSN in your ``.env`` file (the ``user``,
 ``pass`` and ``port`` parameters are optional):
 

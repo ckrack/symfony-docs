@@ -980,7 +980,7 @@ and that will be automatically deleted after the response is sent::
     The support for ``\SplTempFileObject`` in ``BinaryFileResponse``
     was introduced in Symfony 7.1.
 
-If the size of the served file is unknown (e.g. because it's being generated on the fly,
+If the size of the served file is unknown (e.g. because it's being generated dynamically,
 or because a PHP stream filter is registered on it, etc.), you can pass a ``Stream``
 instance to ``BinaryFileResponse``. This will disable ``Range`` and ``Content-Length``
 handling, switching to chunked encoding instead::

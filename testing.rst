@@ -902,8 +902,7 @@ The second optional argument is used to override the default form field values.
 .. note::
 
     Notice that you select form buttons and not forms, as a form can have several
-    buttons. If you use the traversing API, keep in mind that you must look for a
-    button.
+    buttons. If you use the traversing API, remember that you must look for a button.
 
 If you need access to the :class:`Symfony\\Component\\DomCrawler\\Form` object
 that provides helpful methods specific to forms (such as ``getUri()``,

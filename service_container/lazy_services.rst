@@ -145,7 +145,7 @@ It defines an optional parameter used to define interfaces for proxy and interse
 Interface Proxifying
 --------------------
 
-Under the hood, proxies generated to lazily load services inherit from the class
+Internally, proxies generated to lazily load services inherit from the class
 used by the service. However, sometimes this is not possible at all (e.g. because
 the class is `final`_ and can not be extended) or not convenient.
 

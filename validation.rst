@@ -226,7 +226,7 @@ The ``validator`` is designed to validate objects against *constraints* (i.e.
 rules). In order to validate an object, simply map one or more constraints
 to its class and then pass it to the ``validator`` service.
 
-Behind the scenes, a constraint is simply a PHP object that makes an assertive
+Internally, a constraint is a PHP object that makes an assertive
 statement. In real life, a constraint could be: ``'The cake must not be burned'``.
 In Symfony, constraints are similar: they are assertions that a condition
 is true. Given a value, a constraint will tell you if that value

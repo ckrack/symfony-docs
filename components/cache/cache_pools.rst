@@ -51,7 +51,7 @@ and deleting cache items using only two methods and a callback::
     // ... and to remove the cache key
     $cache->delete('my_cache_key');
 
-Out of the box, using this interface provides stampede protection via locking
+Using this interface provides automatic stampede protection via locking
 and early expiration. Early expiration can be controlled via the third "beta"
 argument of the :method:`Symfony\\Contracts\\Cache\\CacheInterface::get` method.
 See the :doc:`/components/cache` article for more information.

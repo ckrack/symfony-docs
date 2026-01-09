@@ -482,7 +482,7 @@ Variable                Usage
 
 .. tip::
 
-    Behind the scenes, these variables are made available to the ``FormView``
+    Internally, these variables are made available to the ``FormView``
     object of your form when the Form component calls ``buildView()`` and
     ``finishView()`` on each "node" of your form tree. To see what "view"
     variables a particular field has, find the source code for the form

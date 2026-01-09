@@ -42,7 +42,7 @@ So how can we install and configure Twig? By running one single command:
 
     $ composer require twig
 
-Two *very* interesting things happen behind the scenes thanks to Symfony Flex: a
+Two *very* interesting things happen internally thanks to Symfony Flex: a
 Composer plugin that is already installed in our project.
 
 First, ``twig`` is not the name of a Composer package: it's a Flex *alias* that

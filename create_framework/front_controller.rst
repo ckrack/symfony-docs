@@ -121,7 +121,7 @@ To access a page, you must now use the ``front.php`` script:
     and remove the front controller script so that your users will be able to
     type ``http://127.0.0.1:4321/hello?name=Fabien``, which looks much better.
 
-The trick is the usage of the ``Request::getPathInfo()`` method which returns
+The key is to use the ``Request::getPathInfo()`` method, which returns
 the path of the Request by removing the front controller script name including
 its sub-directories (only if needed -- see above tip).
 

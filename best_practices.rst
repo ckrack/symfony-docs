@@ -32,7 +32,7 @@ to create new Symfony applications:
 
     $ symfony new my_project_directory
 
-Under the hood, this Symfony binary command executes the needed `Composer`_
+Internally, this Symfony binary command executes the needed `Composer`_
 command to :ref:`create a new Symfony application <creating-symfony-applications>`
 based on the current stable version.
 

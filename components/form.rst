@@ -69,7 +69,7 @@ method::
 
     $form->handleRequest();
 
-Behind the scenes, this uses a :class:`Symfony\\Component\\Form\\NativeRequestHandler`
+Internally, this uses a :class:`Symfony\\Component\\Form\\NativeRequestHandler`
 object to read data off of the correct PHP superglobals (i.e. ``$_POST`` or
 ``$_GET``) based on the HTTP method configured on the form (POST is default).
 

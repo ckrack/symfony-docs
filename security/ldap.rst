@@ -366,7 +366,7 @@ your users have the following two DN: ``dc=companyA,dc=example,dc=com`` and
 ``dc=companyB,dc=example,dc=com``, then ``dn_string`` should be
 ``dc=example,dc=com``.
 
-Bear in mind that usernames must be unique across both DN, as the authentication
+Note that usernames must be unique across both DN, as the authentication
 provider won't be able to select the correct user for the bind process if more
 than one is found.
 
