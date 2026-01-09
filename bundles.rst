@@ -87,6 +87,7 @@ of the bundle. Now that you've created the bundle, enable it::
 
 And while it doesn't do anything yet, AcmeBlogBundle is now ready to be used.
 
+.. _bundles-legacy-directory-structure:
 .. _bundles-directory-structure:
 
 Bundle Directory Structure
@@ -120,26 +121,6 @@ to be adjusted if needed:
 
 ``translations/``
     Holds translations organized by domain and locale (e.g. ``AcmeBlogBundle.en.xlf``).
-
-.. _bundles-legacy-directory-structure:
-
-.. warning::
-
-    The recommended bundle structure was changed in Symfony 5, read the
-    `Symfony 4.4 bundle documentation`_ for information about the old
-    structure.
-
-    When using the new ``AbstractBundle`` class, the bundle defaults to the
-    new structure. Override the ``Bundle::getPath()`` method to change to
-    the old structure::
-
-        class AcmeBlogBundle extends AbstractBundle
-        {
-            public function getPath(): string
-            {
-                return __DIR__;
-            }
-        }
 
 .. tip::
 
@@ -247,5 +228,4 @@ Learn more
 * :doc:`/bundles/prepend_extension`
 
 .. _`third-party bundles`: https://github.com/search?q=topic%3Asymfony-bundle&type=Repositories
-.. _`Symfony 4.4 bundle documentation`: https://symfony.com/doc/4.4/bundles.html#bundle-directory-structure
 .. _`PSR-4`: https://www.php-fig.org/psr/psr-4/
