@@ -327,7 +327,7 @@ before, execute your migrations:
     $ php bin/console doctrine:migrations:migrate
 
 This will only execute the *one* new migration file, because DoctrineMigrationsBundle
-knows that the first migration was already executed earlier. Behind the scenes, it
+knows that the first migration was already executed earlier. Internally, it
 manages a ``migration_versions`` table to track this.
 
 Each time you make a change to your schema, run these two commands to generate the

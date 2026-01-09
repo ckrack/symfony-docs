@@ -31,7 +31,7 @@ until you interact with the proxy in some way.
 
 .. versionadded:: 6.2
 
-    Starting from Symfony 6.2, service laziness is supported out of the box
+    Starting from Symfony 6.2, service laziness is supported natively
     without having to install any additional package.
 
 .. _lazy-services_configuration:
@@ -137,7 +137,7 @@ laziness, and supports lazy-autowiring of union types::
 Interface Proxifying
 --------------------
 
-Under the hood, proxies generated to lazily load services inherit from the class
+Internally, proxies generated to lazily load services inherit from the class
 used by the service. However, sometimes this is not possible at all (e.g. because
 the class is `final`_ and can not be extended) or not convenient.
 

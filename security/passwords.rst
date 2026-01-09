@@ -230,7 +230,7 @@ Reset Password
 --------------
 
 Using `MakerBundle`_ and `SymfonyCastsResetPasswordBundle`_, you can create
-a secure out of the box solution to handle forgotten passwords. First,
+a secure solution to handle forgotten passwords. First,
 install the SymfonyCastsResetPasswordBundle:
 
 .. code-block:: terminal

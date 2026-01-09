@@ -248,7 +248,7 @@ options:
 
 .. tip::
 
-    Behind the scenes, the array value of ``roles`` is passed as the
+    Internally, the array value of ``roles`` is passed as the
     ``$attributes`` argument to each voter in the application with the
     :class:`Symfony\\Component\\HttpFoundation\\Request` as ``$subject``. You
     can learn how to use your custom attributes by reading

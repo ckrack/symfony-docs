@@ -743,7 +743,7 @@ Three different behaviors are available:
 .. note::
 
     Sometimes, you may want to add a compiler pass that creates service
-    definitions on the fly. If you want to decorate such a service,
+    definitions dynamically. If you want to decorate such a service,
     be sure that your compiler pass is registered with ``PassConfig::TYPE_BEFORE_OPTIMIZATION``
     type so that the decoration pass will be able to find the created services.
 

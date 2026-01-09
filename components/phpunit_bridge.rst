@@ -321,7 +321,7 @@ Baseline Deprecations
 
 You can also take a snapshot of deprecations currently triggered by your application
 code, and ignore those during your test runs, still reporting newly added ones.
-The trick is to create a file with the allowed deprecations and define it as the
+To do so, create a file with the allowed deprecations and define it as the
 "deprecation baseline". Deprecations inside that file are ignored but the rest of
 deprecations are still reported.
 
@@ -893,7 +893,7 @@ namespaces in the ``phpunit.xml`` file, as done for example in the
         </listeners>
     </phpunit>
 
-Under the hood, a PHPUnit listener injects the mocked functions in the tested
+Internally, a PHPUnit listener injects the mocked functions in the tested
 classes' namespace. In order to work as expected, the listener has to run before
 the tested class ever runs.
 

@@ -49,7 +49,7 @@ faster on fixing deprecations to be able to upgrade.
 .. tip::
 
     When upgrading to Symfony you might be tempted to also use
-    :ref:`Flex <symfony-flex>`. Please keep in mind that it primarily
+    :ref:`Flex <symfony-flex>`. Please note that it primarily
     focuses on bootstrapping a new Symfony application according to best
     practices regarding the directory structure. When you work in the
     constraints of an existing application you might not be able to
