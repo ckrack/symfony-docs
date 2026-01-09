@@ -47,7 +47,7 @@ When configuring the cache component there are a few concepts you should know:
 .. _cache-app-system:
 
 There are two pools that are always enabled by default. They are ``cache.app`` and
-``cache.system``. The system cache is used for things like annotations, serializer,
+``cache.system``. The system cache is used for things like the serializer,
 and validation. The ``cache.app`` can be used in your code. You can configure which
 adapter (template) they use by using the ``app`` and ``system`` key like:
 

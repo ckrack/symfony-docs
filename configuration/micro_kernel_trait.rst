@@ -211,8 +211,10 @@ events directly from the kernel, again it will be registered automatically::
         }
     }
 
-Advanced Example: Twig, Annotations and the Web Debug Toolbar
--------------------------------------------------------------
+.. _advanced-example-twig-annotations-and-the-web-debug-toolbar:
+
+Advanced Example: Twig, Attributes and the Web Debug Toolbar
+------------------------------------------------------------
 
 The purpose of the ``MicroKernelTrait`` is *not* to have a single-file application.
 Instead, its goal is to give you the power to choose your bundles and structure.
@@ -236,7 +238,7 @@ your ``composer.json`` file to load from there:
 Then, run ``composer dump-autoload`` to dump your new autoload config.
 
 Now, suppose you want to define a custom configuration for your app,
-use Twig and load routes via annotations. Instead of putting *everything*
+use Twig and load routes via attributes. Instead of putting *everything*
 in ``index.php``, create a new ``src/Kernel.php`` to hold the kernel.
 Now it looks like this::
 
@@ -301,7 +303,6 @@ Now it looks like this::
             }
 
             // load the routes defined as PHP attributes
-            // (use 'annotation' as the second argument if you define routes as annotations)
             $routes->import(__DIR__.'/Controller/', 'attribute');
         }
 
