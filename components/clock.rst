@@ -134,9 +134,9 @@ is expired or not, by modifying the clock's time::
             // Clock sleeps for 10 minutes, so now is '2022-11-16 15:30:00'
             $clock->sleep(600); // Instantly changes time as if we waited for 10 minutes (600 seconds)
 
-            // modify the clock, accepts all formats supported by DateTimeImmutable::modify()
             $this->assertTrue($expirationChecker->isExpired($validUntil));
 
+            // modify the clock, accepts all formats supported by DateTimeImmutable::modify()
             $clock->modify('2022-11-16 15:00:00');
 
             // $validUntil is in the future again, so it is no longer expired
