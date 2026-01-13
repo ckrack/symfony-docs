@@ -127,7 +127,7 @@ follows:
         use Symfony\Config\FrameworkConfig;
 
         return static function (FrameworkConfig $framework): void {
-            $blogPublishing = $framework->workflows()->workflows('blog_publishing');
+            $blogPublishing = $framework->workflows()->workflow('blog_publishing');
             $blogPublishing
                 ->type('workflow') // or 'state_machine'
                 ->supports([BlogPost::class])
@@ -146,18 +146,18 @@ follows:
 
             $blogPublishing->transition()
                 ->name('to_review')
-                    ->from(['draft'])
-                    ->to(['reviewed']);
+                    ->from('draft')
+                    ->to('reviewed');
 
             $blogPublishing->transition()
                 ->name('publish')
-                    ->from(['reviewed'])
-                    ->to(['published']);
+                    ->from('reviewed')
+                    ->to('published');
 
             $blogPublishing->transition()
                 ->name('reject')
-                    ->from(['reviewed'])
-                    ->to(['rejected']);
+                    ->from('reviewed')
+                    ->to('rejected');
         };
 
 .. tip::
@@ -759,7 +759,7 @@ to :ref:`Guard events <workflow-usage-guard-events>`, which are always fired:
         return static function (FrameworkConfig $framework): void {
             // ...
 
-            $blogPublishing = $framework->workflows()->workflows('blog_publishing');
+            $blogPublishing = $framework->workflows()->workflow('blog_publishing');
 
             // ...
             // you can pass one or more event names
@@ -931,29 +931,29 @@ transition. The value of this option is any valid expression created with the
         use Symfony\Config\FrameworkConfig;
 
         return static function (FrameworkConfig $framework): void {
-            $blogPublishing = $framework->workflows()->workflows('blog_publishing');
+            $blogPublishing = $framework->workflows()->workflow('blog_publishing');
             // ... previous configuration
 
             $blogPublishing->transition()
                 ->name('to_review')
                     // the transition is allowed only if the current user has the ROLE_REVIEWER role.
                     ->guard('is_granted("ROLE_REVIEWER")')
-                    ->from(['draft'])
-                    ->to(['reviewed']);
+                    ->from('draft')
+                    ->to('reviewed');
 
             $blogPublishing->transition()
                 ->name('publish')
                     // or "is_remember_me", "is_fully_authenticated", "is_granted"
                     ->guard('is_authenticated')
-                    ->from(['reviewed'])
-                    ->to(['published']);
+                    ->from('reviewed')
+                    ->to('published');
 
             $blogPublishing->transition()
                 ->name('reject')
                     // or any valid expression language with "subject" referring to the post
                     ->guard('is_granted("ROLE_ADMIN") and subject.isStatusReviewed()')
-                    ->from(['reviewed'])
-                    ->to(['rejected']);
+                    ->from('reviewed')
+                    ->to('rejected');
         };
 
 You can also use transition blockers to block and return a user-friendly error
@@ -1074,7 +1074,7 @@ it:
         return static function (FrameworkConfig $framework): void {
             // ...
 
-            $blogPublishing = $framework->workflows()->workflows('blog_publishing');
+            $blogPublishing = $framework->workflows()->workflow('blog_publishing');
             // ...
 
             $blogPublishing->markingStore()
@@ -1227,7 +1227,7 @@ be only the title of the workflow or very complex objects:
         use Symfony\Config\FrameworkConfig;
 
         return static function (FrameworkConfig $framework): void {
-            $blogPublishing = $framework->workflows()->workflows('blog_publishing');
+            $blogPublishing = $framework->workflows()->workflow('blog_publishing');
             // ... previous configuration
 
             $blogPublishing->metadata([
@@ -1246,16 +1246,16 @@ be only the title of the workflow or very complex objects:
 
             $blogPublishing->transition()
                 ->name('to_review')
-                    ->from(['draft'])
-                    ->to(['reviewed'])
+                    ->from('draft')
+                    ->to('reviewed')
                     ->metadata([
                         'priority' => 0.5,
                     ]);
 
             $blogPublishing->transition()
                 ->name('publish')
-                    ->from(['reviewed'])
-                    ->to(['published'])
+                    ->from('reviewed')
+                    ->to('published')
                     ->metadata([
                         'hour_limit' => 20,
                         'explanation' => 'You can not publish after 8 PM.',
@@ -1416,7 +1416,7 @@ After implementing your validator, configure your workflow to use it:
         use Symfony\Config\FrameworkConfig;
 
         return static function (FrameworkConfig $framework): void {
-            $blogPublishing = $framework->workflows()->workflows('blog_publishing');
+            $blogPublishing = $framework->workflows()->workflow('blog_publishing');
             // ...
 
             $blogPublishing->definitionValidators([
