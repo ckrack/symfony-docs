@@ -603,10 +603,10 @@ to the approach used by libraries like MapStruct in the Java ecosystem.
 
 .. note::
 
-    The built-in ``#[Map]`` attribute from Symfony only supports ``TARGET_CLASS``
-    and ``TARGET_PROPERTY`` targets. To use ``#[Map]`` on methods (as shown in
-    the MapStruct-like example below), you need to create your own custom attribute
-    that extends Symfony's ``Map`` attribute and adds ``TARGET_METHOD`` support::
+    Symfony's built-in ``#[Map]`` attribute only supports ``TARGET_CLASS`` and
+    ``TARGET_PROPERTY`` targets. If you want to use ``#[Map]`` on methods (as in
+    the MapStruct-like example below), create a custom attribute that extends
+    Symfony's ``Map`` attribute and adds ``TARGET_METHOD`` support::
 
         // src/ObjectMapper/Attribute/Map.php
         namespace App\ObjectMapper\Attribute;
@@ -618,7 +618,7 @@ to the approach used by libraries like MapStruct in the Java ecosystem.
         {
         }
 
-    Then use this custom ``App\ObjectMapper\Attribute\Map`` attribute instead of
+    Then, use this custom ``App\ObjectMapper\Attribute\Map`` attribute instead of
     Symfony's built-in one in your mapper classes.
 
 First, create your custom metadata factory. The following example reads mapping
