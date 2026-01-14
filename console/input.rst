@@ -46,8 +46,10 @@ The ``Argument`` attribute accepts the following parameters:
     For example: ``#[Argument(description: 'Your username')]``.
 
 ``name``
-    The name of the argument (by default, the parameter name converted to ``kebab-case``).
-    For example: ``#[Argument(name: 'user-name')]``.
+    The name displayed for the argument in the command help and used to retrieve
+    the argument value via ``$input->getArgument('some-name')``. By default, it's
+    the constructor parameter name converted to ``kebab-case`` (e.g. ``$lastName``
+    becomes ``last-name``).
 
 ``suggestedValues``
     An array or a callable that provides :ref:`suggested values for the argument <console-input-completion>`.
@@ -221,12 +223,15 @@ The ``Option`` attribute accepts the following parameters:
     For example: ``#[Option(description: 'Number of iterations')]``.
 
 ``name``
-    The name of the option (by default, the parameter name converted to ``kebab-case``).
-    For example: ``#[Option(name: 'max-retries')]``.
+    The name used when passing the option to the command (e.g. ``--max-retries=5``)
+    and when retrieving its value via ``$input->getOption('some-name')``. By default,
+    it's the constructor parameter name converted to ``kebab-case`` (e.g.
+    ``$maxRetries`` becomes ``max-retries``).
 
 ``shortcut``
-    A one-letter shortcut that can be used instead of the full option name.
-    For example: ``#[Option(shortcut: 'i')]`` allows using ``-i`` instead of ``--iterations``.
+    A short alternative to the full option name (e.g. ``#[Option(shortcut: 'i')] $iterations``
+    allows using ``-i`` instead of ``--iterations``). Multiple shortcuts can be
+    defined in an array or using ``|`` as separator (e.g. ``shortcut: 'i|iter'``).
 
 ``suggestedValues``
     An array or a callable that provides :ref:`suggested values for the option <console-input-completion>`.
