@@ -108,7 +108,7 @@ You can specify the configuration in different ways:
 
 .. code-block:: yaml
 
-    channels: ~    # Include all the channels
+    # omit the 'channels' option to include all channels
 
     channels: foo  # Include only channel 'foo'
     channels: '!foo' # Include all channels, except 'foo'
