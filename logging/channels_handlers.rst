@@ -2,7 +2,7 @@ How to Log Messages to different Files
 ======================================
 
 The Symfony Framework organizes log messages into channels. By default, there
-are several channels, including ``doctrine``, ``event``, ``security``, ``request``
+are several channels, including ``app``, ``doctrine``, ``event``, ``security``, ``request``
 and more. The channel is printed in the log message and can also be used
 to direct different channels to different places/files.
 
