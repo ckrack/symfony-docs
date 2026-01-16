@@ -108,13 +108,13 @@ You can specify the configuration in different ways:
 
 .. code-block:: yaml
 
+    # omit the 'channels' option to include all channels
+
     channels: foo  # Include only channel 'foo'
     channels: '!foo' # Include all channels, except 'foo'
 
     channels: [foo, bar]   # Include only channels 'foo' and 'bar'
     channels: ['!foo', '!bar'] # Include all channels, except 'foo' and 'bar'
-
-To include *all* channels, just omit the ``channels`` key.
 
 Creating your own Channel
 -------------------------
