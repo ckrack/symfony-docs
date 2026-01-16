@@ -1378,7 +1378,16 @@ key. For example, the default Symfony configuration contains this:
     The value of the ``resource`` and ``exclude`` options can be any valid
     `glob pattern`_. If you want to exclude only a few services, you
     may use the :class:`Symfony\\Component\\DependencyInjection\\Attribute\\Exclude`
-    attribute directly on your class to exclude it.
+    attribute directly on your class to exclude it::
+
+        // src/Service/SomeService.php
+        namespace App\Service;
+
+        #[Exclude]
+        class SomeService
+        {
+            // ...
+        }
 
 This can be used to quickly make many classes available as services and apply some
 default configuration. The ``id`` of each service is its fully-qualified class name.
