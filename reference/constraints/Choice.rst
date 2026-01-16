@@ -97,7 +97,7 @@ If your valid choice list is simple, you can pass them in directly via the
             {
                 $metadata->addPropertyConstraint(
                     'city',
-                    new Assert\Choice(['New York', 'Berlin', 'Tokyo'])
+                    new Assert\Choice(choices: ['New York', 'Berlin', 'Tokyo'])
                 );
 
                 $metadata->addPropertyConstraint('genre', new Assert\Choice(

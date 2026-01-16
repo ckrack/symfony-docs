@@ -89,19 +89,18 @@ but here's a short example::
 
     use Symfony\Component\Form\Extension\Core\Type\TextType;
     use Symfony\Component\Form\FormBuilderInterface;
-    use Symfony\Component\Validator\Constraints\Length;
-    use Symfony\Component\Validator\Constraints\NotBlank;
+    use Symfony\Component\Validator\Constraints as Assert;
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('firstName', TextType::class, [
-                'constraints' => new Length(min: 3),
+                'constraints' => new Assert\Length(min: 3),
             ])
             ->add('lastName', TextType::class, [
                 'constraints' => [
-                    new NotBlank(),
-                    new Length(min: 3),
+                    new Assert\NotBlank(),
+                    new Assert\Length(min: 3),
                 ],
             ])
         ;
@@ -113,7 +112,9 @@ but here's a short example::
     ``Default`` group when creating the form, or set the correct group on
     the constraint you are adding::
 
-        new NotBlank(['groups' => ['create', 'update']]);
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        new Assert\NotBlank(groups: ['create', 'update']);
 
 .. tip::
 
@@ -137,9 +138,7 @@ This can be done by setting the ``constraints`` option in the
     use Symfony\Component\Form\Extension\Core\Type\TextType;
     use Symfony\Component\Form\FormBuilderInterface;
     use Symfony\Component\OptionsResolver\OptionsResolver;
-    use Symfony\Component\Validator\Constraints\Collection;
-    use Symfony\Component\Validator\Constraints\Length;
-    use Symfony\Component\Validator\Constraints\NotBlank;
+    use Symfony\Component\Validator\Constraints as Assert;
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -152,11 +151,11 @@ This can be done by setting the ``constraints`` option in the
     {
         $resolver->setDefaults([
             'data_class' => null,
-            'constraints' => new Collection([
-                'firstName' => new Length(min: 3),
+            'constraints' => new Assert\Collection([
+                'firstName' => new Assert\Length(min: 3),
                 'lastName' => [
-                    new NotBlank(),
-                    new Length(min: 3),
+                    new Assert\NotBlank(),
+                    new Assert\Length(min: 3),
                 ],
             ]),
         ]);
@@ -165,12 +164,14 @@ This can be done by setting the ``constraints`` option in the
 This means you can also do this when using the ``createFormBuilder()`` method
 in your controller::
 
+    use Symfony\Component\Validator\Constraints as Assert;
+
     $form = $this->createFormBuilder($defaultData, [
             'constraints' => [
-                'firstName' => new Length(['min' => 3]),
+                'firstName' => new Assert\Length(min: 3),
                 'lastName' => [
-                    new NotBlank(),
-                    new Length(['min' => 3]),
+                    new Assert\NotBlank(),
+                    new Assert\Length(min: 3),
                 ],
             ],
         ])

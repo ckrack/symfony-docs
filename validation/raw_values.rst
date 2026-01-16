@@ -65,27 +65,27 @@ Validation of arrays is possible using the ``Collection`` constraint::
         ],
     ];
 
-    $groups = new Assert\GroupSequence(['Default', 'custom']);
+    $groups = new Assert\GroupSequence(groups: ['Default', 'custom']);
 
     $constraint = new Assert\Collection([
         // the keys correspond to the keys in the input array
         'name' => new Assert\Collection([
-            'first_name' => new Assert\Length(['min' => 101]),
-            'last_name' => new Assert\Length(['min' => 1]),
+            'first_name' => new Assert\Length(min: 101),
+            'last_name' => new Assert\Length(min: 1),
         ]),
         'email' => new Assert\Email(),
-        'simple' => new Assert\Length(['min' => 102]),
-        'eye_color' => new Assert\Choice([3, 4]),
+        'simple' => new Assert\Length(min: 102),
+        'eye_color' => new Assert\Choice(choices: [3, 4]),
         'file' => new Assert\File(),
-        'password' => new Assert\Length(['min' => 60]),
+        'password' => new Assert\Length(min: 60),
         'tags' => new Assert\Optional([
             new Assert\Type('array'),
-            new Assert\Count(['min' => 1]),
+            new Assert\Count(min: 1),
             new Assert\All([
                 new Assert\Collection([
                     'slug' => [
                         new Assert\NotBlank(),
-                        new Assert\Type(['type' => 'string']),
+                        new Assert\Type(type: 'string'),
                     ],
                     'label' => [
                         new Assert\NotBlank(),

@@ -144,10 +144,10 @@ following:
                         'personal_email' => new Assert\Email(),
                         'short_bio' => [
                             new Assert\NotBlank(),
-                            new Assert\Length([
-                                'max' => 100,
-                                'maxMessage' => 'Your short bio is too long!',
-                            ]),
+                            new Assert\Length(
+                                max: 100,
+                                maxMessage: 'Your short bio is too long!',
+                            ),
                         ],
                     ],
                     allowMissingFields: true,
@@ -293,8 +293,8 @@ groups. Take the following example::
 
     $constraint = new Assert\Collection(
         fields: [
-            'name' => new Assert\NotBlank(['groups' => 'basic']),
-            'email' => new Assert\NotBlank(['groups' => 'contact']),
+            'name' => new Assert\NotBlank(groups: 'basic'),
+            'email' => new Assert\NotBlank(groups: 'contact'),
         ],
     );
 

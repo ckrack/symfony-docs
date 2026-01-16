@@ -389,12 +389,12 @@ returns ``true`` for acceptable values and ``false`` for invalid values::
     method::
 
         use Symfony\Component\OptionsResolver\OptionsResolver;
-        use Symfony\Component\Validator\Constraints\Length;
+        use Symfony\Component\Validator\Constraints as Assert;
         use Symfony\Component\Validator\Validation;
 
         // ...
         $resolver->setAllowedValues('transport', Validation::createIsValidCallable(
-            new Length(min: 10)
+            new Assert\Length(min: 10)
         ));
 
 In sub-classes, you can use :method:`Symfony\\Component\\OptionsResolver\\OptionsResolver::addAllowedValues`

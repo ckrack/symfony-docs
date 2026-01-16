@@ -685,8 +685,7 @@ option when building each field:
         use Symfony\Component\Form\Extension\Core\Type\DateType;
         use Symfony\Component\Form\Extension\Core\Type\TextType;
         use Symfony\Component\HttpFoundation\Response;
-        use Symfony\Component\Validator\Constraints\NotBlank;
-        use Symfony\Component\Validator\Constraints\Type;
+        use Symfony\Component\Validator\Constraints as Assert;
 
         class DefaultController extends AbstractController
         {
@@ -694,12 +693,12 @@ option when building each field:
             {
                 $form = $this->createFormBuilder()
                     ->add('task', TextType::class, [
-                        'constraints' => new NotBlank(),
+                        'constraints' => new Assert\NotBlank(),
                     ])
                     ->add('dueDate', DateType::class, [
                         'constraints' => [
-                            new NotBlank(),
-                            new Type(\DateTime::class),
+                            new Assert\NotBlank(),
+                            new Assert\Type(\DateTime::class),
                         ],
                     ])
                     ->getForm();
@@ -711,17 +710,16 @@ option when building each field:
 
         use Symfony\Component\Form\Extension\Core\Type\DateType;
         use Symfony\Component\Form\Extension\Core\Type\TextType;
-        use Symfony\Component\Validator\Constraints\NotBlank;
-        use Symfony\Component\Validator\Constraints\Type;
+        use Symfony\Component\Validator\Constraints as Assert;
 
         $form = $formFactory->createBuilder()
             ->add('task', TextType::class, [
-                'constraints' => new NotBlank(),
+                'constraints' => new Assert\NotBlank(),
             ])
             ->add('dueDate', DateType::class, [
                 'constraints' => [
-                    new NotBlank(),
-                    new Type(\DateTime::class),
+                    new Assert\NotBlank(),
+                    new Assert\Type(\DateTime::class),
                 ],
             ])
             ->getForm();

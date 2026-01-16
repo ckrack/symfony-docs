@@ -74,7 +74,7 @@ property is not empty, add the following:
         namespace App\Entity;
 
         // ...
-        use Symfony\Component\Validator\Constraints\NotBlank;
+        use Symfony\Component\Validator\Constraints as Assert;
         use Symfony\Component\Validator\Mapping\ClassMetadata;
 
         class Author
@@ -83,7 +83,7 @@ property is not empty, add the following:
 
             public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
-                $metadata->addPropertyConstraint('name', new NotBlank(
+                $metadata->addPropertyConstraint('name', new Assert\NotBlank(
                     message: 'author.name.not_blank',
                 ));
             }
