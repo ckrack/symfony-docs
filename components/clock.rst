@@ -250,7 +250,7 @@ timestamps::
     error handling across versions of PHP, thanks to polyfilling `PHP 8.3's behavior`_
     on the topic.
 
-``DatePoint`` also allows to set and get the microsecond part of the date and time::
+``DatePoint`` also allows you to set and get the microsecond part of the date and time::
 
     $datePoint = new DatePoint();
     $datePoint->setMicrosecond(345);
