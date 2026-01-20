@@ -1517,7 +1517,7 @@ Limit the Number of Requests
 ----------------------------
 
 This component provides a :class:`Symfony\\Component\\HttpClient\\ThrottlingHttpClient`
-decorator that allows to limit the number of requests within a certain period,
+decorator that allows you to limit the number of requests within a certain period,
 potentially delaying calls based on the rate limiting policy.
 
 The implementation leverages the

@@ -658,7 +658,7 @@ controller argument nullable:
     #[MapUploadedFile]
     ?UploadedFile $document
 
-The ``#[MapUploadedFile]`` attribute also allows to pass a list of constraints
+The ``#[MapUploadedFile]`` attribute also allows you to pass a list of constraints
 to apply to the uploaded file::
 
     namespace App\Controller;
