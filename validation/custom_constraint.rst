@@ -458,6 +458,7 @@ Now, the constraint validator will get an object as the first argument to
 
     use Symfony\Component\Validator\Constraint;
     use Symfony\Component\Validator\ConstraintValidator;
+    use Symfony\Component\Validator\Exception\UnexpectedTypeException;
     use Symfony\Component\Validator\Exception\UnexpectedValueException;
 
     class ConfirmedPaymentReceiptValidator extends ConstraintValidator
@@ -472,7 +473,7 @@ Now, the constraint validator will get an object as the first argument to
             }
 
             if (!$constraint instanceof ConfirmedPaymentReceipt) {
-                throw new UnexpectedValueException($constraint, ConfirmedPaymentReceipt::class);
+                throw new UnexpectedTypeException($constraint, ConfirmedPaymentReceipt::class);
             }
 
             $receiptEmail = $receipt->getPayload()['email'] ?? null;
