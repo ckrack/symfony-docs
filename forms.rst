@@ -939,6 +939,66 @@ These "unmapped fields" can be set and accessed in a controller with::
 Additionally, if there are any fields on the form that aren't included in
 the submitted data, those fields will be explicitly set to ``null``.
 
+Extra fields
+~~~~~~~~~~~~
+
+By default, Symfony expects every submitted field to be defined in the form. Any
+additional submitted fields are treated as "extra fields". You can access them via the
+:method:`FormInterface::getExtraData() <Symfony\\Component\\Form\\FormInterface::getExtraData>` method.
+
+For example, consider a user creation form::
+
+    // ...
+    use App\User;
+    use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+    use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+    use Symfony\Component\Form\FormBuilderInterface;
+
+    class UserCreateType extends AbstractType
+    {
+        public function buildForm(FormBuilderInterface $builder, array $options): void
+        {
+            $builder
+                ->add('username', TextType::class)
+                ->add('email', EmailType::class)
+            ;
+        }
+
+        public function configureOptions(OptionsResolver $resolver)
+        {
+            $resolver->setDefaults([
+                'data_class' => User::class,
+            ]);
+        }
+    }
+
+You can render an additional input in the template without adding it to the form
+definition:
+
+.. code-block:: html+twig
+
+    {# templates/user/create.html.twig #}
+    {{ form_start(form) }}
+        {{ form_row(form.username) }}
+        {{ form_row(form.email) }}
+
+        {# hidden field to send an additional referral code #}
+        <input type="hidden" name="{{ form.vars.full_name ~ '[referralCode]' }}" value="{{ referralCode }}"/>
+
+        <button type="submit">Submit</button>
+    {{ form_end(form) }}
+
+In this example, ``referralCode`` is submitted as an extra field and you can
+read it like this::
+
+    $extraData = $form->getExtraData();
+    $referralCode = $extraData['referralCode'] ?? null;
+
+.. note::
+
+    To accept extra fields, set the :ref:`allow_extra_fields <form-option-allow-extra-fields>`
+    option to ``true``. Otherwise, the form will be invalid.
+
 Learn more
 ----------
 
