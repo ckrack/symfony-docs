@@ -16,7 +16,7 @@ A submit button.
 The Submit button has an additional method
 :method:`Symfony\\Component\\Form\\ClickableInterface::isClicked` that lets
 you check whether this button was used to submit the form. This is especially
-useful when :doc:`a form has multiple submit buttons </form/multiple_buttons>`::
+useful when :ref:`a form has multiple submit buttons <processing-forms-multiple-buttons>`::
 
     if ($form->get('save')->isClicked()) {
         // ...
