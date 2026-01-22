@@ -579,3 +579,8 @@
 /form/button_based_validation /form/validation_groups
 /form/data_based_validation /form/validation_groups
 /form/validation_group_service_resolver /form/validation_groups
+/form/direct_submit /form#processing-forms-submit-method
+/form/multiple_buttons /form#processing-forms-multiple-buttons
+/form/disabling_validation /form#form-disabling-validation
+/form/form_dependencies /form#form-injecting-services
+/form/without_class /form#forms-without-class
