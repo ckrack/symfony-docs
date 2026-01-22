@@ -264,6 +264,38 @@ the ``data_class`` option by adding the following to your form type class::
         }
     }
 
+.. _form-injecting-services:
+
+Injecting Services in Form Classes
+..................................
+
+Form classes are regular services, which means you can inject other services
+using :doc:`autowiring </service_container/autowiring>`::
+
+    // src/Form/Type/TaskType.php
+    namespace App\Form\Type;
+
+    use App\Repository\CategoryRepository;
+    use Symfony\Component\Form\AbstractType;
+    // ...
+
+    class TaskType extends AbstractType
+    {
+        public function __construct(
+            private CategoryRepository $categoryRepository,
+        ) {
+        }
+
+        public function buildForm(FormBuilderInterface $builder, array $options): void
+        {
+            // use $this->categoryRepository to access the repository
+        }
+    }
+
+If you're using the :ref:`default services.yaml configuration <service-container-services-load-example>`,
+this works automatically. See :doc:`/form/create_custom_field_type` for more
+information about injecting services in custom form types.
+
 .. _rendering-forms:
 
 Rendering Forms
@@ -460,11 +492,126 @@ possible paths:
     that prevents the user from being able to hit the "Refresh" button of
     their browser and re-post the data.
 
-.. seealso::
+.. _processing-forms-submit-method:
 
-    If you need more control over exactly when your form is submitted or which
-    data is passed to it, you can
-    :doc:`use the submit() method to handle form submissions </form/direct_submit>`.
+Using the submit() Method
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The :method:`Symfony\\Component\\Form\\FormInterface::handleRequest` method is
+the recommended way to process forms. However, you can also use the
+:method:`Symfony\\Component\\Form\\FormInterface::submit` method for finer
+control over when exactly your form is submitted and what data is passed to it::
+
+    use Symfony\Component\HttpFoundation\Request;
+    use Symfony\Component\HttpFoundation\Response;
+    // ...
+
+    public function new(Request $request): Response
+    {
+        $task = new Task();
+        $form = $this->createForm(TaskType::class, $task);
+
+        if ($request->isMethod('POST')) {
+            $form->submit($request->getPayload()->get($form->getName()));
+
+            if ($form->isSubmitted() && $form->isValid()) {
+                // perform some action...
+
+                return $this->redirectToRoute('task_success');
+            }
+        }
+
+        return $this->render('task/new.html.twig', [
+            'form' => $form,
+        ]);
+    }
+
+The list of fields submitted with the ``submit()`` method must be the same as
+the fields defined by the form class. Otherwise, you'll see a form validation error::
+
+    public function new(Request $request): Response
+    {
+        // ...
+
+        if ($request->isMethod('POST')) {
+            // '$json' represents payload data sent by React/Angular/Vue
+            // the merge of parameters is needed to submit all form fields
+            $form->submit(array_merge($json, $request->getPayload()->all()));
+
+            // ...
+        }
+
+        // ...
+    }
+
+.. tip::
+
+    Forms consisting of nested fields expect an array in
+    :method:`Symfony\\Component\\Form\\FormInterface::submit`. You can also submit
+    individual fields by calling :method:`Symfony\\Component\\Form\\FormInterface::submit`
+    directly on the field::
+
+        $form->get('firstName')->submit('Fabien');
+
+.. tip::
+
+    When submitting a form via a "PATCH" request, you may want to update only a few
+    submitted fields. To achieve this, you may pass an optional second boolean
+    argument to ``submit()``. Passing ``false`` will remove any missing fields
+    within the form object. Otherwise, the missing fields will be set to ``null``.
+
+.. warning::
+
+    When the second parameter ``$clearMissing`` is ``false``, like with the
+    "PATCH" method, the validation will only apply to the submitted fields. If
+    you need to validate all the underlying data, add the required fields
+    manually so that they are validated::
+
+        // 'email' and 'username' are added manually to force their validation
+        $form->submit(array_merge(['email' => null, 'username' => null], $request->getPayload()->all()), false);
+
+.. _processing-forms-multiple-buttons:
+
+Handling Multiple Submit Buttons
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+When your form contains more than one submit button, you'll want to check
+which of the buttons was clicked to adapt the program flow in your controller.
+For example, if you add a second button with the caption "Save and Add" to your form::
+
+    $form = $this->createFormBuilder($task)
+        ->add('task', TextType::class)
+        ->add('dueDate', DateType::class)
+        ->add('save', SubmitType::class, ['label' => 'Create Task'])
+        ->add('saveAndAdd', SubmitType::class, ['label' => 'Save and Add'])
+        ->getForm();
+
+In your controller, use the button's
+:method:`Symfony\\Component\\Form\\ClickableInterface::isClicked` method for
+querying if the "Save and Add" button was clicked::
+
+    if ($form->isSubmitted() && $form->isValid()) {
+        // ... perform some action, such as saving the task to the database
+
+        $nextAction = $form->get('saveAndAdd')->isClicked()
+            ? 'task_new'
+            : 'task_success';
+
+        return $this->redirectToRoute($nextAction);
+    }
+
+Alternatively you can use the :method:`Symfony\\Component\\Form\\Form::getClickedButton`
+method to get the clicked button's name::
+
+    if ($form->getClickedButton() && 'saveAndAdd' === $form->getClickedButton()->getName()) {
+        // ...
+    }
+
+    // when using nested forms, two or more buttons can have the same name;
+    // in those cases, compare the button objects instead of the button names
+    if ($form->getClickedButton() === $form->get('saveAndAdd')) {
+        // ...
+    }
 
 .. _validating-forms:
 
@@ -572,6 +719,47 @@ corresponding errors printed out with the form.
 
 To see the second approach - adding constraints to the form - refer to
 :ref:`this section <form-option-constraints>`. Both approaches can be used together.
+
+.. _form-disabling-validation:
+
+Disabling Validation
+~~~~~~~~~~~~~~~~~~~~
+
+Sometimes it's useful to suppress the validation of a form altogether. For
+these cases, set the ``validation_groups`` option to ``false``::
+
+    use Symfony\Component\OptionsResolver\OptionsResolver;
+
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        $resolver->setDefaults([
+            'validation_groups' => false,
+        ]);
+    }
+
+Note that when you do that, the form will still run basic integrity checks,
+for example whether an uploaded file was too large or whether non-existing
+fields were submitted.
+
+The submission of extra form fields can be controlled with the
+:ref:`allow_extra_fields config option <form-option-allow-extra-fields>` and
+the maximum upload file size should be handled via your PHP and web server
+configuration.
+
+You can also disable validation for specific submit buttons using
+``'validation_groups' => false``. This is useful in multi-step forms when you
+want a "Previous" button to save data without running validation::
+
+    $form = $this->createFormBuilder($task)
+        // ...
+        ->add('nextStep', SubmitType::class)
+        ->add('previousStep', SubmitType::class, [
+            'validation_groups' => false,
+        ])
+        ->getForm();
+
+The form will still validate basic integrity constraints even when clicking
+"previousStep".
 
 Other Common Form Features
 --------------------------
@@ -1007,6 +1195,222 @@ read it like this::
     To accept extra fields, set the :ref:`allow_extra_fields <form-option-allow-extra-fields>`
     option to ``true``. Otherwise, the form will be invalid.
 
+.. _forms-without-class:
+
+Using a Form without a Data Class
+---------------------------------
+
+In most applications, a form is tied to an object, and the fields of the form get
+and store their data on the properties of that object. This is what you've seen
+so far in this article with the ``Task`` class.
+
+However, by default, a form actually assumes that you want to work with arrays
+of data, instead of an object. There are exactly two ways that you can change
+this behavior and tie the form to an object instead:
+
+#. Pass an object when creating the form (as the first argument to ``createFormBuilder()``
+   or the second argument to ``createForm()``);
+
+#. Declare the ``data_class`` option on your form.
+
+If you *don't* do either of these, then the form will return the data as an array.
+In this example, since ``$defaultData`` is not an object (and no ``data_class``
+option is set), ``$form->getData()`` ultimately returns an array::
+
+    // src/Controller/ContactController.php
+    namespace App\Controller;
+
+    use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+    use Symfony\Component\HttpFoundation\Request;
+    use Symfony\Component\HttpFoundation\Response;
+    // ...
+
+    class ContactController extends AbstractController
+    {
+        public function contact(Request $request): Response
+        {
+            $defaultData = ['message' => 'Type your message here'];
+            $form = $this->createFormBuilder($defaultData)
+                ->add('name', TextType::class)
+                ->add('email', EmailType::class)
+                ->add('message', TextareaType::class)
+                ->add('send', SubmitType::class)
+                ->getForm();
+
+            $form->handleRequest($request);
+
+            if ($form->isSubmitted() && $form->isValid()) {
+                // data is an array with "name", "email", and "message" keys
+                $data = $form->getData();
+            }
+
+            // ... render the form
+        }
+    }
+
+.. tip::
+
+    You can also access POST values (in this case "name") directly through
+    the request object, like so::
+
+        $request->getPayload()->get('name');
+
+    Be advised, however, that in most cases using the ``getData()`` method is
+    a better choice, since it returns the data (usually an object) after
+    it's been transformed by the Form component.
+
+.. _form-without-class-validation:
+
+Adding Validation
+~~~~~~~~~~~~~~~~~
+
+Usually, when you call ``$form->handleRequest($request)``, the object is validated
+by reading the constraints that you applied to that class. If your form is mapped
+to an object, this is almost always the approach you want to use. See
+:doc:`/validation` for more details.
+
+.. _form-option-constraints:
+
+But if the form is not mapped to an object and you instead want to retrieve an
+array of your submitted data, there are two ways to add constraints to the form data.
+
+Constraints At Field Level
+..........................
+
+You can attach constraints to the individual fields. The overall approach is
+covered a bit more in :doc:`this validation article </validation/raw_values>`,
+but here's a short example::
+
+    use Symfony\Component\Form\Extension\Core\Type\TextType;
+    use Symfony\Component\Form\FormBuilderInterface;
+    use Symfony\Component\Validator\Constraints\Length;
+    use Symfony\Component\Validator\Constraints\NotBlank;
+
+    public function buildForm(FormBuilderInterface $builder, array $options): void
+    {
+        $builder
+            ->add('firstName', TextType::class, [
+                'constraints' => new Length(['min' => 3]),
+            ])
+            ->add('lastName', TextType::class, [
+                'constraints' => [
+                    new NotBlank(),
+                    new Length(['min' => 3]),
+                ],
+            ])
+        ;
+    }
+
+.. tip::
+
+    If you are using validation groups, you need to either reference the
+    ``Default`` group when creating the form, or set the correct group on
+    the constraint you are adding::
+
+        new NotBlank(['groups' => ['create', 'update']]);
+
+.. tip::
+
+    If the form is not mapped to an object, every object in your array of
+    submitted data is validated using the ``Symfony\Component\Validator\Constraints\Valid``
+    constraint, unless you :ref:`disable validation <disabling-validation>`.
+
+.. warning::
+
+    When a form is only partially submitted (for example, in an HTTP PATCH
+    request), only the constraints from the submitted form fields will be
+    evaluated.
+
+Constraints At Class Level
+..........................
+
+You can also add the constraints at the class level. This can be done by setting
+the ``constraints`` option in the ``configureOptions()`` method::
+
+    use Symfony\Component\Form\Extension\Core\Type\TextType;
+    use Symfony\Component\Form\FormBuilderInterface;
+    use Symfony\Component\OptionsResolver\OptionsResolver;
+    use Symfony\Component\Validator\Constraints\Collection;
+    use Symfony\Component\Validator\Constraints\Length;
+    use Symfony\Component\Validator\Constraints\NotBlank;
+
+    public function buildForm(FormBuilderInterface $builder, array $options): void
+    {
+        $builder
+            ->add('firstName', TextType::class)
+            ->add('lastName', TextType::class);
+    }
+
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        $resolver->setDefaults([
+            'data_class' => null,
+            'constraints' => new Collection([
+                'firstName' => new Length(['min' => 3]),
+                'lastName' => [
+                    new NotBlank(),
+                    new Length(['min' => 3]),
+                ],
+            ]),
+        ]);
+    }
+
+This means you can also do this when using the ``createFormBuilder()`` method
+in your controller::
+
+    $form = $this->createFormBuilder($defaultData, [
+            'constraints' => [
+                'firstName' => new Length(['min' => 3]),
+                'lastName' => [
+                    new NotBlank(),
+                    new Length(['min' => 3]),
+                ],
+            ],
+        ])
+        ->add('firstName', TextType::class)
+        ->add('lastName', TextType::class)
+        ->getForm();
+
+Conditional Constraints
+.......................
+
+It's possible to define field constraints that depend on the value of other
+fields (e.g. a field must not be blank when another field has a certain value).
+To achieve this, use the ``expression`` option of the
+:doc:`When constraint </reference/constraints/When>` to reference the other field::
+
+    use Symfony\Component\Validator\Constraints as Assert;
+
+    $builder
+        ->add('how_did_you_hear', ChoiceType::class, [
+            'required' => true,
+            'label' => 'How did you hear about us?',
+            'choices' => [
+                'Search engine' => 'search_engine',
+                'Friends' => 'friends',
+                'Other' => 'other',
+            ],
+            'expanded' => true,
+            'constraints' => [
+                new Assert\NotBlank(),
+            ]
+        ])
+
+        // this field is only required if the value of the 'how_did_you_hear' field is 'other'
+        ->add('other_text', TextType::class, [
+            'required' => false,
+            'label' => 'Please specify',
+            'constraints' => [
+                new Assert\When(
+                    expression: 'this.getParent().get("how_did_you_hear").getData() == "other"',
+                    constraints: [
+                        new Assert\NotBlank(),
+                    ],
+                )
+            ],
+        ])
+    ;
+
 Learn more
 ----------
 
@@ -1031,7 +1435,6 @@ Advanced Features:
 
     /controller/upload_file
     /security/csrf
-    /form/form_dependencies
     /form/create_custom_field_type
     /form/data_transformers
     /form/data_mappers
@@ -1063,21 +1466,17 @@ Validation:
     :maxdepth: 1
 
     /form/validation_groups
-    /form/disabling_validation
 
 Misc.:
 
 .. toctree::
     :maxdepth: 1
 
-    /form/direct_submit
     /form/embedded
     /form/form_collections
     /form/inherit_data_option
-    /form/multiple_buttons
     /form/unit_testing
     /form/use_empty_data
-    /form/without_class
 
 .. _`Symfony Forms screencast series`: https://symfonycasts.com/screencast/symfony-forms
 .. _`MakerBundle`: https://symfony.com/doc/current/bundles/SymfonyMakerBundle/index.html
