@@ -42,7 +42,7 @@ other group, add the special ``Default`` group::
 Choosing Validation Groups Based on the Clicked Button
 ------------------------------------------------------
 
-When your form has :doc:`multiple submit buttons </form/multiple_buttons>`, you
+When your form has :ref:`multiple submit buttons <processing-forms-multiple-buttons>`, you
 can change the validation group based on the clicked button. For example, in a
 multi-step form like the following, you might want to skip validation when
 returning to a previous step::
