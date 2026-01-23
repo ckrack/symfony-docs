@@ -77,7 +77,7 @@ object to read data off of the correct PHP superglobals (i.e. ``$_POST`` or
 
     If you need more control over exactly when your form is submitted or which
     data is passed to it,
-    :doc:`use the submit() method to handle form submissions </form/direct_submit>`.
+    :ref:`use the submit() method to handle form submissions <processing-forms-submit-method>`.
 
 .. sidebar:: Integration with the HttpFoundation Component
 
