@@ -2281,6 +2281,9 @@ avoids the need for duplicating routes, which also reduces the potential bugs:
             #[Route(path: [
                 'en' => '/about-us',
                 'nl' => '/over-ons'
+                // optionally, you can define a path without a locale. It will be used
+                // for any locale that does not match the locales above
+                '/about-us',
             ], name: 'about_us')]
             public function about(): Response
             {
@@ -2322,6 +2325,9 @@ avoids the need for duplicating routes, which also reduces the potential bugs:
             $routes->add('about_us', [
                 'en' => '/about-us',
                 'nl' => '/over-ons',
+                // optionally, you can define a path without a locale. It will be used
+                // for any locale that does not match the locales above
+                '/about-us',
             ])
                 ->controller([CompanyController::class, 'about'])
             ;
