@@ -21,6 +21,78 @@ install the form feature before using it:
 
     $ composer require symfony/form
 
+Understanding How Forms Work
+----------------------------
+
+Before diving into the code, it's helpful to understand the mental model behind
+Symfony forms. Think of a form as a **bidirectional mapping layer** between
+your PHP objects (or arrays) and HTML forms.
+
+This mapping works in two directions:
+
+#. **Object to HTML**: When rendering a form, Symfony reads data from your
+   object and turns it into HTML fields that users can edit;
+
+#. **HTML to Object**: When processing a submission, Symfony takes the raw
+   values from the HTTP request (typically strings) and converts them back into
+   the appropriate PHP types on your object.
+
+This flow is the core of the Form component. From simple text fields to complex
+nested collections, everything follows the same pattern.
+
+.. _form-data-lifecycle:
+
+The Data Transformation Lifecycle
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Data in a form goes through three representations, often called **data layers**:
+
+**Model Data**
+    The data in the format your application uses. For example, a ``DateTime``
+    object, a Doctrine entity, or a custom value object. This is what you pass
+    to ``createForm()`` and what you get back after a successful submission via
+    ``getData()``.
+
+**Normalized Data**
+    An intermediate representation that normalizes the model data. For most
+    field types, this is identical to the model data. However, for some types
+    it's different. For example, ``DateType`` is normalized as an array with
+    ``year``, ``month``, and ``day`` keys.
+
+**View Data**
+    The format used to populate HTML form fields and received from user
+    submissions. In most cases, this is string-based (or arrays of strings),
+    because browsers submit text. Some fields may use other representations or
+    remain empty for security reasons (for example, file inputs).
+
+High-level flow:
+
+**Form Rendering**
+
+#. Start with model data from your object.
+#. Model transformers convert it to normalized data.
+#. View transformers convert it to view data (typically strings).
+#. Symfony renders the corresponding HTML widgets.
+
+**Form Submission**
+
+#. Symfony reads raw values from the HTTP request (typically strings).
+#. View transformers reverse the data into normalized data.
+#. Model transformers reverse the data into model data.
+#. The data is written back to the underlying object or array.
+
+For a ``DateType`` field configured to render as three ``<select>`` elements:
+
+* **Model data**: a ``DateTime`` object;
+* **Norm data**: an array like ``['year' => 2026, 'month' => 10, 'day' => 18]``;
+  (values are integers)
+* **View data**: an array like ``['year' => '2026', 'month' => '10', 'day' => '18']``
+  (values are strings, as submitted by the browser).
+
+Most of the time you don't need to think about these layers. They become
+relevant when debugging why a field doesn't display or submit correctly, or
+when creating custom :doc:`data transformers </form/data_transformers>`.
+
 Usage
 -----
 
@@ -89,9 +161,34 @@ concept of "form type". In other projects, it's common to differentiate between
 * an entire ``<form>`` with multiple fields to edit a user profile is a
   "form type" (e.g. ``UserProfileType``).
 
-This may be confusing at first, but it will feel natural to you soon enough.
-Besides, it simplifies code and makes "composing" and "embedding" form fields
-much easier to implement.
+This unified concept makes the Form component more **flexible**. You can compose
+complex forms from simpler types, embed forms within forms, and reuse the same
+type definition across your application.
+
+**The Form Type Hierarchy**
+
+Every form type has a parent type. The parent determines the base behavior,
+options, and rendering that your type inherits. Here's a simplified view:
+
+.. code-block:: text
+
+    FormType        (the root parent of all types)
+    ├─ TextType    (renders a text input)
+    │  ├─ EmailType
+    │  ├─ PasswordType
+    │  ├─ ...
+    │  └─ UrlType
+    ├─ ChoiceType  (renders select, radio, or checkboxes)
+    │  ├─ CountryType
+    │  ├─ EntityType
+    │  └─ ...
+    ├─ DateType    (renders single or multiple fields for date input)
+    │  └─ ...
+    └─ ...
+
+When you create a custom form type and specify a parent (via ``getParent()``),
+your type inherits options, template blocks, and behavior from that parent. This
+is why ``EmailType`` reuses the rendering and options from ``TextType``.
 
 There are tens of :doc:`form types provided by Symfony </reference/forms/types>`
 and you can also :doc:`create your own form types </form/create_custom_field_type>`.
@@ -105,7 +202,7 @@ and you can also :doc:`create your own form types </form/create_custom_field_typ
 
         $ php bin/console debug:form
 
-        # pass the form type FQCN to only show the options for that type, its parents and extensions.
+        # pass the form type FQCN to only show the options for that type, its parents and extensions
         # For built-in types, you can pass the short classname instead of the FQCN
         $ php bin/console debug:form BirthdayType
 
@@ -237,10 +334,9 @@ use the ``createForm()`` helper (otherwise, use the ``create()`` method of the
 .. _form-data-class:
 
 Every form needs to know the name of the class that holds the underlying data
-(e.g. ``App\Entity\Task``). Usually, this is just guessed based off of the
-object passed to the second argument to ``createForm()`` (i.e. ``$task``).
-Later, when you begin :doc:`embedding forms </form/embedded>`, this will no
-longer be sufficient.
+(e.g. ``App\Entity\Task``). Usually, this is guessed based on the object passed
+to the second argument to ``createForm()`` (i.e. ``$task``). Later, when you
+begin :doc:`embedding forms </form/embedded>`, this will no longer be sufficient.
 
 So, while not always necessary, it's generally a good idea to explicitly specify
 the ``data_class`` option by adding the following to your form type class::
@@ -263,6 +359,39 @@ the ``data_class`` option by adding the following to your form type class::
             ]);
         }
     }
+
+.. _form-property-path:
+
+Mapping Fields to Object Properties
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+By default, a form field named ``dueDate`` reads and writes the ``dueDate``
+property on your object. This uses the :doc:`PropertyAccess component </components/property_access>`,
+which can work with public properties and common accessor names (``get*()``,
+``is*()``, ``has*()``, ``set*()``).
+
+The ``property_path`` option lets you customize this mapping.
+
+**Mapping to a Different Property**
+
+If your form field name doesn't match the object property::
+
+    $builder->add('deadline', DateType::class, [
+        // this field will read/write the 'dueDate' property
+        'property_path' => 'dueDate',
+    ]);
+
+**Mapping to Nested Properties**
+
+You can access nested object properties using dot notation::
+
+    // assuming Task::getCategory() returns a Category object with getName()/setName()
+    $builder->add('categoryName', TextType::class, [
+        'property_path' => 'category.name',
+    ]);
+
+For fields that shouldn't be written back to the underlying data, use
+:ref:`unampped fields <form-unmapped-fields>`.
 
 .. _form-injecting-services:
 
@@ -432,7 +561,7 @@ written into the form object::
     {
         public function new(Request $request): Response
         {
-            // just set up a fresh $task object (remove the example data)
+            // set up a fresh $task object (remove the example data)
             $task = new Task();
 
             $form = $this->createForm(TaskType::class, $task);
@@ -484,6 +613,51 @@ possible paths:
     Redirecting a user after a successful form submission is a best practice
     that prevents the user from being able to hit the "Refresh" button of
     their browser and re-post the data.
+
+Accessing Form Data
+~~~~~~~~~~~~~~~~~~~
+
+You'll use the ``getData()`` method most often to access the form's data,
+but Symfony forms also provide methods to access data at :ref:`each layer <form-data-lifecycle>`:
+
+``getData()``
+    Returns the **model data**. This is the method you'll use most often.
+    After submission, it returns the populated object (or array) with all the
+    submitted values transformed into their proper PHP types.
+
+``getNormData()``
+    Returns the **normalized data**. Useful when debugging transformer issues
+    or when you need the intermediate representation.
+
+``getViewData()``
+    Returns the **view data**. This is what gets rendered into HTML fields and
+    what comes back from user submissions (before transformation).
+
+.. seealso::
+
+    When adding :ref:`extra fields <form-extra-fields>` to the form, you can also
+    use the ``getExtraData()`` method to get any submitted data that doesn't
+    correspond to a form field.
+
+Example showing these methods in action::
+
+    // after form submission
+    $form->handleRequest($request);
+
+    if ($form->isSubmitted()) {
+        // the populated Task object
+        $task = $form->getData();
+
+        // for a DateType field, this might be ['year' => 2024, 'month' => 6, ...]
+        $normData = $form->get('dueDate')->getNormData();
+
+        // the raw submitted values (usually strings): ['year' => '2024', 'month' => '6', ...]
+        $viewData = $form->get('dueDate')->getViewData();
+    }
+
+If a transformer fails, the form (or the affected field) may be marked as not
+synchronized. Check ``isSynchronized()`` and inspect field errors to understand
+what went wrong.
 
 .. _processing-forms-submit-method:
 
@@ -561,7 +735,10 @@ the fields defined by the form class. Otherwise, you'll see a form validation er
     manually so that they are validated::
 
         // 'email' and 'username' are added manually to force their validation
-        $form->submit(array_merge(['email' => null, 'username' => null], $request->getPayload()->all()), false);
+        $form->submit(array_merge(
+            ['email' => null, 'username' => null],
+            $request->getPayload()->all()
+        ), false);
 
 .. _processing-forms-multiple-buttons:
 
@@ -963,36 +1140,74 @@ to the ``form()`` or the ``form_start()`` helper functions:
     ``DELETE`` request. The :ref:`http_method_override <configuration-framework-http_method_override>`
     option must be enabled for this to work.
 
-Changing the Form Name
-~~~~~~~~~~~~~~~~~~~~~~
+.. _changing-the-form-name:
 
-If you inspect the HTML contents of the rendered form, you'll see that the
-``<form>`` name and the field names are generated from the type class name
-(e.g. ``<form name="task" ...>`` and ``<select name="task[dueDate][date][month]" ...>``).
+Changing the Form Field Names and Ids
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If you want to modify this, use the :method:`Symfony\\Component\\Form\\FormFactoryInterface::createNamed`
-method::
+When Symfony renders a form, it generates HTML ``name`` and ``id`` attributes
+for each field following specific conventions. Understanding these conventions
+helps when writing JavaScript, CSS selectors, or custom form themes.
 
-    // src/Controller/TaskController.php
-    namespace App\Controller;
+In Twig templates, prefer ``form.vars.full_name`` and ``form.vars.id`` as the
+source of truth, instead of reconstructing names manually.
 
-    use App\Form\TaskType;
-    use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-    use Symfony\Component\Form\FormFactoryInterface;
-    // ...
+**The ``name`` Attribute**
 
-    class TaskController extends AbstractController
-    {
-        public function new(FormFactoryInterface $formFactory): Response
-        {
-            $task = ...;
-            $form = $formFactory->createNamed('my_name', TaskType::class, $task);
+Field names follow the pattern: ``formName[fieldName]``. For nested forms, names
+are further nested: ``formName[childForm][fieldName]``.
 
-            // ...
-        }
-    }
+Given a ``TaskType`` form with a ``dueDate`` field::
 
-You can even suppress the name completely by setting it to an empty string.
+    $form = $this->createForm(TaskType::class, $task);
+
+The rendered HTML will have:
+
+.. code-block:: html
+
+    <input name="task[dueDate]" ...>
+
+For a ``DateType`` field that renders as three separate ``<select>`` elements:
+
+.. code-block:: html
+
+    <select name="task[dueDate][month]">...</select>
+    <select name="task[dueDate][day]">...</select>
+    <select name="task[dueDate][year]">...</select>
+
+**The ``id`` Attribute**
+
+The ``id`` attribute follows a similar pattern but uses underscores instead of
+brackets: ``formName_fieldName``. For the examples above:
+
+.. code-block:: html
+
+    <input id="task_dueDate" ...>
+
+    <!-- or for DateType with multiple fields: -->
+    <select id="task_dueDate_month">...</select>
+    <select id="task_dueDate_day">...</select>
+    <select id="task_dueDate_year">...</select>
+
+**Customizing the Form Name**
+
+The default form name is derived from the form type class (for example,
+``TaskType`` becomes ``task`` and ``FooBarType`` becomes ``foo_bar``). You can
+customize this by returning a different value from the ``getBlockPrefix()`` method
+of your form type class.
+
+You can also customize this by creating the form with the
+:method:`Symfony\\Component\\Form\\FormFactoryInterface::createNamed` method::
+
+    // using FormFactory
+    $form = $formFactory->createNamed('my_task', TaskType::class, $task);
+
+    // this generates: <input name="my_task[dueDate]" id="my_task_dueDate">
+
+To create a form without any name prefix (fields named directly like ``dueDate``
+instead of ``task[dueDate]``)::
+
+    $form = $formFactory->createNamed('', TaskType::class, $task);
 
 .. _forms-html5-validation-disable:
 
@@ -1090,6 +1305,8 @@ If you'd like to change one of the guessed values, override it in the options fi
     if you're using a Doctrine entity. Read :ref:`automatic_object_validation`
     guide for more information.
 
+.. _form-unmapped-fields:
+
 Unmapped Fields
 ~~~~~~~~~~~~~~~
 
@@ -1126,6 +1343,8 @@ These "unmapped fields" can be set and accessed in a controller with::
 
 Additionally, if there are any fields on the form that aren't included in
 the submitted data, those fields will be explicitly set to ``null``.
+
+.. _form-extra-fields:
 
 Extra fields
 ~~~~~~~~~~~~
@@ -1387,7 +1606,7 @@ To achieve this, use the ``expression`` option of the
             ]
         ])
 
-        // this field is only required if the value of the 'how_did_you_hear' field is 'other'
+        // this field is only required when 'how_did_you_hear' is 'other'
         ->add('other_text', TextType::class, [
             'required' => false,
             'label' => 'Please specify',
@@ -1401,6 +1620,64 @@ To achieve this, use the ``expression`` option of the
             ],
         ])
     ;
+
+Troubleshooting
+---------------
+
+Why Doesn't My Field Value Display?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+**Problem**: The form renders, but a field is empty even though the underlying
+data has a value.
+
+**Common causes**:
+
+#. The property is not readable (missing accessor, wrong name, or not public).
+   For booleans, Symfony also looks for ``is*()`` and ``has*()`` accessors.
+
+#. The field name doesn't match the property name. Use :ref:`property_path <form-property-path>`
+   if you need to map to a different property.
+
+#. The data is set after creating the form. Populate your object *before*
+   passing it to ``createForm()``::
+
+       // wrong: object populated after form creation
+       $form = $this->createForm(TaskType::class, $task);
+       $task->setTask('My task');
+
+       // correct: object populated before form creation
+       $task->setTask('My task');
+       $form = $this->createForm(TaskType::class, $task);
+
+Why Doesn't My Submitted Data Save to the Object?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+**Problem**: The form submits, but the object properties remain unchanged.
+
+**Common causes**:
+
+#. The property is not writable (missing setter, wrong name, or not public).
+
+#. It is an :ref:`unmapped field <form-unmapped-fields>`.
+
+#. The form is not synchronized due to a transformation failure. Check
+   ``isSynchronized()`` and inspect field errors.
+
+Why Does ``getData()`` Return ``null`` After Submission?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+**Problem**: ``$form->getData()`` is ``null`` after handling the request.
+
+**Common causes**:
+
+#. No initial object (or default data) was provided and the form doesn't create
+   one. Review the form's ``data_class`` and ``empty_data`` options.
+
+#. A transformation failed and the form is not synchronized. Check
+   ``isSynchronized()`` and field errors.
+
+#. The form is not submitted or is invalid. Check ``isSubmitted()`` and
+   ``isValid()`` before using the data.
 
 Learn more
 ----------
