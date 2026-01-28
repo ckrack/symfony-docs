@@ -649,7 +649,7 @@ variables are properly exposed:
 .. _`Symfony Cloud`: https://symfony.com/cloud/
 .. _`Upsun`: https://upsun.com/
 .. _`Symfony Cloud documentation`: https://docs.upsun.com/get-started/stacks/symfony/integration.html
-.. _`Proxy settings in Windows`: https://www.dummies.com/article/technology/computers/operating-systems/windows/windows-10/how-to-set-up-a-proxy-in-windows-10-140262/
+.. _`Proxy settings in Windows`: https://support.microsoft.com/en-us/windows/use-a-proxy-server-in-windows-03096c53-0554-4ffe-b6ab-8b1deee8dae1
 .. _`Proxy settings in macOS`: https://support.apple.com/guide/mac-help/enter-proxy-server-settings-on-mac-mchlp2591/mac
 .. _`Proxy settings in Ubuntu`: https://help.ubuntu.com/stable/ubuntu-help/net-proxy.html.en
 .. _`is treated differently`: https://superuser.com/a/1799209
