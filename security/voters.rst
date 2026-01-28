@@ -52,8 +52,8 @@ which makes creating a voter even easier::
 
     The Voter class also implements
     :class:`Symfony\\Component\\Security\\Core\\Authorization\\Voter\\CacheableVoterInterface`
-    whith methods used to improve
-    :ref:`voting performance <voter-improve-performance>` thanks to caching.
+    with methods used to improve :ref:`voting performance <voter-improve-performance>`
+    thanks to caching.
 
 .. _how-to-use-the-voter-in-a-controller:
 
