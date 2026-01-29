@@ -1630,6 +1630,12 @@ To achieve this, use the ``expression`` option of the
         ])
     ;
 
+.. seealso::
+
+    Another way to implement conditional constraints is to configure the
+    ``validation_groups`` form option with a callable. See
+    :doc:`/form/validation_groups`.
+
 Troubleshooting
 ---------------
 
