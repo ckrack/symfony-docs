@@ -389,6 +389,18 @@ entity primary keys::
         // ...
     }
 
+Using ``UuidGenerator::class`` to generate UUID values creates a new generator
+instance and bypasses Symfony's ``doctrine.uuid_generator`` service. This means
+the UUID version configured in FrameworkBundle (for example, UUIDv6 or UUIDv7)
+is ignored.
+
+Instead, configure the Doctrine entity to use Symfony's generator service::
+
+    #[ORM\Id]
+    #[ORM\Column(type: 'uuid', unique: true)]
+    #[ORM\GeneratedValue(strategy: 'CUSTOM')]
+    #[ORM\CustomIdGenerator('doctrine.uuid_generator')]
+
 .. warning::
 
     Using UUIDs as primary keys is usually not recommended for performance reasons:
