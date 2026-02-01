@@ -266,8 +266,7 @@ encapsulate transformation logic:
     use Symfony\Component\RemoteEvent\PayloadConverterInterface;
     use Symfony\Component\RemoteEvent\RemoteEvent;
 
-    final class AcmeWebhookPayloadConverter
-        implements PayloadConverterInterface
+    final class AcmeWebhookPayloadConverter implements PayloadConverterInterface
     {
         public function convert(array $payload): RemoteEvent
         {
@@ -292,6 +291,12 @@ Then use it in your parser:
 .. code-block:: php
 
     use Symfony\Component\Webhook\Exception\RejectWebhookException;
+    use App\RemoteEvent\AcmeWebhookPayloadConverter;
+
+    public function __construct(
+        #[Autowire(service: AcmeWebhookPayloadConverter::class)]
+        private readonly PayloadConverterInterface $payloadConverter,
+    ) {}
 
     protected function doParse(
         Request $request,
