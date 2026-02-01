@@ -78,11 +78,11 @@ appropriate parser:
 
         # config/webhook.yaml
         framework:
-          webhook:
-            routing:
-              acme_webhook:  # routing name, maps to /webhook/acme_webhook
-                service: App\Webhook\AcmeWebhookRequestParser
-                secret: '%env(WEBHOOK_SECRET)%'  # optional
+            webhook:
+                routing:
+                    acme_webhook:  # routing name, maps to /webhook/acme_webhook
+                        service: App\Webhook\AcmeWebhookRequestParser
+                        secret: '%env(WEBHOOK_SECRET)%'  # optional
 
     .. code-block:: xml
 
@@ -527,7 +527,6 @@ the Messenger component:
         new SendWebhookMessage($subscriber, $event)
     );
 
-
 The message will be queued and processed by
 :class:`Symfony\\Component\\Webhook\\Messenger\\SendWebhookHandler`,
 which:
@@ -547,7 +546,9 @@ which:
 Webhook Signature
 ~~~~~~~~~~~~~~~~~
 
-By default, signatures use HMAC-SHA256. The signature header format is::
+By default, signatures use HMAC-SHA256. The signature header format is:
+
+.. code-block:: text
 
     Webhook-Signature: sha256=<base64-encoded-hmac>
 
