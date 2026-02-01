@@ -345,7 +345,8 @@ attribute:
         }
     }
 
-The routing name in the attribute must match the configuration entry.
+The routing name in the attribute must match the configuration entry of the
+webhook routing.
 
 Asynchronous Processing
 ^^^^^^^^^^^^^^^^^^^^^^^
@@ -379,7 +380,7 @@ Messenger, configure routing for the
                 <framework:messenger>
                     <framework:routing
                         message-class="Symfony\Component\RemoteEvent\Messenger\ConsumeRemoteEventMessage">
-                        <framework:bus>async</framework:bus>
+                        <framework:sender service="async"/>
                     </framework:routing>
                 </framework:messenger>
             </framework:config>
@@ -394,7 +395,7 @@ Messenger, configure routing for the
         return static function (FrameworkConfig $config): void {
             $config->messenger()
                 ->routing(ConsumeRemoteEventMessage::class)
-                ->bus('async');
+                ->senders(['async']);
         };
 
 With this configuration, consumers are invoked asynchronously via the
