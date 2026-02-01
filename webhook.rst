@@ -286,8 +286,62 @@ attribute:
     }
 
 The routing name in the attribute must match the configuration entry.
-Webhooks are processed asynchronously by default (via Messenger);
-configure the bus in your webhook settings if needed.
+
+Asynchronous Processing
+^^^^^^^^^^^^^^^^^^^^^^^
+
+By default, webhook consumers are invoked synchronously when the
+RemoteEvent is dispatched. To process webhooks asynchronously using
+Messenger, configure routing for the
+:class:`Symfony\\Component\\RemoteEvent\\Messenger\\ConsumeRemoteEventMessage`:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/messenger.yaml
+        framework:
+            messenger:
+                routing:
+                    Symfony\Component\RemoteEvent\Messenger\ConsumeRemoteEventMessage:
+                        async: 'async'
+
+    .. code-block:: xml
+
+        <!-- config/packages/messenger.xml -->
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony
+                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+            <framework:config>
+                <framework:messenger>
+                    <framework:routing
+                        message-class="Symfony\Component\RemoteEvent\Messenger\ConsumeRemoteEventMessage">
+                        <framework:bus>async</framework:bus>
+                    </framework:routing>
+                </framework:messenger>
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/messenger.php
+        use Symfony\Component\RemoteEvent\Messenger\ConsumeRemoteEventMessage;
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $config): void {
+            $config->messenger()
+                ->routing(ConsumeRemoteEventMessage::class)
+                ->bus('async');
+        };
+
+With this configuration, consumers are invoked asynchronously via the
+message bus. Without it, consumers are processed synchronously during
+the webhook handling.
+
 
 Built-in Integrations
 ~~~~~~~~~~~~~~~~~~~~~
