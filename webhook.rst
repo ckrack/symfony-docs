@@ -38,24 +38,83 @@ The :class:`Symfony\\Component\\Webhook\\Controller\\WebhookController` provides
 
 By default, any URL prefixed with ``/webhook`` routes to this controller. You can customize this prefix in your routing configuration:
 
-.. code-block:: yaml
+.. configuration-block::
 
-    # config/routes/webhook.yaml
-    webhook:
-        resource: '@FrameworkBundle/Resources/config/routing/webhook.xml'
-        prefix: /webhook  # customize as needed
+    .. code-block:: yaml
 
-Next, configure the parser services that will handle incoming webhooks. The controller uses a routing mechanism to map incoming requests to the appropriate parser:
+        # config/routes/webhook.yaml
+        webhook:
+            resource: '@FrameworkBundle/Resources/config/routing/webhook.php'
+            prefix: /webhook  # customize as needed
 
-.. code-block:: yaml
+    .. code-block:: xml
 
-    # config/webhook.yaml
-    framework:
-      webhook:
-        routing:
-          acme_webhook:  # routing name, maps to /webhook/acme_webhook
-            service: App\Webhook\AcmeWebhookRequestParser
-            secret: '%env(WEBHOOK_SECRET)%'  # optional
+        <!-- config/routes/webhook.xml -->
+        <routes xmlns="http://symfony.com/schema/routing"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/routing
+                https://symfony.com/schema/routing/routing-1.0.xsd">
+            <import resource="@FrameworkBundle/Resources/config/routing/webhook.php"
+                prefix="/webhook" />
+        </routes>
+
+    .. code-block:: php
+
+        // config/routes/webhook.php
+        use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
+
+        return static function (RoutingConfigurator $routes): void {
+            $routes->import('@FrameworkBundle/Resources/config/routing/webhook.php')
+                ->prefix('/webhook');
+        };
+
+Next, configure the parser services that will handle incoming webhooks.
+The controller uses a routing mechanism to map incoming requests to the
+appropriate parser:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/webhook.yaml
+        framework:
+          webhook:
+            routing:
+              acme_webhook:  # routing name, maps to /webhook/acme_webhook
+                service: App\Webhook\AcmeWebhookRequestParser
+                secret: '%env(WEBHOOK_SECRET)%'  # optional
+
+    .. code-block:: xml
+
+        <!-- config/packages/framework.xml -->
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony
+                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+            <framework:config>
+                <framework:webhook enabled="true">
+                    <framework:routing type="acme_webhook">
+                        <framework:service>App\Webhook\AcmeWebhookRequestParser</framework:service>
+                        <framework:secret>%env(WEBHOOK_SECRET)%</framework:secret>
+                    </framework:routing>
+                </framework:webhook>
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/framework.php
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $config): void {
+            $config->webhook()
+                ->routing('acme_webhook')
+                ->service('App\Webhook\AcmeWebhookRequestParser')
+                ->secret('%env(WEBHOOK_SECRET)%');
+        };
 
 The routing name becomes part of the webhook URL (e.g.,
 ``https://example.com/webhook/acme_webhook``). Each routing name must be
