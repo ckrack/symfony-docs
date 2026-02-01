@@ -231,11 +231,7 @@ When extending :class:`Symfony\\Component\\Webhook\\Client\\AbstractRequestParse
             Request $request,
             #[\SensitiveParameter] string $secret
         ): ?RemoteEvent {
-            $payload = json_decode(
-                $request->getContent(),
-                true,
-                flags: JSON_THROW_ON_ERROR
-            );
+            $payload = $request->toArray();
 
             return new RemoteEvent(
                 $payload['event_type'],
@@ -302,11 +298,7 @@ Then use it in your parser:
         #[\SensitiveParameter] string $secret
     ): ?RemoteEvent {
         try {
-            $payload = json_decode(
-                $request->getContent(),
-                true,
-                flags: JSON_THROW_ON_ERROR
-            );
+            $payload = $request->toArray();
 
             return $this->converter->convert($payload);
         } catch (ParseException|JsonException $e) {
