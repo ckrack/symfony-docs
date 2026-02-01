@@ -44,7 +44,7 @@ By default, any URL prefixed with ``/webhook`` routes to this controller. You ca
 
         # config/routes/webhook.yaml
         webhook:
-            resource: '@FrameworkBundle/Resources/config/routing/webhook.php'
+            resource: '@FrameworkBundle/Resources/config/routing/webhook.xml'
             prefix: /webhook  # customize as needed
 
     .. code-block:: xml
@@ -54,7 +54,7 @@ By default, any URL prefixed with ``/webhook`` routes to this controller. You ca
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/routing
                 https://symfony.com/schema/routing/routing-1.0.xsd">
-            <import resource="@FrameworkBundle/Resources/config/routing/webhook.php"
+            <import resource="@FrameworkBundle/Resources/config/routing/webhook.xml"
                 prefix="/webhook" />
         </routes>
 
@@ -64,7 +64,7 @@ By default, any URL prefixed with ``/webhook`` routes to this controller. You ca
         use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
         return static function (RoutingConfigurator $routes): void {
-            $routes->import('@FrameworkBundle/Resources/config/routing/webhook.php')
+            $routes->import('@FrameworkBundle/Resources/config/routing/webhook.xml')
                 ->prefix('/webhook');
         };
 
@@ -76,7 +76,7 @@ appropriate parser:
 
     .. code-block:: yaml
 
-        # config/webhook.yaml
+        # config/packages/webhook.yaml
         framework:
             webhook:
                 routing:
@@ -303,8 +303,7 @@ Messenger, configure routing for the
         framework:
             messenger:
                 routing:
-                    Symfony\Component\RemoteEvent\Messenger\ConsumeRemoteEventMessage:
-                        async: 'async'
+                    'Symfony\Component\RemoteEvent\Messenger\ConsumeRemoteEventMessage': async
 
     .. code-block:: xml
 
