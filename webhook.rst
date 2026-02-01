@@ -122,8 +122,71 @@ unique and connects the webhook source to your consumer code.
 
 All parsers are automatically injected into the WebhookController.
 
-Creating a Custom Parser
+Parsing Webhook Requests
 ~~~~~~~~~~~~~~~~~~~~~~~~
+
+Once a webhook request arrives at your endpoint, it must be parsed and validated before
+your application can process it. Parsing involves verifying the request's authenticity
+(typically via signature validation), extracting the payload, and converting it into a
+:class:`Symfony\\Component\\RemoteEvent\\RemoteEvent` object that your application can work with.
+
+Symfony provides two approaches to handle parsing:
+
+1. **Built-in Parser**: Use the standard :class:`Symfony\\Component\\Webhook\\Client\\RequestParser` for webhooks from other Symfony applications
+2. **Custom Parser**: Create your own parser for webhooks from third-party services or custom APIs
+
+Choose the approach that best fits your webhook source.
+
+Using the Built-in Parser
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+For webhooks originating from other Symfony applications, you can use the built-in
+:class:`Symfony\\Component\\Webhook\\Client\\RequestParser` instead of creating a custom parser.
+
+This parser handles the standard Symfony webhook request format and is perfect for
+consuming webhooks from Symfony apps:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/framework.yaml
+        framework:
+            webhook:
+                routing:
+                    acme_webhook:
+                        service: Symfony\Component\Webhook\Client\RequestParser
+                        secret: '%env(WEBHOOK_SECRET)%'
+
+    .. code-block:: xml
+
+        <!-- config/packages/framework.xml -->
+        <framework:config>
+            <framework:webhook enabled="true">
+                <framework:routing type="acme_webhook">
+                    <framework:service>Symfony\Component\Webhook\Client\RequestParser</framework:service>
+                    <framework:secret>%env(WEBHOOK_SECRET)%</framework:secret>
+                </framework:routing>
+            </framework:webhook>
+        </framework:config>
+
+    .. code-block:: php
+
+        // config/packages/framework.php
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $config): void {
+            $config->webhook()
+                ->routing('acme_webhook')
+                ->service(Symfony\Component\Webhook\Client\RequestParser::class)
+                ->secret('%env(WEBHOOK_SECRET)%');
+        };
+
+The built-in parser automatically handles request validation and signature verification,
+allowing you to focus on consuming the RemoteEvent in your application logic.
+
+Creating a Custom Parser
+^^^^^^^^^^^^^^^^^^^^^^^^^
 
 For webhooks from custom APIs, implement a parser using the :class:`Symfony\\Component\\Webhook\\Client\\RequestParserInterface` or extend :class:`Symfony\\Component\\Webhook\\Client\\AbstractRequestParser`.
 
