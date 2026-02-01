@@ -554,6 +554,11 @@ The Webhook component also enables your application to dispatch webhooks to
 external endpoints when your application events occur. This is useful when
 building APIs that notify subscribers of important events.
 
+.. note::
+
+    To send webhooks, ensure you have installed both the HttpClient and Serializer
+    component via ``composer require symfony/http-client symfony/serializer``.
+
 Basic Usage
 ~~~~~~~~~~~
 
