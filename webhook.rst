@@ -608,16 +608,28 @@ which:
 3. Signs the request using the subscriber's secret
 4. Sends via Symfony's HttpClient component
 
-Webhook Signature
-~~~~~~~~~~~~~~~~~
+Resulting HTTP Request
+~~~~~~~~~~~~~~~~~~~~~~
 
-By default, signatures use HMAC-SHA256. The signature header format is:
+When the webhook is sent, it generates an HTTP POST request with the following format:
 
 .. code-block:: text
 
-    Webhook-Signature: sha256=<base64-encoded-hmac>
+    POST /webhook/symfony HTTP/1.1
+    Host: example.com
+    Content-Type: application/json
+    Webhook-Event: resource.created
+    Webhook-Id: 550e8400-e29b-41d4-a716-446655440000
+    Webhook-Signature: sha256=9f86d081884c7d6d9ffd60bb51d3263112c4b2486f80fa12ab5807265dc789d6
 
-Receiving endpoints should verify this signature using the shared secret
+    {
+        "resource_id": 12345,
+        "email": "user@example.com",
+        "created_at": 1234567890
+    }
+
+By default, the signature uses HMAC-SHA256 of the concatenated event name, event ID, and JSON body,
+encoded in base64. Receiving endpoints should verify this signature using the shared secret
 to ensure webhook authenticity.
 
 Custom Sending Logic
