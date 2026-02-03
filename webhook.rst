@@ -250,6 +250,79 @@ The method receives the request and secret. You should:
 - Throw :class:`Symfony\\Component\\Webhook\\Exception\\RejectWebhookException` for invalid requests
 - Return a :class:`Symfony\\Component\\RemoteEvent\\RemoteEvent` on success
 
+Testing Your Parser
+^^^^^^^^^^^^^^^^^^^
+
+Test your custom parser using :class:`Symfony\\Component\\Webhook\\Client\\Tests\\AbstractRequestParserTest`.
+:class:`Symfony\\Component\\Webhook\\Client\\Tests\\AbstractRequestParserTest` runs
+:method:`Symfony\\Component\\Webhook\\Client\\Tests\\AbstractRequestParserTest::testParse` with data from
+:method:`Symfony\\Component\\Webhook\\Client\\Tests\\AbstractRequestParserTest::getPayloads`,
+which loads files from ``Fixtures/*.json`` and pairs each with a ``.php`` expectation file.
+
+::
+
+    // tests/Webhook/AcmeWebhookRequestParserTest.php
+    namespace App\Tests\Webhook;
+
+    use App\Webhook\AcmeWebhookRequestParser;
+    use Symfony\Component\HttpFoundation\Request;
+    use Symfony\Component\Webhook\Client\Tests\AbstractRequestParserTest;
+
+    class AcmeWebhookRequestParserTest extends AbstractRequestParserTest
+    {
+        protected function createRequestParser(): AcmeWebhookRequestParser
+        {
+            return new AcmeWebhookRequestParser();
+        }
+
+        // Default createRequest() builds a POST request with Content-Type: application/json
+        // override it to add provider-specific headers (e.g., webhook signatures) or change the method
+        protected function createRequest(string $payload): Request
+        {
+            return Request::create('/', 'POST', [], [], [], // the routing is not actually tested
+                [
+                    'CONTENT_TYPE' => 'application/json', // add headers as needed
+                ],
+                $payload
+            );
+        }
+    }
+
+.. code-block:: text
+
+    // tests/Webhook/Fixtures/resource.created.json
+    {
+        "event_type": "resource.created",
+        "event_id": "550e8400-e29b-41d4-a716-446655440000",
+        "email": "user@example.com"
+    }
+
+::
+
+    // tests/Webhook/Fixtures/resource.created.php
+    use Symfony\Component\RemoteEvent\RemoteEvent;
+
+    return new RemoteEvent(
+        name: 'resource.created',
+        id: '550e8400-e29b-41d4-a716-446655440000',
+        payload: [
+            'event_type' => 'resource.created',
+            'event_id' => '550e8400-e29b-41d4-a716-446655440000',
+            'email' => 'user@example.com',
+        ]
+    );
+
+
+- Your test must implement
+  :method:`Symfony\\Component\\Webhook\\Client\\Tests\\AbstractRequestParserTest::createRequestParser`
+  to return an instance of your :class:`Symfony\\Component\\Webhook\\Client\\RequestParserInterface`
+  implementation
+- Override :method:`Symfony\\Component\\Webhook\\Client\\Tests\\AbstractRequestParserTest::getSecret`
+  if your parser validates signatures
+- Override :method:`Symfony\\Component\\Webhook\\Client\\Tests\\AbstractRequestParserTest::getFixtureExtension`
+  if your fixtures are not ``.json`` (e.g., .txt for form-encoded payloads)
+
+
 Handling Complex Payload Transformations
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
