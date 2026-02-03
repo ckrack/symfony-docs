@@ -21,7 +21,6 @@ Installation
 
     $ composer require symfony/webhook
 
-
 Consuming Webhooks
 ------------------
 
@@ -402,7 +401,6 @@ With this configuration, consumers are invoked asynchronously via the
 message bus. Without it, consumers are processed synchronously during
 the webhook handling.
 
-
 Built-in Integrations
 ~~~~~~~~~~~~~~~~~~~~~
 
@@ -543,7 +541,6 @@ Configure similarly to mailers, then consume
             // Update SMS delivery status in database, etc.
         }
     }
-
 
 Sending Webhooks
 ----------------
